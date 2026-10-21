@@ -14,26 +14,22 @@
 <meta name="color-scheme" content="dark">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23030712'/%3E%3Cpath d='M32 8l20 7v15c0 13-8.5 21.5-20 26C20.500 51.500 12 43 12 30V15z' fill='none' stroke='%2306b6d4' stroke-width='4' stroke-linejoin='round'/%3E%3Cpath d='M23 31l6 6 12-13' fill='none' stroke='%2322d3ee' stroke-width='4.500' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
 
-<!-- Open Graph (Facebook, LinkedIn, WhatsApp, Discord, Slack) -->
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="YT Policy Shield">
 <meta property="og:locale" content="en_US">
 <meta property="og:title" content="YouTube Policy Shield – Free YouTube Monetization Checker">
 <meta property="og:description" content="Drop a video and find out if YouTube will monetize or reject it. Free reused content detector and AI voice detector for YouTube Shorts, scanned privately in your browser.">
-<!-- REPLACE the domain below with the address where you host this page, and upload a 1200x630 preview image to it -->
-<meta property="og:image" content="https://YOUR-DOMAIN.com/og-image.png">
+<meta property="og:image" content="https://yt-policy-shield.vercel.app/og-image.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="YT Policy Shield: free YouTube monetization checker">
 
-<!-- Twitter / X card -->
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="YouTube Policy Shield – Free YouTube Monetization Checker">
 <meta name="twitter:description" content="Free reused content detector and AI voice detector for YouTube Shorts. Scan a video in your browser and see exactly why it could be rejected, and how to fix it.">
-<meta name="twitter:image" content="https://YOUR-DOMAIN.com/og-image.png">
+<meta name="twitter:image" content="https://yt-policy-shield.vercel.app/og-image.png">
 <meta name="twitter:image:alt" content="YT Policy Shield: free YouTube monetization checker">
 
-<!-- Structured data -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -41,20 +37,13 @@
     {
       "@type": "WebApplication",
       "name": "YT Policy Shield",
-      "alternateName": [
-        "YouTube Policy Shield",
-        "YouTube Monetization Checker"
-      ],
+      "alternateName": ["YouTube Policy Shield", "YouTube Monetization Checker"],
       "description": "Free YouTube monetization checker. Detects reused or downloaded content risk, robotic AI voice patterns, low video quality and Shorts format problems, entirely in your browser.",
       "applicationCategory": "MultimediaApplication",
       "operatingSystem": "Any (web browser)",
       "browserRequirements": "Requires JavaScript and a modern browser",
       "isAccessibleForFree": true,
-      "offers": {
-        "@type": "Offer",
-        "price": "0",
-        "priceCurrency": "USD"
-      },
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
       "keywords": "youtube monetization checker, reused content detector free, youtube policy shield, ai voice detector youtube shorts",
       "featureList": [
         "Reused content detector (downloaded clips, unedited stock footage)",
@@ -118,7 +107,8 @@ body::before{
 .glow-text{text-shadow:0 0 12px rgba(6,182,212,.75), 0 0 32px rgba(6,182,212,.4)}
 .neon-border{box-shadow:0 0 18px rgba(6,182,212,.35), inset 0 0 14px rgba(6,182,212,.12); border-color:rgba(6,182,212,.6)}
 .hud-pill{display:inline-flex; align-items:center; gap:.5rem; padding:.3rem .75rem; border:1px solid rgba(6,182,212,.35);
-  border-radius:999px; background:rgba(6,182,212,.07); color:#67e8f9; letter-spacing:.14em}
+  border-radius:999px; background:rgba(6,182,212,.07); color:#67e8f9; letter-spacing:.14em; text-decoration:none; cursor:pointer; transition:all .2s; font-size:11px;}
+a.hud-pill:hover{background:rgba(6,182,212,.18); border-color:rgba(34,211,238,.6)}
 .hud-pill .dot{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 10px var(--green);animation:blink 1.6s infinite}
 @keyframes blink{50%{opacity:.25}}
 .flicker{animation:flicker 5s infinite}
@@ -144,7 +134,6 @@ body::before{
 .dz.dragover{transform:scale(1.015); border-color:#67e8f9; background:rgba(6,182,212,.14); animation:none;
   box-shadow:0 0 70px rgba(6,182,212,.5), inset 0 0 50px rgba(6,182,212,.18)}
 .dz.dragover>.k{width:34px;height:34px}
-/* the pulsing glow is a pseudo-element that only changes opacity (GPU-composited), not an animated box-shadow */
 .dz::after{content:""; position:absolute; inset:-2px; border-radius:inherit; pointer-events:none; opacity:.25;
   box-shadow:0 0 46px rgba(6,182,212,.42), inset 0 0 36px rgba(6,182,212,.12); will-change:opacity; animation:pulseBox 3s ease-in-out infinite}
 .dz.dragover::after{animation:none; opacity:1}
@@ -163,14 +152,17 @@ body::before{
 @keyframes spin{to{transform:rotate(360deg)}}
 @keyframes floaty{50%{transform:translateY(-6px)}}
 
-.btn-neon{display:inline-flex;align-items:center;gap:.6rem;padding:.8rem 1.6rem;font-family:Orbitron,sans-serif;font-weight:700;
+.btn-neon{display:inline-flex;align-items:center;justify-content:center;gap:.6rem;padding:.8rem 1.6rem;font-family:Orbitron,sans-serif;font-weight:700;
   letter-spacing:.18em; font-size:.8rem; color:#031017; background:linear-gradient(90deg,#06b6d4,#22d3ee);
   border:0; border-radius:8px; cursor:pointer; box-shadow:0 0 24px rgba(6,182,212,.6); transition:transform .2s, box-shadow .2s}
 .btn-neon:hover{transform:translateY(-2px); box-shadow:0 0 40px rgba(34,211,238,.9)}
-.btn-ghost{display:inline-flex;align-items:center;gap:.6rem;padding:.8rem 1.4rem;font-family:Orbitron,sans-serif;font-weight:700;
+.btn-ghost{display:inline-flex;align-items:center;justify-content:center;gap:.6rem;padding:.8rem 1.4rem;font-family:Orbitron,sans-serif;font-weight:700;
   letter-spacing:.16em; font-size:.75rem; color:#67e8f9; background:rgba(6,182,212,.07);
   border:1px solid rgba(6,182,212,.5); border-radius:8px; cursor:pointer; transition:all .2s}
 .btn-ghost:hover{background:rgba(6,182,212,.18); box-shadow:0 0 22px rgba(6,182,212,.4)}
+.input{width:100%;padding:.85rem 1rem;background:rgba(3,7,18,.6);border:1px solid rgba(6,182,212,.35);border-radius:8px;color:#fff;font-family:'Share Tech Mono',monospace;font-size:.95rem;outline:none;transition:all .2s}
+.input:focus{border-color:#22d3ee;box-shadow:0 0 0 3px rgba(34,211,238,.15);background:rgba(3,7,18,.85)}
+.input::placeholder{color:#475569}
 
 /* ---------- Scanner ---------- */
 .viewport{position:relative; aspect-ratio:16/9; background:#020617; border-radius:10px; overflow:hidden; border:1px solid rgba(6,182,212,.4)}
@@ -211,6 +203,7 @@ body::before{
 #log div{white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
 .l-ok{color:#34d399}.l-warn{color:#fbbf24}.l-bad{color:#fb7185}.l-info{color:#67e8f9}
 
+#modList{list-style:none}
 #modList li{display:flex;align-items:center;gap:.7rem;padding:.45rem .2rem;color:#64748b;transition:color .3s;border-bottom:1px dashed rgba(6,182,212,.15)}
 #modList li.active{color:#67e8f9}
 #modList li.ok{color:#34d399}#modList li.warn{color:#fbbf24}#modList li.bad{color:#fb7185}#modList li.info{color:#67e8f9}
@@ -267,25 +260,75 @@ body::before{
 .tipline{display:flex;gap:.6rem;align-items:flex-start;margin-top:.9rem;font-size:.85rem;color:#94a3b8}
 .tipline i{color:#fbbf24;margin-top:.2rem}
 
-
 .toast{position:fixed; left:50%; bottom:28px; transform:translateX(-50%) translateY(30px); opacity:0; z-index:80; padding:.7rem 1.2rem;
-  border-radius:10px; border:1px solid var(--rose); background:rgba(30,6,14,.9); color:#fda4af; box-shadow:0 0 30px rgba(244,63,94,.4); transition:all .35s; max-width:92vw}
+  border-radius:10px; border:1px solid var(--rose); background:rgba(30,6,14,.9); color:#fda4af; box-shadow:0 0 30px rgba(244,63,94,.4); transition:all .35s; max-width:92vw; text-align:center;}
 .toast.show{opacity:1; transform:translateX(-50%) translateY(0)}
 .toast.good{border-color:#10f5a0;color:#6ee7b7;background:rgba(2,30,20,.9);box-shadow:0 0 30px rgba(16,245,160,.35)}
+
+/* Modals */
+.overlay{position:fixed; inset:0; background:rgba(3,7,18,.85); backdrop-filter:blur(4px); z-index:100; display:flex; align-items:center; justify-content:center; padding:1rem; opacity:0; pointer-events:none; transition:opacity .3s}
+.overlay.show{opacity:1; pointer-events:auto}
+.modal-box{width:100%; max-width:42rem; max-height:90vh; overflow-y:auto; position:relative; transform:translateY(20px); transition:transform .3s; padding:2rem;}
+.overlay.show .modal-box{transform:translateY(0)}
+.close-btn{position:absolute; top:1rem; right:1rem; background:none; border:none; color:#94a3b8; cursor:pointer; font-size:1.2rem; z-index:10;}
+.close-btn:hover{color:#fff}
+.terms-content h2{color:#22d3ee; font-family:'Orbitron',sans-serif; font-size:1.1rem; margin:1.5rem 0 .5rem}
+.terms-content p, .terms-content li{font-size:.85rem; color:#cbd5e1; margin-bottom:.75rem; line-height:1.6}
+.terms-content ul{margin-left:1.5rem}
+.auth-tabs{display:flex; gap:.5rem; margin-bottom:1.5rem; background:rgba(3,7,18,.5); padding:.35rem; border-radius:10px; border:1px solid rgba(6,182,212,.25)}
+.auth-tab{flex:1; padding:.65rem; text-align:center; font-family:'Orbitron',sans-serif; font-size:.7rem; letter-spacing:.15em; color:#64748b; cursor:pointer; border-radius:6px; transition:all .2s; border:0; background:transparent}
+.auth-tab.active{color:#031017; background:linear-gradient(90deg,#06b6d4,#22d3ee)}
+
 /* ---------- Performance layer ---------- */
-/* Real glass blur only on the hero panels, with a small radius. Cards use a solid tint instead. */
 .glass.cc{-webkit-backdrop-filter:blur(8px); backdrop-filter:blur(8px); background:rgba(8,16,32,.6)}
 .viewport,.radar,.bar-track{transform:translateZ(0); backface-visibility:hidden}
-/* While a scan runs the main thread is busy: switch off blur and decorative background motion */
 body.scanning .glass,body.scanning .glass.cc{-webkit-backdrop-filter:none; backdrop-filter:none; background:rgba(8,16,32,.84)}
 body.scanning .scanbeam{display:none}
 body.scanning .flicker{animation:none}
-@media (max-width:768px){
-  .glass.cc{-webkit-backdrop-filter:none; backdrop-filter:none; background:rgba(8,16,32,.82)}
-  .scanbeam{display:none}
+
+/* ---------- MOBILE OPTIMIZATIONS ---------- */
+@media (max-width: 768px) {
+  /* Adjust header and padding */
+  header.wrap { flex-direction: column; text-align: center; gap: 1rem; }
+  .hud-pill { padding: .4rem .8rem; font-size: 10px; }
+  
+  /* Dropzone padding and reticle size */
+  .dz { padding: 2rem 1rem; }
+  .reticle { width: 120px; height: 120px; }
+  .reticle .ic { font-size: 2rem; }
+  
+  /* Force single column layout for features */
+  .grid { grid-template-columns: 1fr !important; }
+  
+  /* Scanner viewport adjustments */
+  .viewport { border-radius: 8px; }
+  .radar { width: 140px; height: 140px; }
+  
+  /* Result cards */
+  .spec { padding: 1rem; }
+  .check { padding: 1rem; }
+  .check .ico { width: 32px; height: 32px; font-size: 1rem; }
+  
+  /* Modals */
+  .modal-box { padding: 1.5rem 1.25rem; max-height: 85vh; }
+  .terms-content h2 { font-size: 1rem; }
+  .terms-content p, .terms-content li { font-size: .8rem; }
+  .auth-tab { font-size: .65rem; padding: .5rem; }
+  
+  /* Buttons */
+  .btn-neon, .btn-ghost { width: 100%; }
+  
+  /* Hide heavy blur on mobile for performance */
+  .glass.cc { -webkit-backdrop-filter: none; backdrop-filter: none; background: rgba(8,16,32,.85); }
+  .scanbeam { display: none; }
+  
+  /* Adjust text sizes */
+  .text-5xl { font-size: 2.2rem; }
+  .text-3xl { font-size: 1.5rem; }
+  .text-2xl { font-size: 1.25rem; }
 }
+
 ::-webkit-scrollbar{width:8px}::-webkit-scrollbar-thumb{background:rgba(6,182,212,.4);border-radius:8px}
-@media (max-width:640px){ .dz{padding:2.2rem 1rem} .radar{width:150px;height:150px} }
 @media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
 </style>
 </head>
@@ -306,10 +349,13 @@ body.scanning .flicker{animation:none}
         <p class="text-[11px] tracking-[.3em] text-cyan-300/70">MONETIZATION DIAGNOSTIC CORE // v2.0</p>
       </div>
     </div>
-    <div class="flex flex-wrap gap-2 text-[11px]">
-      <span class="hud-pill"><span class="dot"></span>SCANNER ONLINE</span>
-      <span class="hud-pill"><i class="fa-solid fa-lock"></i>LOCAL PROCESSING</span>
-      <span class="hud-pill"><i class="fa-regular fa-clock"></i><span id="clock">--:--:--</span></span>
+    <div class="flex flex-wrap justify-center gap-2 text-[11px] items-center">
+      <span class="hud-pill"><span class="dot"></span>ONLINE</span>
+      <span class="hud-pill"><i class="fa-solid fa-lock"></i>LOCAL</span>
+      <a href="#" id="accountBtn" class="hud-pill" onclick="openAuthModal(event)">
+        <i class="fa-solid fa-user"></i>
+        <span id="accountLabel">SIGN IN</span>
+      </a>
     </div>
   </header>
 
@@ -322,9 +368,9 @@ body.scanning .flicker{animation:none}
         <h1 class="font-orb font-bold text-3xl sm:text-5xl text-white leading-tight">
           Will YouTube <span class="text-cyan-400 glow-text">monetize</span> your video?
         </h1>
-        <p class="mt-4 max-w-2xl mx-auto text-slate-400">
+        <p class="mt-4 max-w-2xl mx-auto text-slate-400 text-sm sm:text-base">
           Drop a video file. The scanner runs resolution, format, reused-content and AI-voice diagnostics
-          directly in your browser &mdash; no questions asked, nothing uploaded.
+          directly in your browser.
         </p>
       </div>
 
@@ -336,7 +382,7 @@ body.scanning .flicker{animation:none}
           <div class="ic"><i class="fa-solid fa-cloud-arrow-up"></i></div>
         </div>
         <p class="font-orb text-lg sm:text-xl tracking-[.15em] text-white">DROP VIDEO INTO TARGET ZONE</p>
-        <p class="text-slate-400 mt-2 mb-6">or engage the file picker to begin the automatic scan</p>
+        <p class="text-slate-400 mt-2 mb-6 text-sm">or click to open the file picker</p>
         <button type="button" class="btn-neon" id="pickBtn"><i class="fa-solid fa-crosshairs"></i> SELECT VIDEO FILE</button>
         <p class="mt-6 text-xs tracking-[.25em] text-cyan-300/70">ACCEPTED: MP4 &nbsp;//&nbsp; MOV &nbsp;//&nbsp; WEBM</p>
       </div>
@@ -355,9 +401,9 @@ body.scanning .flicker{animation:none}
       <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
         <div>
           <p class="text-cyan-400 tracking-[.4em] text-xs">// SCAN IN PROGRESS</p>
-          <h2 class="font-orb font-bold text-2xl text-white tracking-widest">HOLOGRAPHIC DIAGNOSTIC SWEEP</h2>
+          <h2 class="font-orb font-bold text-xl sm:text-2xl text-white tracking-widest">DIAGNOSTIC SWEEP</h2>
         </div>
-        <button id="abortBtn" class="btn-ghost"><i class="fa-solid fa-xmark"></i> ABORT SCAN</button>
+        <button id="abortBtn" class="btn-ghost"><i class="fa-solid fa-xmark"></i> ABORT</button>
       </div>
 
       <div class="grid lg:grid-cols-5 gap-5">
@@ -418,9 +464,88 @@ body.scanning .flicker{animation:none}
   </main>
 
   <footer class="max-w-6xl mx-auto px-4 pb-10 text-center text-[11px] leading-relaxed text-slate-500">
-    <p>YT Policy Shield runs a heuristic estimate modeled on YouTube Partner Program guidance (reused / inauthentic content, quality, Shorts format).</p>
-    <p>It is not affiliated with YouTube or Google and cannot predict their final decision. For official results, also check the <span class="text-cyan-400/80">Checks</span> step in YouTube Studio before publishing.</p>
+    <div class="flex justify-center gap-6 mb-4 flex-wrap">
+      <a href="#" onclick="openTermsModal(event)" style="color:#67e8f9; text-decoration:none; letter-spacing:.1em;">TERMS & CONDITIONS</a>
+      <a href="#" onclick="openAuthModal(event)" style="color:#67e8f9; text-decoration:none; letter-spacing:.1em;">ACCOUNT</a>
+    </div>
+    <p class="text-xs">YT Policy Shield runs a heuristic estimate modeled on YouTube Partner Program guidance.</p>
+    <p class="text-xs">It is not affiliated with YouTube or Google and cannot predict their final decision.</p>
+    <p class="mt-3 text-xs">© 2025 YT Policy Shield. All rights reserved.</p>
   </footer>
+</div>
+
+<!-- ================= MODALS ================= -->
+
+<div id="termsModal" class="overlay">
+  <div class="modal-box glass cc">
+    <span class="k tl"></span><span class="k tr"></span><span class="k bl"></span><span class="k br"></span>
+    <button class="close-btn" onclick="closeTermsModal()">✕</button>
+    <div class="terms-content">
+      <p class="text-cyan-400 text-xs mb-1" style="letter-spacing:.2em">// LEGAL DOCUMENT</p>
+      <h1 class="font-orb text-2xl text-white mb-4">Terms & Conditions</h1>
+      <p>By using YT Policy Shield, you agree to these terms. If you do not agree, please do not use the service.</p>
+      <h2>1. Description of Service</h2>
+      <p>YT Policy Shield is a free, browser-based diagnostic tool. Your video files are never uploaded to our servers. All scanning happens locally on your device.</p>
+      <h2>2. Not Affiliated with YouTube</h2>
+      <p>We are not affiliated with, endorsed by, or sponsored by YouTube or Google LLC. Our tool provides a heuristic estimate and cannot predict YouTube's final decision.</p>
+      <h2>3. User Accounts (Optional)</h2>
+      <p>Accounts are stored locally using your browser's storage (localStorage). Your password is hashed locally and never sent anywhere. We cannot recover lost accounts because we never had access to them.</p>
+      <h2>4. Limitation of Liability</h2>
+      <p>The Service is provided "AS IS". We are not liable for any indirect, incidental, or consequential damages, including loss of revenue or business interruption.</p>
+      <div class="glass p-4 mt-6" style="border-left:3px solid #22d3ee">
+        <p class="text-sm text-slate-300 mb-0"><strong>Summary:</strong> Free tool. Local processing. Estimates only. Not YouTube. Use responsibly.</p>
+      </div>
+      <div class="center mt-6">
+        <button class="btn-neon" onclick="closeTermsModal()">I UNDERSTAND</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="authModal" class="overlay">
+  <div class="modal-box glass cc" style="max-width:26rem">
+    <span class="k tl"></span><span class="k tr"></span><span class="k bl"></span><span class="k br"></span>
+    <button class="close-btn" onclick="closeAuthModal()">✕</button>
+    
+    <div class="auth-tabs">
+      <button class="auth-tab active" id="tabLogin" onclick="switchAuthTab('login')">SIGN IN</button>
+      <button class="auth-tab" id="tabSignup" onclick="switchAuthTab('signup')">CREATE ACCOUNT</button>
+    </div>
+
+    <div id="authMsg" class="hidden mb-4" style="padding:.75rem; border-radius:8px; font-size:.85rem"></div>
+
+    <form id="loginForm" onsubmit="handleLogin(event)">
+      <div class="mb-4">
+        <label class="block text-cyan-300 text-xs mb-2">EMAIL OR USERNAME</label>
+        <input type="text" id="loginEmail" class="input" placeholder="you@example.com" required>
+      </div>
+      <div class="mb-4">
+        <label class="block text-cyan-300 text-xs mb-2">PASSWORD</label>
+        <input type="password" id="loginPassword" class="input" placeholder="••••••••" required>
+      </div>
+      <button type="submit" class="btn-neon w-full">SIGN IN</button>
+    </form>
+
+    <form id="signupForm" class="hidden" onsubmit="handleSignup(event)">
+      <div class="mb-4">
+        <label class="block text-cyan-300 text-xs mb-2">DISPLAY NAME</label>
+        <input type="text" id="signupName" class="input" placeholder="Your name" required>
+      </div>
+      <div class="mb-4">
+        <label class="block text-cyan-300 text-xs mb-2">EMAIL</label>
+        <input type="email" id="signupEmail" class="input" placeholder="you@example.com" required>
+      </div>
+      <div class="mb-4">
+        <label class="block text-cyan-300 text-xs mb-2">PASSWORD</label>
+        <input type="password" id="signupPassword" class="input" placeholder="At least 6 characters" minlength="6" required>
+      </div>
+      <label class="flex items-start gap-2 text-xs text-slate-400 mb-4 cursor-pointer">
+        <input type="checkbox" id="signupTerms" style="margin-top:.2rem" required>
+        <span>I agree to the <a href="#" onclick="closeAuthModal();openTermsModal(event)" style="color:#22d3ee">Terms & Conditions</a>.</span>
+      </label>
+      <button type="submit" class="btn-neon w-full">CREATE ACCOUNT</button>
+    </form>
+  </div>
 </div>
 
 <div id="toast" class="toast" role="status"></div>
@@ -429,26 +554,112 @@ body.scanning .flicker{animation:none}
 (() => {
 'use strict';
 
-/* Canonical + og:url follow the address the page is actually served from (skipped for local files). */
-try {
-  if (/^https?:$/.test(location.protocol)) {
-    const url = location.origin + location.pathname;
-    let c = document.querySelector('link[rel="canonical"]');
-    if (!c) { c = document.createElement('link'); c.rel = 'canonical'; document.head.appendChild(c); }
-    c.href = url;
-    let og = document.querySelector('meta[property="og:url"]');
-    if (!og) { og = document.createElement('meta'); og.setAttribute('property', 'og:url'); document.head.appendChild(og); }
-    og.content = url;
+/* ============================================================
+   AUTH & MODAL LOGIC
+============================================================ */
+const STORE_KEY = 'ytps_users';
+const SESSION_KEY = 'ytps_session';
+
+function hash(str) {
+  let h1 = 0xdeadbeef, h2 = 0x41c6ce57;
+  for (let i = 0; i < str.length; i++) {
+    const ch = str.charCodeAt(i);
+    h1 = Math.imul(h1 ^ ch, 2654435761); h2 = Math.imul(h2 ^ ch, 1597334677);
   }
-} catch (_) {}
+  h1 = Math.imul(h1 ^ (h1 >>> 16), 2246822507) ^ Math.imul(h2 ^ (h2 >>> 13), 3266489909);
+  h2 = Math.imul(h2 ^ (h2 >>> 16), 2246822507) ^ Math.imul(h1 ^ (h1 >>> 13), 3266489909);
+  return (h2 >>> 0).toString(16).padStart(8, '0') + (h1 >>> 0).toString(16).padStart(8, '0');
+}
+function loadUsers() { try { return JSON.parse(localStorage.getItem(STORE_KEY) || '{}'); } catch (_) { return {}; } }
+function saveUsers(u) { localStorage.setItem(STORE_KEY, JSON.stringify(u)); }
+function getSession() { try { return JSON.parse(localStorage.getItem(SESSION_KEY) || 'null'); } catch (_) { return null; } }
+
+function updateAccountUI() {
+  const label = document.getElementById('accountLabel');
+  const btn = document.getElementById('accountBtn');
+  if(!label || !btn) return;
+  
+  const sess = getSession();
+  if (sess) {
+    const users = loadUsers();
+    if (users[sess.email]) {
+      label.textContent = (users[sess.email].name || 'MY ACCOUNT').toUpperCase();
+      btn.onclick = (e) => {
+        e.preventDefault();
+        if(confirm('Signed in as ' + users[sess.email].name + '. Sign out?')) {
+          localStorage.removeItem(SESSION_KEY); location.reload();
+        }
+      };
+      return;
+    }
+  }
+  label.textContent = 'SIGN IN';
+  btn.onclick = openAuthModal;
+}
+
+window.openAuthModal = function(e) { if(e) e.preventDefault(); document.getElementById('authModal').classList.add('show'); }
+window.closeAuthModal = function() { document.getElementById('authModal').classList.remove('show'); document.getElementById('authMsg').className = 'hidden'; }
+window.openTermsModal = function(e) { if(e) e.preventDefault(); document.getElementById('termsModal').classList.add('show'); }
+window.closeTermsModal = function() { document.getElementById('termsModal').classList.remove('show'); }
+
+window.switchAuthTab = function(tab) {
+  document.getElementById('tabLogin').classList.toggle('active', tab === 'login');
+  document.getElementById('tabSignup').classList.toggle('active', tab === 'signup');
+  document.getElementById('loginForm').classList.toggle('hidden', tab !== 'login');
+  document.getElementById('signupForm').classList.toggle('hidden', tab !== 'signup');
+  document.getElementById('authMsg').className = 'hidden';
+}
+
+function showAuthMsg(msg, type) {
+  const el = document.getElementById('authMsg');
+  el.textContent = msg; el.className = 'mb-4';
+  el.style.cssText = type === 'error' 
+    ? 'padding:.75rem;border-radius:8px;font-size:.85rem;background:rgba(244,63,94,.1);border:1px solid rgba(244,63,94,.5);color:#fda4af'
+    : 'padding:.75rem;border-radius:8px;font-size:.85rem;background:rgba(16,245,160,.1);border:1px solid rgba(16,245,160,.5);color:#6ee7b7';
+}
+
+window.handleLogin = function(e) {
+  e.preventDefault();
+  const id = document.getElementById('loginEmail').value.trim().toLowerCase();
+  const pw = document.getElementById('loginPassword').value;
+  const users = loadUsers();
+  let key = Object.keys(users).find(k => k === id || (users[k].name||'').toLowerCase() === id);
+  if (!key) return showAuthMsg('No account found.', 'error');
+  if (users[key].pw !== hash(pw)) return showAuthMsg('Incorrect password.', 'error');
+  
+  localStorage.setItem(SESSION_KEY, JSON.stringify({ email: key }));
+  showAuthMsg('Welcome back!', 'success');
+  setTimeout(() => { closeAuthModal(); updateAccountUI(); }, 1000);
+}
+
+window.handleSignup = function(e) {
+  e.preventDefault();
+  const name = document.getElementById('signupName').value.trim();
+  const email = document.getElementById('signupEmail').value.trim().toLowerCase();
+  const pw = document.getElementById('signupPassword').value;
+  const agreed = document.getElementById('signupTerms').checked;
+  if (!agreed) return showAuthMsg('You must agree to the Terms.', 'error');
+  
+  const users = loadUsers();
+  if (users[email]) return showAuthMsg('Account already exists.', 'error');
+  
+  users[email] = { name, pw: hash(pw), created: Date.now() };
+  saveUsers(users);
+  localStorage.setItem(SESSION_KEY, JSON.stringify({ email }));
+  
+  showAuthMsg('Account created!', 'success');
+  setTimeout(() => { closeAuthModal(); updateAccountUI(); }, 1000);
+}
+
+document.addEventListener('DOMContentLoaded', updateAccountUI);
+
 
 /* ============================================================
-   Helpers
+   Helpers & Scanner Engine
 ============================================================ */
 const $  = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => [...r.querySelectorAll(s)];
 const sleep = ms => new Promise(r => setTimeout(r, ms));
-/* Cooperative yielding: long loops hand control back to the browser every ~12 ms so the UI keeps painting. */
 const yieldUI = () => new Promise(r => setTimeout(r, 0));
 let sliceStart = 0;
 const sliceReset = () => { sliceStart = performance.now(); };
@@ -476,9 +687,6 @@ function toast(msg, good) {
   clearTimeout(toastTimer); toastTimer = setTimeout(() => t.classList.remove('show'), 3800);
 }
 
-/* ============================================================
-   View switching, clock
-============================================================ */
 const VIEWS = ['upload', 'scan', 'result', 'error'];
 function show(v) {
   VIEWS.forEach(x => $('#view-' + x).classList.toggle('hidden', x !== v));
@@ -486,9 +694,6 @@ function show(v) {
 }
 setInterval(() => { $('#clock').textContent = new Date().toLocaleTimeString([], { hour12: false }); }, 1000);
 
-/* ============================================================
-   Upload handling
-============================================================ */
 const dz = $('#dropzone'), input = $('#fileInput');
 ['dragenter', 'dragover'].forEach(ev => dz.addEventListener(ev, e => { e.preventDefault(); dz.classList.add('dragover'); }));
 ['dragleave', 'drop'].forEach(ev => dz.addEventListener(ev, e => { e.preventDefault(); dz.classList.remove('dragover'); }));
@@ -509,9 +714,6 @@ function handleFile(file) {
   startScan(file);
 }
 
-/* ============================================================
-   Scanner UI controls
-============================================================ */
 const MOD_ICON = {
   pending: '<i class="fa-regular fa-circle"></i>',
   active:  '<i class="fa-solid fa-circle-notch fa-spin"></i>',
@@ -574,14 +776,10 @@ function drawPlaceholder(l1, l2) {
   pvx.fillStyle = '#94a3b8'; pvx.font = '14px "Share Tech Mono", monospace'; pvx.fillText(l2, cw / 2, ch / 2 + 24);
 }
 
-/* ============================================================
-   Scan orchestration
-============================================================ */
 let scanToken = 0;
 let currentURL = null;
 let activeVideo = null;
 
-/* Frees the hidden <video> and revokes its blob URL immediately, so the browser can drop its handle on the file. */
 function releaseMedia() {
   if (activeVideo) {
     try { activeVideo.pause(); activeVideo.removeAttribute('src'); activeVideo.load(); } catch (_) {}
@@ -628,7 +826,6 @@ async function runDiagnostics(file, token) {
   log('Scanner core online. Target locked: ' + file.name, 'info');
   await sleep(250); chk();
 
-  /* ---- 1. Metadata (with decoder-free fallback) ---- */
   setProgress(8, 'Reading Container Metadata...');
   setMod('res', 'active');
   const loaded = await loadVideo(file);
@@ -637,7 +834,6 @@ async function runDiagnostics(file, token) {
   let w = video ? video.videoWidth : 0, h = video ? video.videoHeight : 0, dur = video ? video.duration : 0;
   let limited = !video, estimated = false, durSource = 'video metadata';
   setProgress(12, 'Reading video details...');
-  /* Reads only the small header index of the file (never the video data). It also tells us where the audio lives. */
   const info = await parseContainer(file); chk();
   if (limited) {
     log('Using a lightweight scan for this file...', 'info');
@@ -655,14 +851,12 @@ async function runDiagnostics(file, token) {
   else log(`Metadata: ${w}x${h}, ${fmtTime(dur)}, ${fmtSize(file.size)}`, 'ok');
   await sleep(200); chk();
 
-  /* ---- 2. Resolution ---- */
   setProgress(16, 'Checking Resolution & Quality Thresholds...');
   R.resCheck = checkResolution(R.meta);
   setMod('res', R.resCheck.status);
   log(`Resolution: ${R.resCheck.headline}`, R.resCheck.status === 'bad' ? 'bad' : R.resCheck.status === 'info' ? 'warn' : 'ok');
   await sleep(250); chk();
 
-  /* ---- 3. Format ---- */
   setProgress(22, 'Verifying Format & Aspect Ratio...');
   setMod('fmt', 'active');
   R.fmtCheck = checkFormat(R.meta);
@@ -670,7 +864,6 @@ async function runDiagnostics(file, token) {
   setMod('fmt', R.fmtCheck.status);
   log(`Format: ${R.fmtCheck.headline}`, (R.fmtCheck.status === 'warn' || R.fmtCheck.status === 'info') ? 'warn' : 'ok');
 
-  /* ---- 4. Visual / reused content ---- */
   setProgress(28, 'Checking Reused Content Rules...');
   setMod('reuse', 'active');
   const noVisual = { skipped: true, limited: true, K: 0, gap: 0, hits: 0, cutsPerMin: 0, staticRatio: 0, variety: 0, meanBright: 0 };
@@ -683,7 +876,6 @@ async function runDiagnostics(file, token) {
       R.visual = noVisual;
       log('Picture analysis skipped for this file.', 'info');
     } finally {
-      /* Frames are done: free the video element and revoke its object URL right now, not at the end. */
       if (token === scanToken) releaseMedia();
       video = null;
     }
@@ -698,7 +890,6 @@ async function runDiagnostics(file, token) {
   if (!R.visual.skipped) log('Editing pace measured.', 'ok');
   else if (!R.visual.limited) log('Clip too short to measure editing pace.', 'info');
 
-  /* ---- 5. Audio ---- */
   setProgress(60, 'Scanning Audio Frequencies...');
   setMod('voice', 'active');
   log('Listening to the audio...', 'info');
@@ -707,7 +898,7 @@ async function runDiagnostics(file, token) {
   });
   chk();
   logAudio(R.audio);
-  if (limited && estimated && R.audio.audioDuration > 0) {   // real duration from the audio track beats a size-based guess
+  if (limited && estimated && R.audio.audioDuration > 0) {
     R.meta.dur = R.audio.audioDuration; R.meta.estimated = false; R.meta.durSource = 'audio track';
     R.fmtCheck = checkFormat(R.meta);
     setMod('fmt', R.fmtCheck.status);
@@ -715,7 +906,6 @@ async function runDiagnostics(file, token) {
     log(`Video length confirmed: ${fmtTime(R.meta.dur)}`, 'ok');
   }
 
-  /* ---- 6. Compile ---- */
   setProgress(94, 'Compiling Diagnostic Matrix...');
   R.voiceCheck = checkVoice(R.audio);
   R.reuseCheck = checkReuse(R.meta, R.visual, R.audio);
@@ -726,7 +916,7 @@ async function runDiagnostics(file, token) {
   log('Report ready.', 'ok');
   await sleep(300); chk();
 
-  if (token === scanToken) releaseMedia();     // safety net: nothing is left alive after a scan
+  if (token === scanToken) releaseMedia();
   return R;
 }
 
@@ -737,18 +927,13 @@ function logAudio(a) {
   else log('Audio could not be read for this file.', 'info');
 }
 
-/* ============================================================
-   Video loading & frame sampling
-============================================================ */
-/* Resolves { ok:true, video } on success, or { ok:false, reason } when the browser
-   cannot decode the file. It never rejects, so callers can fall back gracefully. */
 function loadVideo(file) {
   return new Promise(resolve => {
-    releaseMedia();                                    // never keep two videos / URLs alive
-    const url = URL.createObjectURL(file);             // a handle to the file on disk, not a copy in memory
+    releaseMedia();
+    const url = URL.createObjectURL(file);
     currentURL = url;
     const v = document.createElement('video');
-    v.muted = true; v.playsInline = true; v.preload = 'metadata';   // metadata only: never buffer the whole file
+    v.muted = true; v.playsInline = true; v.preload = 'metadata';
     v.style.cssText = 'position:fixed;left:-9999px;top:0;width:2px;height:2px;opacity:0;pointer-events:none';
     document.body.appendChild(v);
     activeVideo = v;
@@ -763,11 +948,11 @@ function loadVideo(file) {
     v.onerror = () => finish(false, 'decode-error');
     v.onloadedmetadata = async () => {
       try {
-        if (!isFinite(v.duration)) {            // some WEBM files report Infinity
+        if (!isFinite(v.duration)) {
           await new Promise(res => { const t = setTimeout(res, 3500); v.ontimeupdate = () => { clearTimeout(t); v.ontimeupdate = null; res(); }; v.currentTime = 1e7; });
           v.currentTime = 0;
         }
-        if (v.readyState < 2) await seek(v, Math.min(0.05, v.duration / 2));   // decode a single frame, nothing more
+        if (v.readyState < 2) await seek(v, Math.min(0.05, v.duration / 2));
       } catch (_) {}
       if (!isFinite(v.duration) || v.duration <= 0 || !v.videoWidth || !v.videoHeight) return finish(false, 'no-video-stream');
       finish(true);
@@ -787,9 +972,6 @@ function seek(v, t) {
   });
 }
 
-/* ---------- Container fallback ---------- */
-/* Reads basic properties (frame size, duration, codec) straight from the file
-   headers, so a file the browser cannot decode can still be scanned. */
 async function readBytes(file, start, len) {
   return new DataView(await file.slice(start, start + len).arrayBuffer());
 }
@@ -808,26 +990,24 @@ function friendlyCodec(c) {
 
 const ASC_RATES = [96000, 88200, 64000, 48000, 44100, 32000, 24000, 22050, 16000, 12000, 11025, 8000, 7350];
 
-/* AudioSpecificConfig -> what an ADTS header needs */
 function parseASC(b) {
   let pos = 0;
   const bits = n => { let v = 0; for (let i = 0; i < n; i++) { const byte = b[pos >> 3] || 0; v = (v * 2) + ((byte >> (7 - (pos & 7))) & 1); pos++; } return v; };
   let aot = bits(5); if (aot === 31) aot = 32 + bits(6);
   let fi = bits(4); if (fi === 15) fi = ASC_RATES.indexOf(bits(24));
   const chan = bits(4);
-  if (aot === 5 || aot === 29) {                      // explicit SBR/PS signalling: the real core type follows
+  if (aot === 5 || aot === 29) {
     let efi = bits(4); if (efi === 15) bits(24);
     aot = bits(5); if (aot === 31) aot = 32 + bits(6);
   }
   return { aot, freqIdx: fi, chan };
 }
 
-/* Finds the 'esds' box inside an audio sample entry and returns { oti, asc } */
 function parseEsds(dv, start, end) {
   let i = start;
   for (; i + 4 <= end; i++) if (fourcc(dv, i) === 'esds') break;
   if (i + 4 > end) return null;
-  let o = i + 8;                                       // skip 'esds' + version/flags
+  let o = i + 8;
   const readLen = () => { let len = 0, n = 0, b; do { b = dv.getUint8(o++); len = (len << 7) | (b & 0x7F); n++; } while ((b & 0x80) && n < 4); return len; };
   let oti = 0, asc = null;
   while (o < end - 2) {
@@ -840,7 +1020,6 @@ function parseEsds(dv, start, end) {
   return { oti, asc };
 }
 
-/* Reads one audio sample-table box (they can be large: one entry per audio frame) */
 function readAudioTable(dv, t, p, ctx) {
   const n = dv.getUint32(p + 4);
   if (t === 'stts') {
@@ -861,8 +1040,6 @@ function readAudioTable(dv, t, p, ctx) {
   }
 }
 
-/* Turns the raw audio track tables into a "plan" that says where every audio frame sits in the file.
-   Returns { unsupported:true } when we cannot index it (fragmented MP4, unusual codecs). */
 function buildAudioPlan(t) {
   const count = t.aCount || 0;
   if (!count || !t.chunkOffsets || !t.chunkOffsets.length || !t.stsc || !t.stsc.length || !t.mdTs || !t.sttsTicks || !t.sttsSamples) return { unsupported: true };
@@ -882,7 +1059,6 @@ function buildAudioPlan(t) {
   };
 }
 
-/* Collects readable text (tool names, titles, comments) from a metadata box. */
 function scanText(dv, a, b, out) {
   let s = '';
   const flush = () => { if (s.length >= 5 && out.length < 120) out.push(s.length > 240 ? s.slice(0, 240) : s); s = ''; };
@@ -893,11 +1069,10 @@ function scanText(dv, a, b, out) {
   flush();
 }
 
-/* The "handler name" of a track, e.g. "VideoHandler" or "ISO Media file produced by Google Inc." */
 function hdlrName(dv, p, pe) {
   let a = p + 24;
   if (a >= pe) return '';
-  if (fourcc(dv, p + 4) === 'mhlr') a += 1;              // QuickTime stores a length byte first
+  if (fourcc(dv, p + 4) === 'mhlr') a += 1;
   let s = '';
   for (let i = a; i < pe && i < a + 120; i++) { const c = dv.getUint8(i); if (c === 0) break; if (c >= 32 && c < 127) s += String.fromCharCode(c); }
   return s.trim();
@@ -918,13 +1093,13 @@ function parseMoov(dv) {
         else { timescale = dv.getUint32(p + 12); duration = dv.getUint32(p + 16); }
       } else if (t === 'trak') { const tr = {}; tracks.push(tr); walk(p, pe, tr); }
       else if (t === 'tkhd' && ctx) {
-        const m = p + 4 + (dv.getUint8(p) === 1 ? 32 : 20) + 16;      // start of the transform matrix
+        const m = p + 4 + (dv.getUint8(p) === 1 ? 32 : 20) + 16;
         const a = dv.getInt32(m) / 65536, b = dv.getInt32(m + 4) / 65536;
         ctx.w = dv.getUint32(m + 36) / 65536; ctx.h = dv.getUint32(m + 40) / 65536;
-        ctx.rotated = Math.abs(a) < 0.001 && Math.abs(b) > 0.5;        // 90/270 degree rotation (phone footage)
+        ctx.rotated = Math.abs(a) < 0.001 && Math.abs(b) > 0.5;
       } else if (t === 'mdhd' && ctx) ctx.mdTs = dv.getUint8(p) === 1 ? dv.getUint32(p + 20) : dv.getUint32(p + 12);
       else if (t === 'hdlr' && ctx) {
-        if (fourcc(dv, p + 4) !== 'dhlr') {                            // QuickTime has a 2nd 'dhlr' (data handler) box inside minf; ignore it
+        if (fourcc(dv, p + 4) !== 'dhlr') {
           if (!ctx.kind) ctx.kind = fourcc(dv, p + 8);
           const nm = hdlrName(dv, p, pe); if (nm && !ctx.hname) ctx.hname = nm;
         }
@@ -934,20 +1109,20 @@ function parseMoov(dv) {
         if (ctx.kind === 'soun') {
           ctx.aFmt = ctx.codec;
           try { ctx.esds = parseEsds(dv, p + 16, Math.min(pe, p + 8 + dv.getUint32(p + 8))); } catch (_) {}
-        } else if (ctx.kind === 'vide') {                              // the encoder's own name for itself, e.g. "Lavc59 libx264"
+        } else if (ctx.kind === 'vide') {
           try {
             const q = p + 58;
             if (q + 32 <= pe) { const L = Math.min(dv.getUint8(q), 31); let s = ''; for (let i = 0; i < L; i++) { const c = dv.getUint8(q + 1 + i); if (c >= 32 && c < 127) s += String.fromCharCode(c); } ctx.compressor = s.trim(); }
           } catch (_) {}
         }
       }
-      else if (ctx && ctx.kind === 'vide' && t === 'stts') {           // frame count and duration -> frames per second
+      else if (ctx && ctx.kind === 'vide' && t === 'stts') {
         const n = dv.getUint32(p + 4); let fr = 0, tk = 0;
         for (let i = 0; i < n && i < 200000; i++) { const c = dv.getUint32(p + 8 + i * 8), d = dv.getUint32(p + 12 + i * 8); fr += c; tk += c * d; }
         ctx.vFrames = fr; ctx.vTicks = tk;
       }
       else if (ctx && ctx.kind === 'soun' && (t === 'stts' || t === 'stsz' || t === 'stsc' || t === 'stco' || t === 'co64')) readAudioTable(dv, t, p, ctx);
-      else if (t === 'udta' || t === 'meta') scanText(dv, p, pe, texts);   // tool names, titles, comments, camera info
+      else if (t === 'udta' || t === 'meta') scanText(dv, p, pe, texts);
       else if (CONT.has(t)) walk(p, pe, ctx);
       o += sz;
     }
@@ -958,7 +1133,7 @@ function parseMoov(dv) {
   let w = vt && vt.w ? Math.round(vt.w) : 0, h = vt && vt.h ? Math.round(vt.h) : 0;
   if (vt && vt.rotated) [w, h] = [h, w];
   const audioTracks = tracks.filter(t => t.kind === 'soun').slice(0, 4).map(t => { try { return buildAudioPlan(t); } catch (_) { return { unsupported: true }; } });
-  const audio = audioTracks.length ? audioTracks[0] : null;      // null = this file has no audio track at all
+  const audio = audioTracks.length ? audioTracks[0] : null;
   const fps = vt && vt.vTicks && vt.mdTs ? vt.vFrames * vt.mdTs / vt.vTicks : 0;
   return {
     container: 'mp4/mov', w, h, dur: timescale ? duration / timescale : 0, codec: vt ? vt.codec : '', audio, audioTracks,
@@ -975,11 +1150,11 @@ async function parseMP4(file) {
     if (bsize === 1) { if (hd.byteLength < 16) break; bsize = Number(hd.getBigUint64(8)); hl = 16; }
     else if (bsize === 0) bsize = file.size - off;
     if (bsize < hl) break;
-    if (type === 'ftyp' && bsize >= 16 && bsize <= 512) {            // file "brand": streaming-format copies are labelled "dash"
+    if (type === 'ftyp' && bsize >= 16 && bsize <= 512) {
       const f = await readBytes(file, off + hl, bsize - hl);
       brand = { major: fourcc(f, 0), compat: [] };
       for (let i = 8; i + 4 <= f.byteLength; i += 4) brand.compat.push(fourcc(f, i));
-    } else if (type === 'uuid' && bsize > 40 && bsize <= 262144) {   // XMP packet written by editing apps
+    } else if (type === 'uuid' && bsize > 40 && bsize <= 262144) {
       const f = await readBytes(file, off + hl + 16, bsize - hl - 16);
       const xt = new TextDecoder('latin1').decode(new Uint8Array(f.buffer, f.byteOffset, f.byteLength));
       const m = xt.match(/CreatorTool(?:>|=")([^<"]{2,80})/); if (m) extra.push(m[1]);
@@ -1010,7 +1185,7 @@ async function parseWebM(file) {
       const ir = readId(o); if (!ir) return;
       const sr = readSize(o + ir.n); if (!sr) return;
       const ds = o + ir.n + sr.n, de = sr.size < 0 ? end : ds + sr.size, id = ir.id;
-      if (id === 0x1F43B675) return;                                   // first Cluster: metadata is behind us
+      if (id === 0x1F43B675) return;
       if (MASTER.has(id)) walk(ds, Math.min(de, end));
       else if (de <= len) {
         const n = de - ds;
@@ -1019,7 +1194,7 @@ async function parseWebM(file) {
         else if (id === 0xB0) w = uint(ds, n);
         else if (id === 0xBA) h = uint(ds, n);
         else if (id === 0x86) codecs.push(strAt(ds, n));
-        else if (id === 0x4D80 || id === 0x5741 || id === 0x7BA9) { const s = strAt(ds, n); if (s) texts.push(s); }   // muxer, writing app, title
+        else if (id === 0x4D80 || id === 0x5741 || id === 0x7BA9) { const s = strAt(ds, n); if (s) texts.push(s); }
       }
       o = de;
     }
@@ -1038,11 +1213,6 @@ async function parseContainer(file) {
   } catch (_) { return null; }
 }
 
-/* ---------- end container fallback ---------- */
-
-/* Samples K pairs of frames ~gap seconds apart at evenly spread positions.
-   The share of pairs that contain a hard cut estimates the edit pace without
-   needing to decode every frame. */
 async function analyzeVisual(v, dur, chk, onProg) {
   if (dur < 1.2) return { skipped: true, K: 0, gap: 0, hits: 0, cutsPerMin: 0, staticRatio: 0, variety: 0, meanBright: 0 };
   const K = clamp(Math.floor(dur / 3), 6, 14);
@@ -1070,7 +1240,7 @@ async function analyzeVisual(v, dur, chk, onProg) {
   const variety = [], bright = [], t0clock = performance.now();
   for (let i = 0; i < K; i++) {
     chk();
-    if (done >= 4 && performance.now() - t0clock > 9000) break;   // time budget: slow decoders (4K/HEVC) never stall the scan
+    if (done >= 4 && performance.now() - t0clock > 9000) break;
     let t0 = ((i + 0.5) / K) * dur - gap / 2;
     t0 = clamp(t0, 0, Math.max(0, dur - gap - 0.05));
     await seek(v, t0); await sleep(25);
@@ -1084,7 +1254,7 @@ async function analyzeVisual(v, dur, chk, onProg) {
     prevA = a; bright.push(a.mean);
     done++; onProg(done / K);
   }
-  c.width = c.height = 0;                              // release the scratch canvas
+  c.width = c.height = 0;
   const N = Math.max(1, done);
   return {
     K: N, gap, hits,
@@ -1095,16 +1265,8 @@ async function analyzeVisual(v, dur, chk, onProg) {
   };
 }
 
-/* ============================================================
-   Audio analysis (Web Audio API)
-   The video is never loaded into memory. For MP4/MOV the file's own sample
-   index tells us exactly where each audio frame is, so we fetch only the audio
-   frames of a few short windows (the whole track if it is short) and decode those
-   off-screen. Pitch, loudness and pause patterns are measured on that waveform
-   sample. Only small files in other layouts fall back to a whole-file decode.
-============================================================ */
 const AUDIO_FULL_READ_LIMIT = 80 * 1024 * 1024;
-const AUDIO_DECODE_RATE = 16000;                       // decode straight to a low rate: 3x less memory than 48 kHz
+const AUDIO_DECODE_RATE = 16000;
 
 function makeDecoder() {
   const OAC = window.OfflineAudioContext || window.webkitOfflineAudioContext;
@@ -1114,7 +1276,6 @@ function makeDecoder() {
   return buf => new Promise((res, rej) => { const p = ctx.decodeAudioData(buf, res, rej); if (p && p.catch) p.catch(rej); });
 }
 
-/* Mixes to mono and reduces to ~8 kHz. */
 function toMono8k(buf) {
   const sr = buf.sampleRate, c0 = buf.getChannelData(0), c1 = buf.numberOfChannels > 1 ? buf.getChannelData(1) : null;
   const factor = Math.max(1, Math.round(sr / 8000)), sr2 = sr / factor;
@@ -1128,7 +1289,6 @@ function toMono8k(buf) {
   return { ds, sr2 };
 }
 
-/* Evenly spread listening windows: the whole track when it is <= 90 s, otherwise 4 x 25 s. */
 function audioWindows(total) {
   if (total <= 90) return [[0, total]];
   const L = 25, n = 4;
@@ -1139,7 +1299,6 @@ function pickSegments(ds, sr2) {
   return audioWindows(total).map(([a, b]) => ({ ds: ds.subarray(Math.floor(a * sr2), Math.floor(b * sr2)), sr2 }));
 }
 
-/* byte offset of every audio frame, from the chunk tables */
 function audioOffsets(A) {
   if (A._off) return A._off;
   const off = new Float64Array(A.count);
@@ -1161,12 +1320,11 @@ function writeAdts(out, w, frameLen, A) {
   out[w + 6] = 0xFC;
 }
 
-/* Reads just the audio frames between t0 and t1 (seconds) and returns a small, standalone audio stream. */
 async function readAudioWindow(file, A, t0, t1, chk) {
   const off = audioOffsets(A);
   const i0 = clamp(Math.floor(t0 * A.rate), 0, A.count), i1 = clamp(Math.ceil(t1 * A.rate), 0, A.count);
   if (i1 <= i0) return null;
-  const runs = []; let rs = i0;                        // runs of frames that sit next to each other in the file
+  const runs = []; let rs = i0;
   for (let s = i0 + 1; s <= i1; s++) if (s === i1 || off[s] !== off[s - 1] + A.sizeOf(s - 1)) { runs.push([rs, s]); rs = s; }
   const parts = new Array(runs.length);
   for (let b = 0; b < runs.length; b += 24) {
@@ -1213,9 +1371,6 @@ async function analyzeAudio(file, info, chk, onProg) {
   const plans = info && info.audioTracks ? info.audioTracks : (info && info.audio ? [info.audio] : []);
   if (info && info.container === 'mp4/mov' && !plans.length) return { status: 'silent', audioDuration: 0, noTrack: true, peakDb: -120 };
 
-  /* Preferred path: fetch only the audio frames we need. If the file has several audio tracks
-     (for example music on one and a voice-over on another) every readable track is checked
-     and the one with the most speech wins. */
   const usable = plans.filter(p => p && !p.unsupported).slice(0, 3);
   const results = [];
   for (let i = 0; i < usable.length; i++) {
@@ -1230,7 +1385,6 @@ async function analyzeAudio(file, info, chk, onProg) {
     return Object.assign(results[0], { tracks: plans.length });
   }
 
-  /* Last resort, small files only: let the browser decode the whole track. */
   if (file.size > AUDIO_FULL_READ_LIMIT) return { status: 'skipped', note: 'Audio in this file can only be read by loading the whole file, which is too large to do safely.' };
   let segs, audioDuration;
   try {
@@ -1247,14 +1401,8 @@ async function analyzeAudio(file, info, chk, onProg) {
   return measureVoice(segs, audioDuration, chk, onProg);
 }
 
-/* ---------- Voice detection ----------
-   Loudness-independent on purpose: every threshold is relative to the track's own level
-   (its noise floor and its 95th-percentile loudness), so quiet recordings, background speech
-   and voices mixed under music are judged the same way as loud, clean ones. Only a track
-   that is quieter than about -76 dBFS counts as silent. */
 const SILENCE_RMS = 1.5e-4;
 
-/* How strongly the loudness rises and falls at the speed of syllables (about 3-7 times a second). */
 function modulationRatio(rms, fs) {
   const n = rms.length; if (n < 100) return 0;
   let m = 0; for (let i = 0; i < n; i++) m += rms[i];
@@ -1270,7 +1418,6 @@ function modulationRatio(rms, fs) {
   return tot > 0 ? { ratio: band / tot, peak: peak / tot } : { ratio: 0, peak: 0 };
 }
 
-/* One pitch reading (Hz) for the 50 ms of audio starting at p, or 0 when the sound is not clearly pitched. */
 function estimatePitch(ds, p, W, minLag, maxLag, rbuf, sr2) {
   let r0 = 0; for (let k = 0; k < W; k++) r0 += ds[p + k] * ds[p + k];
   if (r0 <= 1e-10) return 0;
@@ -1284,16 +1431,12 @@ function estimatePitch(ds, p, W, minLag, maxLag, rbuf, sr2) {
   for (let lag = minLag + 1; lag < maxLag; lag++) {
     if (rbuf[lag] >= 0.88 * best && rbuf[lag] >= rbuf[lag - 1] && rbuf[lag] >= rbuf[lag + 1]) {
       const y0 = rbuf[lag - 1], y1 = rbuf[lag], y2 = rbuf[lag + 1], dn = y0 - 2 * y1 + y2;
-      return sr2 / (lag + (dn < 0 ? 0.5 * (y0 - y2) / dn : 0));       // sub-sample accuracy
+      return sr2 / (lag + (dn < 0 ? 0.5 * (y0 - y2) / dn : 0));
     }
   }
   return 0;
 }
 
-/* ---------- Audio uniqueness: repetition / loop analysis ----------
-   Looped library music repeats itself almost exactly; speech and most original audio do not.
-   We describe every 0.1 s of sound by 20 frequency bands, then measure how closely the sound
-   at time t matches the sound L seconds later. */
 const FFT_N = 512;
 function fftInPlace(re, im) {
   const n = FFT_N;
@@ -1321,7 +1464,7 @@ async function loopAnalysis(ds, sr2, chk) {
   const hop = Math.round(0.1 * sr2), frames = Math.floor((ds.length - FFT_N) / hop) + 1;
   const B = 20;
   if (frames < 60) return { score: 0, period: 0 };
-  const edges = [];                                      // 20 log-spaced bands between 150 Hz and 3.8 kHz
+  const edges = [];
   for (let b = 0; b <= B; b++) edges.push(Math.max(1, Math.round(150 * Math.pow(3800 / 150, b / B) * FFT_N / sr2)));
   for (let b = 1; b <= B; b++) if (edges[b] <= edges[b - 1]) edges[b] = edges[b - 1] + 1;
   const hann = new Float32Array(FFT_N); for (let i = 0; i < FFT_N; i++) hann[i] = 0.5 - 0.5 * Math.cos(2 * Math.PI * i / (FFT_N - 1));
@@ -1341,18 +1484,18 @@ async function loopAnalysis(ds, sr2, chk) {
     if ((t & 31) === 0) await maybeYield(chk);
   }
   const sortedEn = Float32Array.from(en).sort();
-  const gate = sortedEn[Math.floor(frames / 2)] * 0.02;  // ignore near-silent frames
+  const gate = sortedEn[Math.floor(frames / 2)] * 0.02;
   const valid = new Uint8Array(frames); let nv = 0;
   for (let t = 0; t < frames; t++) if (en[t] > gate && en[t] > 0) { valid[t] = 1; nv++; }
   if (nv < 50) return { score: 0, period: 0 };
-  const mu = new Float32Array(B);                        // remove each band's average, then unit-length every frame
+  const mu = new Float32Array(B);
   for (let t = 0; t < frames; t++) if (valid[t]) for (let b = 0; b < B; b++) mu[b] += F[t * B + b] / nv;
   for (let t = 0; t < frames; t++) {
     if (!valid[t]) continue;
     let s = 0; for (let b = 0; b < B; b++) { const v = F[t * B + b] - mu[b]; F[t * B + b] = v; s += v * v; }
     s = Math.sqrt(s) || 1; for (let b = 0; b < B; b++) F[t * B + b] /= s;
   }
-  const Lmin = 15, Lmax = Math.min(Math.floor(frames / 2), 200);   // repeats between 1.5 s and 20 s
+  const Lmin = 15, Lmax = Math.min(Math.floor(frames / 2), 200);
   const sc = new Float32Array(Lmax + 1);
   let best = 0;
   for (let L = Lmin; L <= Lmax; L++) {
@@ -1366,11 +1509,10 @@ async function loopAnalysis(ds, sr2, chk) {
     if (sc[L] > best) best = sc[L];
     if ((L & 7) === 0) await maybeYield(chk);
   }
-  let per = Lmin; for (let L = Lmin; L <= Lmax; L++) if (sc[L] >= 0.92 * best) { per = L; break; }   // shortest repeat, not a multiple of it
+  let per = Lmin; for (let L = Lmin; L <= Lmax; L++) if (sc[L] >= 0.92 * best) { per = L; break; }
   return { score: Math.max(0, best), period: per * hop / sr2 };
 }
 
-/* Measures pitch contour, loudness variation, pause regularity, speech evidence and repetition. */
 async function measureVoice(segs, audioDuration, chk, onProg) {
   sliceReset();
   let totalWin = 0, voicedWin = 0, analyzed = 0, maxP95 = 0, tried = 0, modW = 0, modSum = 0, peakSum = 0;
@@ -1379,7 +1521,7 @@ async function measureVoice(segs, audioDuration, chk, onProg) {
   for (let si = 0; si < segs.length; si++) {
     const { ds, sr2 } = segs[si], n = ds.length;
     const W = Math.round(sr2 * 0.05), H = Math.round(sr2 * 0.02);
-    const minLag = Math.floor(sr2 / 500), maxLag = Math.ceil(sr2 / 70);      // voices from about 70 Hz to 500 Hz
+    const minLag = Math.floor(sr2 / 500), maxLag = Math.ceil(sr2 / 70);
     if (n < W * 4) continue;
     const rbuf = new Float32Array(maxLag + 2);
     const rms = new Float32Array(Math.floor((n - W) / H) + 1);
@@ -1398,11 +1540,9 @@ async function measureVoice(segs, audioDuration, chk, onProg) {
     const mr = modulationRatio(rms, sr2 / H); modSum += mr.ratio * rms.length; peakSum += mr.peak * rms.length; modW += rms.length;
     const lp = await loopAnalysis(ds, sr2, chk); if (lp.score > loop.score) loop = lp;
 
-    /* "Voiced" = clearly above this track's own noise floor, never above -12 dB of its loud parts. */
     const thr = Math.min(Math.max(p10 * 2.2, p95 * 0.05, SILENCE_RMS * 0.8), p95 * 0.25);
     const voiced = new Uint8Array(rms.length); let nv = 0;
     for (let i = 0; i < rms.length; i++) if (rms[i] > thr) { voiced[i] = 1; nv++; }
-    /* Loudness bookkeeping over every frame ... */
     let run = 0, seenVoice = false;
     for (let i = 0; i < rms.length; i++) {
       if (voiced[i]) {
@@ -1411,7 +1551,6 @@ async function measureVoice(segs, audioDuration, chk, onProg) {
         seenVoice = true; run = 0;
       } else if (seenVoice) run++;
     }
-    /* ... and pitch readings on short runs of consecutive voiced frames spread over the whole window. */
     const RUN = 6, runLen = new Uint16Array(rms.length + 1);
     for (let i = rms.length - 1; i >= 0; i--) runLen[i] = voiced[i] ? runLen[i + 1] + 1 : 0;
     const starts = [];
@@ -1443,8 +1582,6 @@ async function measureVoice(segs, audioDuration, chk, onProg) {
   const snrDb = mean(snrs);
   const loopScore = loop.score, loopPeriod = loop.period;
 
-  /* Speech evidence. "clear": real pauses between phrases. "mixed": a voice under music or noise, found through its
-     syllable rhythm and pitch instead of pauses. A rhythm that is too regular (a steady beat or a loop) is music. */
   const clear = voicedRatio > 0.06 && voicedRatio < 0.99 && pausesPer30 >= 1.5 && pitchedFrac >= 0.2 && f0s.length >= 10 && modPeak < 0.4;
   const mixed = !clear && modRatio >= 0.42 && modPeak < 0.28 && pitchedFrac >= 0.2 && f0s.length >= 10 && loopScore < 0.85;
   const common = { voicedRatio, durAnalyzed: analyzed, audioDuration, peakDb, snrDb, modRatio, modPeak, steadyFrac, jumpFrac, pitchedFrac, loopScore, loopPeriod };
@@ -1472,17 +1609,6 @@ async function measureVoice(segs, audioDuration, chk, onProg) {
   return { status: 'speech', confidence: clear ? 'clear' : 'mixed', voiceLevel, pitchSpread, dbStd, pauseCV, pauseCount: pauses.length, roboticScore, medianPitch: med, bedLoop: loopScore >= 0.85, ...common };
 }
 
-/* ============================================================
-   Policy diagnostics
-============================================================ */
-function resLabel(short) {
-  if (short >= 2160) return '4K UHD';
-  if (short >= 1440) return '2K QHD';
-  if (short >= 1080) return 'FULL HD';
-  if (short >= 720)  return 'HD';
-  if (short >= 480)  return 'SD';
-  return 'VERY LOW';
-}
 function aspectLabel(w, h) {
   const r = w / h;
   const known = [[16/9,'16:9'],[9/16,'9:16'],[1,'1:1'],[4/3,'4:3'],[3/4,'3:4'],[4/5,'4:5'],[5/4,'5:4'],[21/9,'21:9'],[3/2,'3:2'],[2/3,'2:3'],[2,'2:1']];
@@ -1599,7 +1725,6 @@ function checkVoice(a) {
     if (mixed) facts.push('Mixed with music or background sound');
     const meter = clamp(100 - a.roboticScore, 0, 100);
     const b = { ...base, facts, meter };
-    /* Voices heard through music or noise are measured less exactly, so they can warn but never fail on their own. */
     const failAt = mixed ? Infinity : a.voiceLevel === 'clear' ? 62 : 72;
     const warnAt = mixed ? 55 : 40;
     if (a.roboticScore >= failAt) return { ...b, status: 'bad', badge: 'Robotic Voice', value: 'Robotic', sub: 'Sounds synthetic',
@@ -1650,10 +1775,6 @@ function checkVoice(a) {
     facts: [], tip: CHECK_NEEDS_MP4 };
 }
 
-/* ---------- Reused content engine ----------
-   Every clue becomes a "signal" with a weight. Clues about where the file came from are "strong" when they
-   are specific (a download-site name, a stock library, a TikTok video ID). A strong clue can never pass
-   unnoticed: with no sign of your own work it is High risk, and even with commentary it stays at Medium. */
 const reEsc = s => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 const DL_SITES = ['viddsave', 'vidssave', 'vidsave', 'savevid', 'savefrom', 'y2mate', 'y2meta', 'y2down', 'ssyoutube', 'ytmp3', 'ytmp4', 'yt1s', 'yt5s', 'ytdown', 'ytdl',
   'yt-dlp', 'ytdlp', 'youtube-dl', '9xbuddy', 'keepvid', 'clipconverter', 'flvto', 'onlinevideoconverter', 'savetube', 'savethevideo', 'snapsave', 'snaptik', 'snapinsta',
@@ -1696,7 +1817,7 @@ function nameSignals(name) {
       if (m) { out.push({ id: r.id, group: r.group, w: r.w, strong: !!r.strong, why: r.why, hit: (m[0] || '').replace(/^[^a-z0-9]+|[^a-z0-9]+$/g, '') }); break; }
     }
   }
-  if (!out.some(s => s.id === 'dl-site')) {              // site names split by separators, e.g. "save_from.net"
+  if (!out.some(s => s.id === 'dl-site')) {
     const m = low.replace(/[^a-z0-9]/g, '').match(DL_RE_SQUASHED);
     if (m) out.push({ id: 'dl-site', group: 'download', w: 58, strong: true, why: 'the file name comes from a video-download site or app', hit: m[0] });
   }
@@ -1719,7 +1840,6 @@ function metaSignals(sig) {
   if ((m = low.match(/(?:^|[^a-z])(youtube|tiktok|douyin|instagram|facebook|snapchat|twitter|vimeo|dailymotion)(?:$|[^a-z])/))) out.push({ id: 'meta-platform', group: 'download', w: 30, strong: false, why: 'the hidden file information mentions ' + m[1], hit: m[1] });
   if (/https?:\/\/|www\.[a-z0-9-]{2,}\.[a-z]{2,}/.test(low)) out.push({ id: 'meta-url', group: 'download', w: 22, strong: false, why: 'a web address is written in the hidden file information', hit: 'web address' });
   if (/copyright|all rights reserved|licensed to/.test(low)) out.push({ id: 'meta-copyright', group: 'copyright', w: 18, strong: false, why: 'a copyright notice is written in the hidden file information', hit: 'copyright notice' });
-  // clues that point the other way: the file was recorded or edited by its maker
   if (/com\.apple\.quicktime\.(?:make|model|software|location)|com\.android\.(?:version|manufacturer|model)|[+-]\d{1,3}\.\d{2,6}[+-]\d{1,3}\.\d{2,6}|(?:^|[^a-z])(?:gopro|dji|canon|nikon|panasonic|fujifilm|samsung|iphone|pixel|xiaomi|oneplus|oppo|vivo|huawei)(?:$|[^a-z])/.test(low)) out.push({ id: 'camera', group: 'camera', w: -22, why: 'the hidden file information shows it was recorded on a phone or camera', hit: 'camera' });
   if ((m = low.match(/adobe premiere|premiere pro|after effects|final cut|davinci|resolve|filmora|wondershare|capcut|inshot|kinemaster|vn video|vllo|imovie|camtasia|shotcut|openshot|lightworks|hitfilm|movavi|powerdirector|clipchamp|canva|veed|descript/))) out.push({ id: 'editor', group: 'editor', w: -10, why: 'the file was made with an editing app', hit: m[0].replace(/\b\w/g, c => c.toUpperCase()) });
   return out;
@@ -1774,14 +1894,12 @@ function checkReuse(meta, vis, aud) {
   }
   let risk = 0; const reasons = [];
 
-  // 1. Where did the file come from?
   let src = 0; pos.forEach((s, i) => { src += i === 0 ? s.w : s.w * 0.4; });
   risk += Math.min(src, 85);
   pos.slice(0, 2).forEach(s => reasons.push(s.why));
   risk += Math.max(-30, neg.reduce((a, s) => a + s.w, 0));
   const hasCamera = neg.some(s => s.id === 'camera'), editor = neg.find(s => s.id === 'editor');
 
-  // 2. Has anything been edited?
   let noEdits = false;
   if (!vis.skipped) {
     if (vis.hits === 0 && meta.dur >= 20) { risk += 20; noEdits = true; reasons.push('it’s one continuous shot with no cuts'); }
@@ -1790,7 +1908,6 @@ function checkReuse(meta, vis, aud) {
     if (vis.staticRatio > 0.6 && vis.hits === 0) { risk += 5; reasons.push('the picture barely moves'); }
   }
 
-  // 3. Is the audio yours?
   let noCommentary = false;
   if (aud.status === 'silent') { risk += 25; noCommentary = true; reasons.push('it has no sound at all'); }
   else if (aud.status === 'nospeech') {
@@ -1798,9 +1915,8 @@ function checkReuse(meta, vis, aud) {
     if (aud.kind === 'music-loop') { risk += 8; reasons.push('the music repeats in a short loop, like a free library track'); }
   }
   else if (aud.status === 'speech') risk -= aud.confidence === 'mixed' ? 4 : 10;
-  if (noEdits && noCommentary) risk += 15;                // nothing original has been added at all
+  if (noEdits && noCommentary) risk += 15;
 
-  // 4. Does it look like a generic saved short?
   const vertical = meta.w && meta.h && meta.w / meta.h <= 0.8;
   const isShort = vertical && meta.dur <= 180;
   if (isShort && noCommentary && !hasCamera && !editor && (noEdits || vis.limited)) {
@@ -1808,7 +1924,6 @@ function checkReuse(meta, vis, aud) {
   }
   if (isShort && !hasCamera && SOCIAL_SIZES.has(meta.w + 'x' + meta.h)) risk += 6;
 
-  // 5. A specific download, stock or ripped-media clue is never allowed to pass quietly.
   const strong = pos.filter(s => s.strong);
   const ownWork = aud.status === 'speech' && aud.confidence !== 'mixed' && (vis.skipped || vis.hits > 0);
   if (strong.length) risk = Math.max(risk, ownWork ? (strong.length >= 2 ? 55 : 42) : 70);
@@ -1856,9 +1971,6 @@ function checkReuse(meta, vis, aud) {
     tip: 'We can’t see where your clips came from. Make sure you own, or have a license for, everything in the video.' };
 }
 
-/* ============================================================
-   Report rendering
-============================================================ */
 const STATUS_ICON = { ok: 'fa-circle-check', warn: 'fa-triangle-exclamation', bad: 'fa-circle-xmark', info: 'fa-circle-info' };
 const NOTE_TITLE = { ok: 'WHY IT PASSED', warn: 'WHAT TO WATCH', bad: 'WHY IT FAILED', info: 'GOOD TO KNOW' };
 const statusWord = c => c.unverified ? 'NOT CHECKED' : { ok: 'PASSED', warn: 'WARNING', bad: 'FAILED', info: 'NO ISSUE' }[c.status];
