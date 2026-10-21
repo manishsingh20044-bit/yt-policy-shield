@@ -1,5 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>YouTube Policy Shield – Free YouTube Monetization Checker</title>
+<meta name="description" content="YouTube Policy Shield: a free YouTube monetization checker, reused content detector and AI voice detector for YouTube Shorts. Private in-browser scan.">
+<meta name="keywords" content="youtube monetization checker, reused content detector free, youtube policy shield, ai voice detector youtube shorts, youtube reused content checker, youtube inauthentic content, youtube shorts monetization, youtube demonetization checker, ai voice detector, yt policy shield">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+<meta name="author" content="YT Policy Shield">
+<meta name="application-name" content="YT Policy Shield">
+<meta name="apple-mobile-web-app-title" content="YT Policy Shield">
+<meta name="theme-color" content="#030712">
+<meta name="color-scheme" content="dark">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23030712'/%3E%3Cpath d='M32 8l20 7v15c0 13-8.5 21.5-20 26C20.500 51.500 12 43 12 30V15z' fill='none' stroke='%2306b6d4' stroke-width='4' stroke-linejoin='round'/%3E%3Cpath d='M23 31l6 6 12-13' fill='none' stroke='%2322d3ee' stroke-width='4.500' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
 
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="YT Policy Shield">
+<meta property="og:locale" content="en_US">
+<meta property="og:title" content="YouTube Policy Shield – Free YouTube Monetization Checker">
+<meta property="og:description" content="Drop a video and find out if YouTube will monetize or reject it. Free reused content detector and AI voice detector for YouTube Shorts, scanned privately in your browser.">
+<meta property="og:image" content="https://yt-policy-shield.vercel.app/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="YT Policy Shield: free YouTube monetization checker">
 
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="YouTube Policy Shield – Free YouTube Monetization Checker">
+<meta name="twitter:description" content="Free reused content detector and AI voice detector for YouTube Shorts. Scan a video in your browser and see exactly why it could be rejected, and how to fix it.">
+<meta name="twitter:image" content="https://yt-policy-shield.vercel.app/og-image.png">
+<meta name="twitter:image:alt" content="YT Policy Shield: free YouTube monetization checker">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      "name": "YT Policy Shield",
+      "alternateName": ["YouTube Policy Shield", "YouTube Monetization Checker"],
+      "description": "Free YouTube monetization checker. Detects reused or downloaded content risk, robotic AI voice patterns, low video quality and Shorts format problems, entirely in your browser.",
+      "applicationCategory": "MultimediaApplication",
+      "operatingSystem": "Any (web browser)",
+      "browserRequirements": "Requires JavaScript and a modern browser",
+      "isAccessibleForFree": true,
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+      "keywords": "youtube monetization checker, reused content detector free, youtube policy shield, ai voice detector youtube shorts",
+      "featureList": [
+        "Reused content detector (downloaded clips, unedited stock footage)",
+        "AI voice detector for YouTube Shorts and long videos",
+        "Resolution and quality check (720p HD minimum)",
+        "Shorts versus long-video format check",
+        "Step-by-step fixes for every issue found",
+        "Private scan: your video never leaves your device"
+      ]
+    }
+  ]
+}
+</script>
+
+<!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-SG3JSYXM08"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-SG3JSYXM08');
+</script>
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+  theme: { extend: { fontFamily: { orb: ['Orbitron', 'sans-serif'], tech: ['"Share Tech Mono"', 'monospace'] } } }
+};
+</script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#030712; --cyan:#06b6d4; --cyan-2:#22d3ee; --rose:#f43f5e; --amber:#f59e0b; --green:#10f5a0;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg); color:#cbd5e1; font-family:'Share Tech Mono',monospace;
+  min-height:100vh; overflow-x:hidden; position:relative;
+}
+/* ---------- Ambient background ---------- */
+body::before{
+  content:""; position:fixed; inset:0; z-index:0; pointer-events:none;
+  background-image:
+    linear-gradient(rgba(6,182,212,.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(6,182,212,.07) 1px, transparent 1px);
+  background-size:44px 44px;
+  -webkit-mask-image:radial-gradient(ellipse at 50% 25%, #000 15%, transparent 78%);
+          mask-image:radial-gradient(ellipse at 50% 25%, #000 15%, transparent 78%);
+}
+.bg-glow{position:fixed; z-index:0; pointer-events:none; border-radius:50%; transform:translateZ(0)}
+.bg-glow.a{width:640px;height:640px;left:-220px;top:-220px;background:radial-gradient(circle, rgba(8,145,178,.38) 0%, rgba(8,145,178,0) 68%)}
+.bg-glow.b{width:600px;height:600px;right:-220px;bottom:-220px;background:radial-gradient(circle, rgba(190,18,60,.26) 0%, rgba(190,18,60,0) 68%)}
+.scanlines{position:fixed; inset:0; z-index:60; pointer-events:none; transform:translateZ(0);
+  background:repeating-linear-gradient(0deg, rgba(0,0,0,0) 0, rgba(0,0,0,0) 2px, rgba(0,0,0,.16) 3px);}
+.scanbeam{position:fixed; left:0; right:0; top:-140px; height:140px; z-index:59; pointer-events:none; contain:layout paint style;
+  background:linear-gradient(180deg, transparent, rgba(6,182,212,.07), transparent); transform:translate3d(0,0,0); will-change:transform; animation:beam 8s linear infinite;}
+@keyframes beam{from{transform:translate3d(0,0,0)}to{transform:translate3d(0,calc(100vh + 280px),0)}}
+#app{position:relative; z-index:10}
+
+/* ---------- Glass / HUD primitives ---------- */
+.glass{
+  background:rgba(8,16,32,.78);
+  border:1px solid rgba(6,182,212,.28);
+  box-shadow:0 0 24px rgba(6,182,212,.07), inset 0 0 20px rgba(6,182,212,.04);
+  border-radius:14px;
+}
+.glow-text{text-shadow:0 0 12px rgba(6,182,212,.75), 0 0 32px rgba(6,182,212,.4)}
+.neon-border{box-shadow:0 0 18px rgba(6,182,212,.35), inset 0 0 14px rgba(6,182,212,.12); border-color:rgba(6,182,212,.6)}
+.hud-pill{display:inline-flex; align-items:center; gap:.5rem; padding:.3rem .75rem; border:1px solid rgba(6,182,212,.35);
+  border-radius:999px; background:rgba(6,182,212,.07); color:#67e8f9; letter-spacing:.14em; text-decoration:none; cursor:pointer; transition:all .2s; font-size:11px;}
+a.hud-pill:hover{background:rgba(6,182,212,.18); border-color:rgba(34,211,238,.6)}
+.hud-pill .dot{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 10px var(--green);animation:blink 1.6s infinite}
+@keyframes blink{50%{opacity:.25}}
+.flicker{animation:flicker 5s infinite}
+@keyframes flicker{0%,92%,100%{opacity:1}93%{opacity:.6}94%{opacity:1}96%{opacity:.75}97%{opacity:1}}
+
+.cc{position:relative}
+.cc>.k{position:absolute;width:24px;height:24px;border:2px solid var(--cyan);filter:drop-shadow(0 0 6px var(--cyan));pointer-events:none;transition:all .3s}
+.k.tl{top:-2px;left:-2px;border-right:0;border-bottom:0;border-top-left-radius:6px}
+.k.tr{top:-2px;right:-2px;border-left:0;border-bottom:0;border-top-right-radius:6px}
+.k.bl{bottom:-2px;left:-2px;border-right:0;border-top:0;border-bottom-left-radius:6px}
+.k.br{bottom:-2px;right:-2px;border-left:0;border-top:0;border-bottom-right-radius:6px}
+
+.holo{position:relative; overflow:hidden}
+.holo::after{content:""; position:absolute; top:0; bottom:0; left:0; width:45%; pointer-events:none;
+  background:linear-gradient(105deg, transparent 0%, rgba(103,232,249,.11) 50%, transparent 100%);
+  transform:translate3d(-110%,0,0); animation:holo 1.6s ease-out .35s 1 both;}
+@keyframes holo{from{transform:translate3d(-110%,0,0)}to{transform:translate3d(320%,0,0)}}
+
+/* ---------- Drop zone ---------- */
+.dz{padding:3.2rem 1.5rem; cursor:pointer; border-style:dashed; border-width:2px; border-color:rgba(6,182,212,.5);
+  transition:transform .25s, background .25s, border-color .25s; outline:none}
+.dz:hover,.dz:focus-visible{border-color:var(--cyan-2); background:rgba(6,182,212,.07)}
+.dz.dragover{transform:scale(1.015); border-color:#67e8f9; background:rgba(6,182,212,.14); animation:none;
+  box-shadow:0 0 70px rgba(6,182,212,.5), inset 0 0 50px rgba(6,182,212,.18)}
+.dz.dragover>.k{width:34px;height:34px}
+.dz::after{content:""; position:absolute; inset:-2px; border-radius:inherit; pointer-events:none; opacity:.25;
+  box-shadow:0 0 46px rgba(6,182,212,.42), inset 0 0 36px rgba(6,182,212,.12); will-change:opacity; animation:pulseBox 3s ease-in-out infinite}
+.dz.dragover::after{animation:none; opacity:1}
+@keyframes pulseBox{0%,100%{opacity:.25}50%{opacity:1}}
+.reticle .r1,.reticle .r2,.reticle .ic{will-change:transform}
+.reticle{position:relative; width:150px; height:150px; margin:0 auto}
+.reticle .r1,.reticle .r2,.reticle .r3{position:absolute; inset:0; border-radius:50%}
 .reticle .r1{border:2px dashed rgba(6,182,212,.7); animation:spin 16s linear infinite}
 .reticle .r2{inset:14px; border:2px solid rgba(34,211,238,.9); border-top-color:transparent; border-bottom-color:transparent; animation:spin 5s linear infinite reverse}
 .reticle .r3{inset:30px; border:1px solid rgba(6,182,212,.4); background:radial-gradient(circle, rgba(6,182,212,.22), transparent 70%)}
@@ -147,41 +298,24 @@ body.scanning .flicker{animation:none}
 
 /* ---------- MOBILE OPTIMIZATIONS ---------- */
 @media (max-width: 768px) {
-  /* Adjust header and padding */
   header.wrap { flex-direction: column; text-align: center; gap: 1rem; }
   .hud-pill { padding: .4rem .8rem; font-size: 10px; }
-  
-  /* Dropzone padding and reticle size */
   .dz { padding: 2rem 1rem; }
   .reticle { width: 120px; height: 120px; }
   .reticle .ic { font-size: 2rem; }
-  
-  /* Force single column layout for features */
   .grid { grid-template-columns: 1fr !important; }
-  
-  /* Scanner viewport adjustments */
   .viewport { border-radius: 8px; }
   .radar { width: 140px; height: 140px; }
-  
-  /* Result cards */
   .spec { padding: 1rem; }
   .check { padding: 1rem; }
   .check .ico { width: 32px; height: 32px; font-size: 1rem; }
-  
-  /* Modals */
   .modal-box { padding: 1.5rem 1.25rem; max-height: 85vh; }
   .terms-content h2 { font-size: 1rem; }
   .terms-content p, .terms-content li { font-size: .8rem; }
   .auth-tab { font-size: .65rem; padding: .5rem; }
-  
-  /* Buttons */
   .btn-neon, .btn-ghost { width: 100%; }
-  
-  /* Hide heavy blur on mobile for performance */
   .glass.cc { -webkit-backdrop-filter: none; backdrop-filter: none; background: rgba(8,16,32,.85); }
   .scanbeam { display: none; }
-  
-  /* Adjust text sizes */
   .text-5xl { font-size: 2.2rem; }
   .text-3xl { font-size: 1.5rem; }
   .text-2xl { font-size: 1.25rem; }
