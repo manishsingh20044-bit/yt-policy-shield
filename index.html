@@ -1702,7 +1702,7 @@ function fftInPlace(re, im) {
 async function loopAnalysis(ds, sr2, chk) {
   const hop = Math.round(0.1 * sr2), frames = Math.floor((ds.length - FFT_N) / hop) + 1;
   const B = 20;
-  if (frames < 60) return { score: 0, period: 0 };
+  if (frames < 60) return { score: 0, period: 0, flux: null };
   const edges = [];
   for (let b = 0; b <= B; b++) edges.push(Math.max(1, Math.round(150 * Math.pow(3800 / 150, b / B) * FFT_N / sr2)));
   for (let b = 1; b <= B; b++) if (edges[b] <= edges[b - 1]) edges[b] = edges[b - 1] + 1;
@@ -1726,7 +1726,7 @@ async function loopAnalysis(ds, sr2, chk) {
   const gate = sortedEn[Math.floor(frames / 2)] * 0.02;
   const valid = new Uint8Array(frames); let nv = 0;
   for (let t = 0; t < frames; t++) if (en[t] > gate && en[t] > 0) { valid[t] = 1; nv++; }
-  if (nv < 50) return { score: 0, period: 0 };
+  if (nv < 50) return { score: 0, period: 0, flux: null };
   const mu = new Float32Array(B);
   for (let t = 0; t < frames; t++) if (valid[t]) for (let b = 0; b < B; b++) mu[b] += F[t * B + b] / nv;
   for (let t = 0; t < frames; t++) {
@@ -1734,6 +1734,15 @@ async function loopAnalysis(ds, sr2, chk) {
     let s = 0; for (let b = 0; b < B; b++) { const v = F[t * B + b] - mu[b]; F[t * B + b] = v; s += v * v; }
     s = Math.sqrt(s) || 1; for (let b = 0; b < B; b++) F[t * B + b] /= s;
   }
+  // How fast the sound's colour changes from one 0.1 s step to the next. Speech changes with every syllable;
+  // sustained music notes and chords barely change.
+  let fxSum = 0, fxN = 0;
+  for (let t = 0; t + 1 < frames; t++) {
+    if (!valid[t] || !valid[t + 1]) continue;
+    let d = 0; for (let b = 0; b < B; b++) d += F[t * B + b] * F[(t + 1) * B + b];
+    fxSum += 1 - d; fxN++;
+  }
+  const flux = fxN >= 30 ? fxSum / fxN : null;
   const Lmin = 15, Lmax = Math.min(Math.floor(frames / 2), 80);
   const sc = new Float32Array(Lmax + 1);
   let best = 0;
@@ -1749,13 +1758,26 @@ async function loopAnalysis(ds, sr2, chk) {
     if ((L & 7) === 0) await maybeYield(chk);
   }
   let per = Lmin; for (let L = Lmin; L <= Lmax; L++) if (sc[L] >= 0.92 * best) { per = L; break; }
-  return { score: Math.max(0, best), period: per * hop / sr2 };
+  return { score: Math.max(0, best), period: per * hop / sr2, flux };
 }
+
+/* ---- Robotic-voice tuning (all thresholds in one place) ----
+   Add ?debug=1 to the page URL to see the raw numbers under the Voice check. */
+const VOICE_TUNE = {
+  pitchSpreadHi: 3.4, pitchSpreadRange: 2.2,   // pitch variety (semitones): below ~1.2 = monotone, above ~3.4 = lively
+  dbStdHi: 7.5, dbStdRange: 4.5,               // loudness variation (dB)
+  pauseCVHi: 0.75, pauseCVRange: 0.5,          // how irregular pauses are
+  floorHiDb: -62, floorLoDb: -84,              // loudness of the gaps between phrases: <= -84 dB = digital silence
+  wPitch: 0.40, wDb: 0.20, wPause: 0.20, wFloor: 0.20,
+  failClear: 55, failQuiet: 68, failMixed: 72, // score at which we say "Robotic"
+  warnClear: 38, warnMixed: 50                 // score at which we say "a bit flat"
+};
+const DEBUG_VOICE = /[?&]debug=1/.test(location.search);
 
 async function measureVoice(segs, audioDuration, chk, onProg) {
   sliceReset();
   let totalWin = 0, voicedWin = 0, analyzed = 0, maxP95 = 0, tried = 0, modW = 0, modSum = 0, peakSum = 0;
-  const f0s = [], dbs = [], pauses = [], snrs = [], deltas = []; let loop = { score: 0, period: 0 };
+  const f0s = [], dbs = [], pauses = [], snrs = [], deltas = [], pauseRms = []; let loop = { score: 0, period: 0 }, fluxSum = 0, fluxW = 0;
 
   for (let si = 0; si < segs.length; si++) {
     const { ds, sr2 } = segs[si], n = ds.length;
@@ -1778,6 +1800,7 @@ async function measureVoice(segs, audioDuration, chk, onProg) {
     snrs.push(20 * Math.log10(p95 / Math.max(p10, p95 * 0.003)));
     const mr = modulationRatio(rms, sr2 / H); modSum += mr.ratio * rms.length; peakSum += mr.peak * rms.length; modW += rms.length;
     const lp = await loopAnalysis(ds, sr2, chk); if (lp.score > loop.score) loop = lp;
+    if (lp.flux !== null) { fluxSum += lp.flux * rms.length; fluxW += rms.length; }
 
     const thr = Math.min(Math.max(p10 * 2.2, p95 * 0.05, SILENCE_RMS * 0.8), p95 * 0.25);
     const voiced = new Uint8Array(rms.length); let nv = 0;
@@ -1786,7 +1809,11 @@ async function measureVoice(segs, audioDuration, chk, onProg) {
     for (let i = 0; i < rms.length; i++) {
       if (voiced[i]) {
         voicedWin++; dbs.push(20 * Math.log10(rms[i]));
-        if (seenVoice && run >= 8 && run <= 100) pauses.push(run * H / sr2);
+        if (seenVoice && run >= 8 && run <= 100) {
+          pauses.push(run * H / sr2);
+          // middle half of the gap only (skips the fading tail of the previous word)
+          for (let k = i - run + Math.ceil(run * 0.25); k < i - Math.floor(run * 0.25); k++) pauseRms.push(rms[k]);
+        }
         seenVoice = true; run = 0;
       } else if (seenVoice) run++;
     }
@@ -1820,10 +1847,15 @@ async function measureVoice(segs, audioDuration, chk, onProg) {
   const pitchedFrac = tried ? f0s.length / tried : 0;
   const snrDb = mean(snrs);
   const loopScore = loop.score, loopPeriod = loop.period;
+  const flux = fluxW ? fluxSum / fluxW : null;
 
-  const clear = voicedRatio > 0.06 && voicedRatio < 0.99 && pausesPer30 >= 1.5 && pitchedFrac >= 0.2 && f0s.length >= 10 && modPeak < 0.4;
+  // A very regular voice (typical of robotic text-to-speech) has a strong, even syllable rhythm (high modPeak).
+  // That used to make it look like music and get thrown out as "no voice". We now keep it as speech when it also
+  // has the marks of speech: a sound colour that changes every syllable, clear gaps between phrases, and no repeating loop.
+  const regularSpeech = modPeak < 0.9 && loopScore < 0.6 && flux !== null && flux >= 0.4 && pausesPer30 >= 3;
+  const clear = voicedRatio > 0.06 && voicedRatio < 0.99 && pausesPer30 >= 1.5 && pitchedFrac >= 0.2 && f0s.length >= 10 && (modPeak < 0.4 || regularSpeech);
   const mixed = !clear && modRatio >= 0.42 && modPeak < 0.28 && pitchedFrac >= 0.2 && f0s.length >= 10 && loopScore < 0.85;
-  const common = { voicedRatio, durAnalyzed: analyzed, audioDuration, peakDb, snrDb, modRatio, modPeak, steadyFrac, jumpFrac, pitchedFrac, loopScore, loopPeriod };
+  const common = { flux, pausesPer30, f0n: f0s.length, voicedRatio, durAnalyzed: analyzed, audioDuration, peakDb, snrDb, modRatio, modPeak, steadyFrac, jumpFrac, pitchedFrac, loopScore, loopPeriod };
 
   if (!clear && !mixed) {
     const looped = loopScore >= 0.85 && analyzed >= 8;
@@ -1836,16 +1868,20 @@ async function measureVoice(segs, audioDuration, chk, onProg) {
   const dbStd = stdev(dbs);
   const pauseCV = pauses.length >= 5 ? stdev(pauses) / Math.max(1e-6, mean(pauses)) : null;
 
+  const T = VOICE_TUNE;
+  const pauseFloorDb = pauseRms.length >= 12 ? 20 * Math.log10(Math.max(median(pauseRms), 1e-7)) : null;
   const comps = [
-    { w: 0.55, v: clamp((3.0 - pitchSpread) / 2.2, 0, 1) },
-    { w: 0.25, v: clamp((7.5 - dbStd) / 4.5, 0, 1) }
+    { w: T.wPitch, v: clamp((T.pitchSpreadHi - pitchSpread) / T.pitchSpreadRange, 0, 1) },
+    { w: T.wDb,    v: clamp((T.dbStdHi - dbStd) / T.dbStdRange, 0, 1) }
   ];
-  if (pauseCV !== null) comps.push({ w: 0.20, v: clamp((0.75 - pauseCV) / 0.5, 0, 1) });
+  if (pauseCV !== null) comps.push({ w: T.wPause, v: clamp((T.pauseCVHi - pauseCV) / T.pauseCVRange, 0, 1) });
+  // Text-to-speech exports usually have perfectly silent gaps; a real microphone always picks up some room noise.
+  if (pauseFloorDb !== null) comps.push({ w: T.wFloor, v: clamp((T.floorHiDb - pauseFloorDb) / (T.floorHiDb - T.floorLoDb), 0, 1) });
   const wsum = comps.reduce((a, c) => a + c.w, 0);
   const roboticScore = Math.round(100 * comps.reduce((a, c) => a + c.w * c.v, 0) / wsum);
   const voiceLevel = peakDb < -45 ? 'quiet' : snrDb < 9 ? 'background' : 'clear';
 
-  return { status: 'speech', confidence: clear ? 'clear' : 'mixed', voiceLevel, pitchSpread, dbStd, pauseCV, pauseCount: pauses.length, roboticScore, medianPitch: med, bedLoop: loopScore >= 0.85, ...common };
+  return { status: 'speech', confidence: clear ? 'clear' : 'mixed', voiceLevel, pitchSpread, dbStd, pauseCV, pauseCount: pauses.length, pauseFloorDb, roboticScore, medianPitch: med, bedLoop: loopScore >= 0.85, ...common };
 }
 
 function aspectLabel(w, h) {
@@ -1960,12 +1996,14 @@ function checkVoice(a) {
       `Volume changes: ${a.dbStd < 4 ? 'Very even' : a.dbStd < 6 ? 'Fairly even' : 'Natural'}`
     ];
     if (a.pauseCV !== null) facts.push(`Pauses: ${a.pauseCV < 0.4 ? 'Evenly spaced' : a.pauseCV < 0.6 ? 'Fairly regular' : 'Natural'}`);
+    if (a.pauseFloorDb !== null && a.pauseFloorDb !== undefined) facts.push(`Gaps between phrases: ${a.pauseFloorDb <= -80 ? 'Digital silence' : a.pauseFloorDb <= -66 ? 'Unusually clean' : 'Natural room noise'}`);
     facts.push(`Voice level: ${lvl}`);
     if (mixed) facts.push('Mixed with music or background sound');
+    if (DEBUG_VOICE) facts.push(`DEBUG score=${a.roboticScore} pitchSpread=${a.pitchSpread.toFixed(2)} dbStd=${a.dbStd.toFixed(2)} pauseCV=${a.pauseCV === null ? 'n/a' : a.pauseCV.toFixed(2)} floorDb=${a.pauseFloorDb === null ? 'n/a' : a.pauseFloorDb.toFixed(1)} pauses=${a.pauseCount} mixed=${mixed} modPeak=${a.modPeak.toFixed(2)} flux=${a.flux === null ? 'n/a' : a.flux.toFixed(2)}`);
     const meter = clamp(100 - a.roboticScore, 0, 100);
     const b = { ...base, facts, meter };
-    const failAt = mixed ? Infinity : a.voiceLevel === 'clear' ? 62 : 72;
-    const warnAt = mixed ? 55 : 40;
+    const failAt = mixed ? VOICE_TUNE.failMixed : a.voiceLevel === 'clear' ? VOICE_TUNE.failClear : VOICE_TUNE.failQuiet;
+    const warnAt = mixed ? VOICE_TUNE.warnMixed : VOICE_TUNE.warnClear;
     if (a.roboticScore >= failAt) return { ...b, status: 'bad', badge: 'Robotic Voice', value: 'Robotic', sub: 'Sounds synthetic',
       headline: 'Voice sounds robotic',
       note: 'The narration is very flat: the tone, volume and pauses barely change, which is typical of default text-to-speech. YouTube allows AI voices, but mass-produced videos with robotic narration and little original value are often demonetized as “inauthentic content”.',
@@ -1991,8 +2029,8 @@ function checkVoice(a) {
     return { ...b, status: 'ok', badge: mixed ? 'Voice Likely' : 'Natural Audio', value: mixed ? 'Voice + Music' : 'Natural', sub: mixed ? 'Voice found under music' : 'Sounds human',
       headline: mixed ? 'Voice likely present, sounds natural' : 'Voice sounds natural',
       note: mixed
-        ? 'We found what looks like a voice mixed with music or background sound, and it rises, falls and pauses like real speech, so there’s no sign of a robotic AI voice. The check is less exact when audio is mixed.'
-        : 'Your voice rises, falls and pauses the way real human speech does, so there’s no sign of a robotic AI voice.',
+        ? 'We found what looks like a voice mixed with music or background sound, and it rises, falls and pauses like real speech, so we found no sign of a robotic voice. The check is less exact when audio is mixed.'
+        : 'Your voice rises, falls and pauses the way real human speech does, so we found no sign of a robotic voice. Very natural-sounding AI voices can still pass this sound-pattern check.',
       tip: a.voiceLevel !== 'clear'
         ? 'The voice is quiet compared with the rest of the audio. Raising it a little, or turning the music down, helps viewers and makes this check more reliable.'
         : 'If any part of the voice or visuals was AI-generated, turn on the “altered or synthetic content” label in YouTube Studio.' };
@@ -2001,7 +2039,7 @@ function checkVoice(a) {
     const loopNote = a.kind === 'music-loop' ? ' The sound is a short loop that repeats, the way free library music does.' : '';
     return { ...base, status: 'info', badge: 'No Clear Voice', value: 'No Voice', sub: 'Nothing to check', meter: 100,
       headline: 'No clear narration found',
-      facts: ['Spoken narration: None found', `Audio type: ${audioKindLabel(a)}`, `Loudness: ${loudnessWord(a.peakDb)}`],
+      facts: ['Spoken narration: None found', `Audio type: ${audioKindLabel(a)}`, `Loudness: ${loudnessWord(a.peakDb)}`].concat(DEBUG_VOICE ? [`DEBUG nospeech voicedRatio=${a.voicedRatio.toFixed(2)} pauses/30s=${a.pausesPer30.toFixed(1)} pitchedFrac=${a.pitchedFrac.toFixed(2)} f0n=${a.f0n} modPeak=${a.modPeak.toFixed(2)} modRatio=${a.modRatio.toFixed(2)} loop=${a.loopScore.toFixed(2)} flux=${a.flux === null ? 'n/a' : a.flux.toFixed(2)}`] : []),
       note: `We couldn’t find a clear spoken voice, so there’s no AI-voice risk to check.${loopNote} Music-only videos are fine, but make sure the visuals are original (see the reused content check).`,
       tip: 'If someone does speak, even quietly in the background, raise the voice or turn the music down and scan again.' };
   }
