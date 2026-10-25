@@ -423,6 +423,25 @@ a.hud-pill:hover{background:rgba(6,182,212,.18); border-color:rgba(34,211,238,.6
 
 .seo-block{content-visibility:auto;contain-intrinsic-size:0 700px}
 .seo-block h2{letter-spacing:.12em}
+.seo-copy p{color:#94a3b8;line-height:1.75;margin:0 0 1rem;max-width:48rem}
+.tip-list{list-style:none;padding:0;margin:1rem 0 0}
+.tip-list li{position:relative;padding:.55rem 0 .55rem 1.6rem;color:#cbd5e1;line-height:1.65}
+.tip-list li::before{content:"";position:absolute;left:0;top:.95rem;width:8px;height:8px;border-radius:50%;background:#22d3ee;box-shadow:0 0 10px #22d3ee}
+.cmp-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.cmp-col{padding:1.25rem 1.3rem}
+.cmp-col.ok{border-color:rgba(16,245,160,.45);box-shadow:0 0 28px rgba(16,245,160,.08)}
+.cmp-col.bad{border-color:rgba(244,63,94,.45);box-shadow:0 0 28px rgba(244,63,94,.08)}
+.cmp-col h3{display:flex;align-items:center;gap:.6rem;margin:0 0 1rem;font-size:.85rem;letter-spacing:.14em}
+.cmp-col.ok h3{color:#10f5a0}
+.cmp-col.bad h3{color:#f43f5e}
+.cmp-list{list-style:none;padding:0;margin:0}
+.cmp-list li{display:flex;gap:.7rem;align-items:flex-start;padding:.45rem 0;color:#cbd5e1;line-height:1.55;border-bottom:1px dashed rgba(148,163,184,.12)}
+.cmp-list li:last-child{border-bottom:0}
+.cmp-list i{margin-top:.2rem;flex-shrink:0}
+.ypp-list{list-style:none;padding:0;margin:0}
+.ypp-list li{display:flex;gap:.9rem;align-items:flex-start;padding:1rem 1.15rem;margin:0 0 .75rem;border:1px solid rgba(6,182,212,.28);border-radius:12px;background:rgba(8,16,32,.55);color:#cbd5e1;line-height:1.7}
+.ypp-list li .n{width:28px;height:28px;border-radius:8px;display:grid;place-items:center;font-size:.72rem;color:#031017;background:#22d3ee;flex-shrink:0;font-weight:700;margin-top:.1rem}
+@media (max-width:720px){.cmp-grid{grid-template-columns:1fr}}
 .faq-item{border:1px solid rgba(6,182,212,.28);border-radius:12px;background:rgba(8,16,32,.55);margin:0 0 .75rem}
 .faq-item summary{list-style:none;cursor:pointer;padding:1rem 1.15rem;display:flex;align-items:center;gap:.8rem;color:#e2e8f0;font-weight:700}
 .faq-item summary::-webkit-details-marker{display:none}
@@ -638,6 +657,64 @@ a.hud-pill:hover{background:rgba(6,182,212,.18); border-color:rgba(34,211,238,.6
           </article>
         </div>
         <p class="text-slate-400 max-w-3xl mt-6 leading-relaxed">This tool helps you detect a robotic voice and text-to-speech narration before you upload. The TTS detector looks at pitch, loudness, and pause patterns so you can swap synthetic audio for a natural voice and keep original-content signals stronger.</p>
+      </section>
+
+      <section class="seo-block mt-16" id="fix-robotic-voice" aria-labelledby="fix-heading">
+        <p class="text-cyan-400 tracking-[.4em] text-xs mb-3">// TTS FIX GUIDE</p>
+        <h2 id="fix-heading" class="font-orb font-bold text-2xl sm:text-3xl text-white mb-4">How to Fix Robotic Voice &amp; Pass YouTube Monetization in 2026</h2>
+        <div class="seo-copy">
+          <p>A robotic voice is one of the fastest ways a YouTube Short can look like mass-produced or inauthentic content. Default text-to-speech (TTS) often has a flat pitch, even volume, and identical pauses. YouTube may still allow AI audio, but videos that add little original value on top of a synthetic voice are more likely to get limited ads or stay unmonetized.</p>
+          <p>If this checker flags TTS narration, do not re-upload the same file. Rewrite the script so it sounds like a person talking, not a caption being read. Use shorter sentences, questions, and a clear point of view. Then record again with a natural voice, or a higher-quality voice that varies tone and timing.</p>
+          <p>Background music, sound effects, and on-screen text help, but they do not replace original commentary. Pair a human-sounding voice with cuts, zooms, and footage you actually edited. Faceless channels can still pass more often when the narration teaches, reacts, or adds a unique take instead of reading a generic stock script.</p>
+          <p>Scan the new export before you upload. The TTS detector looks at pitch, loudness, and pause patterns. If the robotic voice warning remains, slow down, add breaths, and mix the voice slightly above the music so it does not sound like a template.</p>
+          <p>Use these fixes when the AI voice detector warns you:</p>
+        </div>
+        <ul class="tip-list">
+          <li>Rewrite the script in your own words. Avoid long, even paragraphs that default TTS engines read in a robotic voice.</li>
+          <li>Record with a real mic when you can. If you must use TTS, pick a natural voice and manually change speed, pitch, and pauses.</li>
+          <li>Add light background music under the voice, not over it. Leave room for breaths so the track does not sound machine-made.</li>
+          <li>Cut B-roll, zoom, captions, and your own commentary so the video is not unedited stock footage with a TTS overlay.</li>
+          <li>Export at 720p or higher, then run this free YouTube monetization checker again before you hit upload.</li>
+        </ul>
+      </section>
+
+      <section class="seo-block mt-16" id="allow-vs-deny" aria-labelledby="allow-heading">
+        <p class="text-cyan-400 tracking-[.4em] text-xs mb-3">// POLICY CONTRAST</p>
+        <h2 id="allow-heading" class="font-orb font-bold text-2xl sm:text-3xl text-white mb-4">What YouTube Allows vs. What Gets You Demonetized</h2>
+        <p class="text-slate-400 max-w-3xl mb-6 leading-relaxed">This is a heuristic guide modeled on public YouTube Partner Program guidance. It is not a YouTube decision. Use it to see which patterns usually stay eligible for ads, and which often lead to limited ads or no monetization.</p>
+        <div class="cmp-grid">
+          <article class="glass cmp-col ok">
+            <h3 class="font-orb"><i class="fa-solid fa-circle-check"></i> Usually allowed</h3>
+            <ul class="cmp-list">
+              <li><i class="fa-solid fa-check text-green-400"></i><span>Original commentary, reaction, or teaching on top of footage</span></li>
+              <li><i class="fa-solid fa-check text-green-400"></i><span>Natural voice or carefully mixed TTS that does not sound robotic</span></li>
+              <li><i class="fa-solid fa-check text-green-400"></i><span>720p HD or higher, with a Shorts-ready vertical crop when needed</span></li>
+              <li><i class="fa-solid fa-check text-green-400"></i><span>Edited clips, captions, and on-screen value you created</span></li>
+              <li><i class="fa-solid fa-check text-green-400"></i><span>A unique point of view instead of a copied stock script</span></li>
+            </ul>
+          </article>
+          <article class="glass cmp-col bad">
+            <h3 class="font-orb"><i class="fa-solid fa-circle-xmark"></i> Higher demonetization risk</h3>
+            <ul class="cmp-list">
+              <li><i class="fa-solid fa-xmark text-rose-400"></i><span>Default robotic voice / flat TTS with no original take</span></li>
+              <li><i class="fa-solid fa-xmark text-rose-400"></i><span>Unedited stock footage or reused content with little commentary</span></li>
+              <li><i class="fa-solid fa-xmark text-rose-400"></i><span>Mass-produced Shorts that all share the same template and voice</span></li>
+              <li><i class="fa-solid fa-xmark text-rose-400"></i><span>Low-quality video below 720p or stretched, blurry exports</span></li>
+              <li><i class="fa-solid fa-xmark text-rose-400"></i><span>Inauthentic content that adds no meaningful viewer value</span></li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <section class="seo-block mt-16" id="ypp-2026" aria-labelledby="ypp-heading">
+        <p class="text-cyan-400 tracking-[.4em] text-xs mb-3">// YPP 2026</p>
+        <h2 id="ypp-heading" class="font-orb font-bold text-2xl sm:text-3xl text-white mb-4">Latest YouTube Partner Program (YPP) Updates - 2026</h2>
+        <p class="text-slate-400 max-w-3xl mb-6 leading-relaxed">YPP rules still change. These 2026 points reflect publicly discussed Partner Program themes this checker is modeled on. Always confirm the latest policies in YouTube Studio. This site is not affiliated with YouTube or Google.</p>
+        <ul class="ypp-list">
+          <li><span class="n">01</span><span>Original content still matters more than volume. Reused clips and unedited stock footage remain a common reason Shorts get limited ads or stay out of YPP.</span></li>
+          <li><span class="n">02</span><span>AI and TTS audio are not an automatic ban, but a robotic voice with no unique commentary is often treated as inauthentic or mass-produced content.</span></li>
+          <li><span class="n">03</span><span>Quality and authenticity checks (HD resolution, real editing, viewer value) are part of eligibility. Scan before upload so you can fix issues instead of waiting on a YouTube review.</span></li>
+        </ul>
       </section>
 
       <section class="seo-block mt-16" id="faq" aria-labelledby="faq-heading">
