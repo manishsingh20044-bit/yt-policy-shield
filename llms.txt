@@ -1,0 +1,18 @@
+# YT Policy Shield
+
+> Free YouTube Monetization & AI Voice Checker
+
+YT Policy Shield is a free in-browser YouTube monetization checker. Drop an MP4, MOV, or WEBM file to scan Shorts and long videos for AI voice, robotic voice, TTS narration, reused content, quality, and YPP eligibility. No login. The video stays on your device.
+
+## Scanner
+
+- [Free YouTube Monetization Checker](https://yt-policy-shield.vercel.app/#view-upload): Private in-browser scanner for YouTube Shorts and long videos. Checks resolution, format, reused content, and AI voice before you upload.
+
+## How it Works
+
+- [How to check if YouTube Shorts will be monetized?](https://yt-policy-shield.vercel.app/#how-it-works): Drop a video, run a local scan, then read pass, warn, or fail results with step-by-step fixes.
+- [How does the AI Voice Detector work?](https://yt-policy-shield.vercel.app/#about): Measures pitch, loudness, and pause patterns to flag robotic voice and text-to-speech narration.
+
+## FAQ
+
+- [What are common questions about YouTube monetization?](https://yt-policy-shield.vercel.app/#faq): Free to use, no upload to a server, YPP eligibility estimates, reused content, robotic voice, and TTS detector answers.
