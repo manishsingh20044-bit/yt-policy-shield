@@ -441,6 +441,12 @@ a.hud-pill:hover{background:rgba(6,182,212,.18); border-color:rgba(34,211,238,.6
 .ypp-list{list-style:none;padding:0;margin:0}
 .ypp-list li{display:flex;gap:.9rem;align-items:flex-start;padding:1rem 1.15rem;margin:0 0 .75rem;border:1px solid rgba(6,182,212,.28);border-radius:12px;background:rgba(8,16,32,.55);color:#cbd5e1;line-height:1.7}
 .ypp-list li .n{width:28px;height:28px;border-radius:8px;display:grid;place-items:center;font-size:.72rem;color:#031017;background:#22d3ee;flex-shrink:0;font-weight:700;margin-top:.1rem}
+.demo-card{padding:1.1rem 1.15rem 1.2rem;transition:border-color .25s,box-shadow .25s,transform .25s}
+.demo-card:hover{border-color:rgba(34,211,238,.7);box-shadow:0 0 36px rgba(6,182,212,.22);transform:translateY(-3px)}
+.demo-card h3{margin:0 0 .85rem;color:#e2e8f0;font-size:.82rem;letter-spacing:.12em}
+.demo-card img{display:block;width:100%;height:auto;border-radius:10px;border:1px solid rgba(6,182,212,.35);transition:border-color .25s,box-shadow .25s}
+.demo-card:hover img{border-color:rgba(34,211,238,.65);box-shadow:0 0 24px rgba(6,182,212,.28)}
+.demo-cap{margin:.9rem 0 0;color:#94a3b8;font-size:.85rem;line-height:1.6;text-align:center}
 @media (max-width:720px){.cmp-grid{grid-template-columns:1fr}}
 .faq-item{border:1px solid rgba(6,182,212,.28);border-radius:12px;background:rgba(8,16,32,.55);margin:0 0 .75rem}
 .faq-item summary{list-style:none;cursor:pointer;padding:1rem 1.15rem;display:flex;align-items:center;gap:.8rem;color:#e2e8f0;font-weight:700}
@@ -702,6 +708,26 @@ a.hud-pill:hover{background:rgba(6,182,212,.18); border-color:rgba(34,211,238,.6
               <li><i class="fa-solid fa-xmark text-rose-400"></i><span>Low-quality video below 720p or stretched, blurry exports</span></li>
               <li><i class="fa-solid fa-xmark text-rose-400"></i><span>Inauthentic content that adds no meaningful viewer value</span></li>
             </ul>
+          </article>
+        </div>
+      </section>
+
+      <section class="seo-block mt-16" id="demo" aria-labelledby="demo-heading">
+        <p class="text-cyan-400 tracking-[.4em] text-xs mb-3">// LIVE DEMO</p>
+        <h2 id="demo-heading" class="font-orb font-bold text-2xl sm:text-3xl text-white mb-4">See It in Action: How Our Scanner Works</h2>
+        <p class="text-slate-400 max-w-3xl mb-6 leading-relaxed">See how our diagnostic core scans real videos. The first example shows a video flagged for high reused-content risk and no clear voice. The second shows a video that failed due to low resolution.</p>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <article class="glass demo-card cc">
+            <span class="k tl"></span><span class="k tr"></span><span class="k bl"></span><span class="k br"></span>
+            <h3 class="font-orb">Example 1: High Risk (Reused Content)</h3>
+            <img src="/demo-result-1.png" alt="High Risk Reused Content Result">
+            <p class="demo-cap">Result: 1 Critical Issue (No Voice / Reused Content).</p>
+          </article>
+          <article class="glass demo-card cc">
+            <span class="k tl"></span><span class="k tr"></span><span class="k bl"></span><span class="k br"></span>
+            <h3 class="font-orb">Example 2: Low Quality (Resolution)</h3>
+            <img src="/demo-result-2.png" alt="Low Resolution Result">
+            <p class="demo-cap">Result: 1 Critical Issue (Below 720p HD).</p>
           </article>
         </div>
       </section>
