@@ -8,7 +8,7 @@
 <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
 <meta name="googlebot" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
 <meta name="bingbot" content="index, follow">
-<meta name="author" content="YT Policy Shield">
+<meta name="author" content="Manish Singh">
 <meta name="application-name" content="YT Policy Shield">
 <meta name="apple-mobile-web-app-title" content="YT Policy Shield">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -60,7 +60,16 @@
         "width": 1200,
         "height": 630
       },
-      "description": "Free in-browser YouTube monetization checker, AI voice detector, reused content scanner, and YPP eligibility tool for Shorts and long-form videos."
+      "description": "Free in-browser YouTube monetization checker, AI voice detector, reused content scanner, and YPP eligibility tool for Shorts and long-form videos.",
+      "founder": { "@id": "https://yt-policy-shield.vercel.app/#author" }
+    },
+    {
+      "@type": "Person",
+      "@id": "https://yt-policy-shield.vercel.app/#author",
+      "name": "Manish Singh",
+      "jobTitle": "YouTube Creator",
+      "description": "Faceless YouTuber who built YT Policy Shield to help creators catch robotic TTS voices and monetization risk before upload.",
+      "url": "https://yt-policy-shield.vercel.app/"
     },
     {
       "@type": "WebSite",
@@ -85,6 +94,7 @@
       },
       "inLanguage": "en-US",
       "dateModified": "2026-10-25",
+      "author": { "@id": "https://yt-policy-shield.vercel.app/#author" },
       "speakable": {
         "@type": "SpeakableSpecification",
         "cssSelector": ["h1", "#how-heading", "#about-heading", "#faq-heading"]
@@ -104,6 +114,7 @@
       "isAccessibleForFree": true,
       "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
       "publisher": { "@id": "https://yt-policy-shield.vercel.app/#organization" },
+      "author": { "@id": "https://yt-policy-shield.vercel.app/#author" },
       "inLanguage": "en-US",
       "keywords": "youtube monetization checker, youtube shorts monetization checker free, youtube reused content checker, youtube ai voice detector, youtube ypp eligibility checker, youtube inauthentic content checker, youtube demonetization checker, faceless youtube channel monetization checker",
       "featureList": [
@@ -450,6 +461,9 @@ a.hud-pill:hover{background:rgba(6,182,212,.18); border-color:rgba(34,211,238,.6
 .lang-card{padding:1.25rem 1.3rem 1.4rem}
 .lang-card h3{margin:0 0 1rem;color:#67e8f9;font-size:.82rem;letter-spacing:.14em}
 .lang-card .tip-list{margin-top:.4rem}
+.note-box{padding:1.15rem 1.25rem;max-width:48rem;border-color:rgba(34,211,238,.4)}
+.note-box .kicker{margin:0 0 .45rem;color:#67e8f9;font-size:.66rem;letter-spacing:.22em;font-weight:700}
+.note-box p{margin:0;color:#cbd5e1;line-height:1.7;font-size:.95rem}
 @media (max-width:720px){.cmp-grid{grid-template-columns:1fr}}
 .faq-item{border:1px solid rgba(6,182,212,.28);border-radius:12px;background:rgba(8,16,32,.55);margin:0 0 .75rem}
 .faq-item summary{list-style:none;cursor:pointer;padding:1rem 1.15rem;display:flex;align-items:center;gap:.8rem;color:#e2e8f0;font-weight:700}
@@ -667,6 +681,11 @@ a.hud-pill:hover{background:rgba(6,182,212,.18); border-color:rgba(34,211,238,.6
         </div>
         <p class="text-slate-400 max-w-3xl mt-6 leading-relaxed">This tool helps you detect a robotic voice and text-to-speech narration before you upload. The TTS detector looks at pitch, loudness, and pause patterns so you can swap synthetic audio for a natural voice and keep original-content signals stronger.</p>
       </section>
+
+      <aside class="glass note-box mt-16" aria-label="Personal note from Manish Singh">
+        <p class="font-orb kicker">// PERSONAL NOTE</p>
+        <p>Personal Note: As a faceless YouTuber, I struggled with robotic TTS voices for months. I built this scanner to help other creators avoid demonetization before they upload. — Manish Singh</p>
+      </aside>
 
       <section class="seo-block mt-16" id="fix-robotic-voice" aria-labelledby="fix-heading">
         <p class="text-cyan-400 tracking-[.4em] text-xs mb-3">// TTS FIX GUIDE</p>
@@ -887,6 +906,7 @@ a.hud-pill:hover{background:rgba(6,182,212,.18); border-color:rgba(34,211,238,.6
     <p class="text-xs">YT Policy Shield is a free YouTube Shorts monetization checker, AI voice detector, reused content checker, and YPP eligibility scanner that runs in your browser.</p>
     <p class="text-xs">It uses a heuristic estimate modeled on YouTube Partner Program guidance.</p>
     <p class="text-xs">It is not affiliated with YouTube or Google and cannot predict their final decision.</p>
+    <p class="mt-3 text-xs">Built by Manish Singh, a fellow YouTube Creator.</p>
     <p class="mt-3 text-xs">© 2026 YT Policy Shield. All rights reserved.</p>
   </footer>
 </div>
