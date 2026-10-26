@@ -167,7 +167,7 @@
           "name": "Is this YouTube monetization checker free?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Yes. YT Policy Shield is free to use. You do not need an account to scan a video. Optional local accounts are stored only in your browser."
+            "text": "Yes. YT Policy Shield is free to use. You do not need an account to scan a video."
           }
         },
         {
@@ -473,10 +473,6 @@ a.hud-pill:hover{background:rgba(6,182,212,.18); border-color:rgba(34,211,238,.6
 .faq-item[open] summary::after{content:"-"}
 .faq-item p{padding:0 1.15rem 1.1rem;color:#94a3b8;line-height:1.7;margin:0}
 .step-num{width:36px;height:36px;border-radius:8px;display:grid;place-items:center;font-size:.75rem;color:#031017;background:#22d3ee;flex-shrink:0;font-weight:700}
-.auth-tabs{display:flex; gap:.5rem; margin-bottom:1.5rem; background:rgba(3,7,18,.5); padding:.35rem; border-radius:10px; border:1px solid rgba(6,182,212,.25)}
-.auth-tab{flex:1; padding:.65rem; text-align:center; font-size:.7rem; letter-spacing:.15em; color:#64748b; cursor:pointer; border-radius:6px; border:0; background:transparent}
-.auth-tab.active{color:#031017; background:linear-gradient(90deg,#06b6d4,#22d3ee)}
-
 .hidden{display:none!important}
 .mx-auto{margin-left:auto;margin-right:auto}
 .max-w-6xl{max-width:72rem}.max-w-2xl{max-width:42rem}.max-w-3xl{max-width:48rem}
@@ -596,10 +592,6 @@ a.hud-pill:hover{background:rgba(6,182,212,.18); border-color:rgba(34,211,238,.6
       <a href="#faq" class="hud-pill">FAQ</a>
       <span class="hud-pill"><span class="dot"></span>ONLINE</span>
       <span class="hud-pill"><i class="fa-solid fa-lock"></i>LOCAL</span>
-      <a href="#" id="accountBtn" class="hud-pill" onclick="openAuthModal(event)">
-        <i class="fa-solid fa-user"></i>
-        <span id="accountLabel">SIGN IN</span>
-      </a>
     </nav>
   </header>
 
@@ -792,7 +784,7 @@ a.hud-pill:hover{background:rgba(6,182,212,.18); border-color:rgba(34,211,238,.6
         <div>
           <details class="faq-item" open>
             <summary>Is this YouTube monetization checker free?</summary>
-            <p>Yes. YT Policy Shield is free to use. You do not need an account to scan a video. Optional local accounts are stored only in your browser.</p>
+            <p>Yes. YT Policy Shield is free to use. You do not need an account to scan a video.</p>
           </details>
           <details class="faq-item">
             <summary>Does my video get uploaded to a server?</summary>
@@ -907,7 +899,6 @@ a.hud-pill:hover{background:rgba(6,182,212,.18); border-color:rgba(34,211,238,.6
       <a href="#faq" style="color:#67e8f9; text-decoration:none; letter-spacing:.1em;">FAQ</a>
       <a href="#about" style="color:#67e8f9; text-decoration:none; letter-spacing:.1em;">ABOUT</a>
       <a href="#" onclick="openTermsModal(event)" style="color:#67e8f9; text-decoration:none; letter-spacing:.1em;">TERMS & CONDITIONS</a>
-      <a href="#" onclick="openAuthModal(event)" style="color:#67e8f9; text-decoration:none; letter-spacing:.1em;">ACCOUNT</a>
     </nav>
     <p class="text-xs">YT Policy Shield is a free YouTube Shorts monetization checker, AI voice detector, reused content checker, and YPP eligibility scanner that runs in your browser.</p>
     <p class="text-xs">It uses a heuristic estimate modeled on YouTube Partner Program guidance.</p>
@@ -931,9 +922,7 @@ a.hud-pill:hover{background:rgba(6,182,212,.18); border-color:rgba(34,211,238,.6
       <p>YT Policy Shield is a free, browser-based diagnostic tool. Your video files are never uploaded to our servers. All scanning happens locally on your device.</p>
       <h2>2. Not Affiliated with YouTube</h2>
       <p>We are not affiliated with, endorsed by, or sponsored by YouTube or Google LLC. Our tool provides a heuristic estimate and cannot predict YouTube's final decision.</p>
-      <h2>3. User Accounts (Optional)</h2>
-      <p>Accounts are stored locally using your browser's storage (localStorage). Your password is hashed locally and never sent anywhere. We cannot recover lost accounts because we never had access to them.</p>
-      <h2>4. Limitation of Liability</h2>
+      <h2>3. Limitation of Liability</h2>
       <p>The Service is provided "AS IS". We are not liable for any indirect, incidental, or consequential damages, including loss of revenue or business interruption.</p>
       <div class="glass p-4 mt-6" style="border-left:3px solid #22d3ee">
         <p class="text-sm text-slate-300 mb-0"><strong>Summary:</strong> Free tool. Local processing. Estimates only. Not YouTube. Use responsibly.</p>
@@ -945,157 +934,14 @@ a.hud-pill:hover{background:rgba(6,182,212,.18); border-color:rgba(34,211,238,.6
   </div>
 </div>
 
-<div id="authModal" class="overlay">
-  <div class="modal-box glass cc" style="max-width:26rem">
-    <span class="k tl"></span><span class="k tr"></span><span class="k bl"></span><span class="k br"></span>
-    <button class="close-btn" onclick="closeAuthModal()">✕</button>
-    
-    <div class="auth-tabs">
-      <button class="auth-tab active" id="tabLogin" onclick="switchAuthTab('login')">SIGN IN</button>
-      <button class="auth-tab" id="tabSignup" onclick="switchAuthTab('signup')">CREATE ACCOUNT</button>
-    </div>
-
-    <div id="authMsg" class="hidden mb-4" style="padding:.75rem; border-radius:8px; font-size:.85rem"></div>
-
-    <form id="loginForm" onsubmit="handleLogin(event)">
-      <div class="mb-4">
-        <label class="block text-cyan-300 text-xs mb-2">EMAIL OR USERNAME</label>
-        <input type="text" id="loginEmail" class="input" placeholder="you@example.com" required>
-      </div>
-      <div class="mb-4">
-        <label class="block text-cyan-300 text-xs mb-2">PASSWORD</label>
-        <input type="password" id="loginPassword" class="input" placeholder="••••••••" required>
-      </div>
-      <button type="submit" class="btn-neon w-full">SIGN IN</button>
-    </form>
-
-    <form id="signupForm" class="hidden" onsubmit="handleSignup(event)">
-      <div class="mb-4">
-        <label class="block text-cyan-300 text-xs mb-2">DISPLAY NAME</label>
-        <input type="text" id="signupName" class="input" placeholder="Your name" required>
-      </div>
-      <div class="mb-4">
-        <label class="block text-cyan-300 text-xs mb-2">EMAIL</label>
-        <input type="email" id="signupEmail" class="input" placeholder="you@example.com" required>
-      </div>
-      <div class="mb-4">
-        <label class="block text-cyan-300 text-xs mb-2">PASSWORD</label>
-        <input type="password" id="signupPassword" class="input" placeholder="At least 6 characters" minlength="6" required>
-      </div>
-      <label class="flex items-start gap-2 text-xs text-slate-400 mb-4 cursor-pointer">
-        <input type="checkbox" id="signupTerms" style="margin-top:.2rem" required>
-        <span>I agree to the <a href="#" onclick="closeAuthModal();openTermsModal(event)" style="color:#22d3ee">Terms & Conditions</a>.</span>
-      </label>
-      <button type="submit" class="btn-neon w-full">CREATE ACCOUNT</button>
-    </form>
-  </div>
-</div>
-
 <div id="toast" class="toast" role="status"></div>
 
 <script>
 (() => {
 'use strict';
 
-/* ============================================================
-   AUTH & MODAL LOGIC
-============================================================ */
-const STORE_KEY = 'ytps_users';
-const SESSION_KEY = 'ytps_session';
-
-function hash(str) {
-  let h1 = 0xdeadbeef, h2 = 0x41c6ce57;
-  for (let i = 0; i < str.length; i++) {
-    const ch = str.charCodeAt(i);
-    h1 = Math.imul(h1 ^ ch, 2654435761); h2 = Math.imul(h2 ^ ch, 1597334677);
-  }
-  h1 = Math.imul(h1 ^ (h1 >>> 16), 2246822507) ^ Math.imul(h2 ^ (h2 >>> 13), 3266489909);
-  h2 = Math.imul(h2 ^ (h2 >>> 16), 2246822507) ^ Math.imul(h1 ^ (h1 >>> 13), 3266489909);
-  return (h2 >>> 0).toString(16).padStart(8, '0') + (h1 >>> 0).toString(16).padStart(8, '0');
-}
-function loadUsers() { try { return JSON.parse(localStorage.getItem(STORE_KEY) || '{}'); } catch (_) { return {}; } }
-function saveUsers(u) { localStorage.setItem(STORE_KEY, JSON.stringify(u)); }
-function getSession() { try { return JSON.parse(localStorage.getItem(SESSION_KEY) || 'null'); } catch (_) { return null; } }
-
-function updateAccountUI() {
-  const label = document.getElementById('accountLabel');
-  const btn = document.getElementById('accountBtn');
-  if(!label || !btn) return;
-  
-  const sess = getSession();
-  if (sess) {
-    const users = loadUsers();
-    if (users[sess.email]) {
-      label.textContent = (users[sess.email].name || 'MY ACCOUNT').toUpperCase();
-      btn.onclick = (e) => {
-        e.preventDefault();
-        if(confirm('Signed in as ' + users[sess.email].name + '. Sign out?')) {
-          localStorage.removeItem(SESSION_KEY); location.reload();
-        }
-      };
-      return;
-    }
-  }
-  label.textContent = 'SIGN IN';
-  btn.onclick = openAuthModal;
-}
-
-window.openAuthModal = function(e) { if(e) e.preventDefault(); document.getElementById('authModal').classList.add('show'); }
-window.closeAuthModal = function() { document.getElementById('authModal').classList.remove('show'); document.getElementById('authMsg').className = 'hidden'; }
 window.openTermsModal = function(e) { if(e) e.preventDefault(); document.getElementById('termsModal').classList.add('show'); }
 window.closeTermsModal = function() { document.getElementById('termsModal').classList.remove('show'); }
-
-window.switchAuthTab = function(tab) {
-  document.getElementById('tabLogin').classList.toggle('active', tab === 'login');
-  document.getElementById('tabSignup').classList.toggle('active', tab === 'signup');
-  document.getElementById('loginForm').classList.toggle('hidden', tab !== 'login');
-  document.getElementById('signupForm').classList.toggle('hidden', tab !== 'signup');
-  document.getElementById('authMsg').className = 'hidden';
-}
-
-function showAuthMsg(msg, type) {
-  const el = document.getElementById('authMsg');
-  el.textContent = msg; el.className = 'mb-4';
-  el.style.cssText = type === 'error' 
-    ? 'padding:.75rem;border-radius:8px;font-size:.85rem;background:rgba(244,63,94,.1);border:1px solid rgba(244,63,94,.5);color:#fda4af'
-    : 'padding:.75rem;border-radius:8px;font-size:.85rem;background:rgba(16,245,160,.1);border:1px solid rgba(16,245,160,.5);color:#6ee7b7';
-}
-
-window.handleLogin = function(e) {
-  e.preventDefault();
-  const id = document.getElementById('loginEmail').value.trim().toLowerCase();
-  const pw = document.getElementById('loginPassword').value;
-  const users = loadUsers();
-  let key = Object.keys(users).find(k => k === id || (users[k].name||'').toLowerCase() === id);
-  if (!key) return showAuthMsg('No account found.', 'error');
-  if (users[key].pw !== hash(pw)) return showAuthMsg('Incorrect password.', 'error');
-  
-  localStorage.setItem(SESSION_KEY, JSON.stringify({ email: key }));
-  showAuthMsg('Welcome back!', 'success');
-  setTimeout(() => { closeAuthModal(); updateAccountUI(); }, 1000);
-}
-
-window.handleSignup = function(e) {
-  e.preventDefault();
-  const name = document.getElementById('signupName').value.trim();
-  const email = document.getElementById('signupEmail').value.trim().toLowerCase();
-  const pw = document.getElementById('signupPassword').value;
-  const agreed = document.getElementById('signupTerms').checked;
-  if (!agreed) return showAuthMsg('You must agree to the Terms.', 'error');
-  
-  const users = loadUsers();
-  if (users[email]) return showAuthMsg('Account already exists.', 'error');
-  
-  users[email] = { name, pw: hash(pw), created: Date.now() };
-  saveUsers(users);
-  localStorage.setItem(SESSION_KEY, JSON.stringify({ email }));
-  
-  showAuthMsg('Account created!', 'success');
-  setTimeout(() => { closeAuthModal(); updateAccountUI(); }, 1000);
-}
-
-document.addEventListener('DOMContentLoaded', updateAccountUI);
-
 
 /* ============================================================
    Helpers & Scanner Engine
