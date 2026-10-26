@@ -1,18 +1,32 @@
 # YT Policy Shield
 
-> Free YouTube Monetization & AI Voice Checker
+> Free YouTube Monetization Checker and AI Voice Detector
 
 YT Policy Shield is a free in-browser YouTube monetization checker. Drop an MP4, MOV, or WEBM file to scan Shorts and long videos for AI voice, robotic voice, TTS narration, reused content, quality, and YPP eligibility. No login. The video stays on your device.
+
+Official site: https://yt-policy-shield.vercel.app/
 
 ## Scanner
 
 - [Free YouTube Monetization Checker](https://yt-policy-shield.vercel.app/#view-upload): Private in-browser scanner for YouTube Shorts and long videos. Checks resolution, format, reused content, and AI voice before you upload.
 
-## How it Works
+## Guides
 
 - [How to check if YouTube Shorts will be monetized?](https://yt-policy-shield.vercel.app/#how-it-works): Drop a video, run a local scan, then read pass, warn, or fail results with step-by-step fixes.
 - [How does the AI Voice Detector work?](https://yt-policy-shield.vercel.app/#about): Measures pitch, loudness, and pause patterns to flag robotic voice and text-to-speech narration.
+- [How to fix robotic voice and pass YouTube monetization](https://yt-policy-shield.vercel.app/#fix-robotic-voice): English and Hindi guides for TTS narration, original commentary, and HD export.
+- [What YouTube allows vs what gets demonetized](https://yt-policy-shield.vercel.app/#allow-vs-deny): Original commentary vs reused stock, natural voice vs flat TTS, 720p vs low quality.
+- [YouTube Partner Program 2026 notes](https://yt-policy-shield.vercel.app/#ypp-2026): Public YPP themes this checker is modeled on. Not affiliated with YouTube or Google.
 
 ## FAQ
 
-- [What are common questions about YouTube monetization?](https://yt-policy-shield.vercel.app/#faq): Free to use, no upload to a server, YPP eligibility estimates, reused content, robotic voice, and TTS detector answers.
+- [What are common questions about YouTube monetization?](https://yt-policy-shield.vercel.app/#faq): Free to use, no server upload, YPP eligibility estimates, reused content, robotic voice, and TTS detector answers.
+
+## Facts
+
+- Price: free
+- Login: not required
+- Upload: none. Scan runs in the browser
+- Files: MP4, MOV, WEBM
+- Author: Manish Singh, YouTube creator
+- Disclaimer: heuristic estimate only. Cannot predict YouTube's final decision
