@@ -1953,13 +1953,13 @@ async function loopAnalysis(ds, sr2, chk) {
 /* ---- Robotic-voice tuning (all thresholds in one place) ----
    Add ?debug=1 to the page URL to see the raw numbers under the Voice check. */
 const VOICE_TUNE = {
-  pitchSpreadHi: 3.4, pitchSpreadRange: 2.2,   // pitch variety (semitones): below ~1.2 = monotone, above ~3.4 = lively
-  dbStdHi: 7.5, dbStdRange: 4.5,               // loudness variation (dB)
+  pitchSpreadHi: 2.4, pitchSpreadRange: 2.0,   // pitch variety (semitones): below ~0.4 = monotone, above ~2.4 = natural human
+  dbStdHi: 5.2, dbStdRange: 4.0,               // loudness variation (dB): below ~1.2 = flat TTS, above ~5.2 = natural
   pauseCVHi: 0.90, pauseCVRange: 0.55,         // how irregular pauses are (higher = more human-breathing tolerance)
   floorHiDb: -62, floorLoDb: -84,              // loudness of the gaps between phrases: <= -84 dB = digital silence
-  wPitch: 0.40, wDb: 0.20, wPause: 0.20, wFloor: 0.20,
-  failClear: 65, failQuiet: 68, failMixed: 72, // score at which we say "Robotic"
-  warnClear: 50, warnMixed: 50                 // score at which we say "a bit flat"
+  wPitch: 0.34, wDb: 0.18, wPause: 0.24, wFloor: 0.24,
+  failClear: 78, failQuiet: 82, failMixed: 86, // score at which we say "Robotic"
+  warnClear: 62, warnMixed: 64                 // score at which we say "a bit flat"
 };
 const DEBUG_VOICE = /[?&]debug=1/.test(location.search);
 
@@ -2068,6 +2068,8 @@ async function measureVoice(segs, audioDuration, chk, onProg) {
   const wsum = comps.reduce((a, c) => a + c.w, 0);
   let roboticScore = Math.round(100 * comps.reduce((a, c) => a + c.w * c.v, 0) / wsum);
   if (typeof snrDb === 'number' && snrDb < 12) roboticScore = Math.max(0, roboticScore - (snrDb < 6 ? 12 : 8));
+  if (pitchSpread >= 1.6 && dbStd >= 3.2) roboticScore = Math.max(0, roboticScore - 14);
+  else if (pitchSpread >= 1.2 || dbStd >= 2.8) roboticScore = Math.max(0, roboticScore - 6);
   const voiceLevel = peakDb < -45 ? 'quiet' : snrDb < 9 ? 'background' : 'clear';
 
   return { status: 'speech', confidence: clear ? 'clear' : 'mixed', voiceLevel, pitchSpread, dbStd, pauseCV, pauseCount: pauses.length, pauseFloorDb, roboticScore, medianPitch: med, bedLoop: loopScore >= 0.85, ...common };
@@ -2185,8 +2187,8 @@ function checkVoice(a) {
     const mixed = a.confidence === 'mixed';
     const lvl = { clear: 'Clear', quiet: 'Quiet', background: 'Background' }[a.voiceLevel] || 'Clear';
     const facts = [
-      `Voice tone variety: ${a.pitchSpread < 1.3 ? 'Very flat' : a.pitchSpread < 2.0 ? 'Fairly flat' : 'Natural'}`,
-      `Volume changes: ${a.dbStd < 4 ? 'Very even' : a.dbStd < 6 ? 'Fairly even' : 'Natural'}`
+      `Voice tone variety: ${a.pitchSpread < 0.8 ? 'Very flat' : a.pitchSpread < 1.5 ? 'Fairly flat' : 'Natural'}`,
+      `Volume changes: ${a.dbStd < 2.4 ? 'Very even' : a.dbStd < 4.2 ? 'Fairly even' : 'Natural'}`
     ];
     if (a.pauseCV !== null) facts.push(`Pauses: ${a.pauseCV < 0.4 ? 'Evenly spaced' : a.pauseCV < 0.6 ? 'Fairly regular' : 'Natural'}`);
     if (a.pauseFloorDb !== null && a.pauseFloorDb !== undefined) facts.push(`Gaps between phrases: ${a.pauseFloorDb <= -80 ? 'Digital silence' : a.pauseFloorDb <= -66 ? 'Unusually clean' : 'Natural room noise'}`);
