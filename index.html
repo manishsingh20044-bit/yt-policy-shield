@@ -102,7 +102,7 @@
       },
       "inLanguage": "en-US",
       "datePublished": "2026-01-01",
-      "dateModified": "2026-10-26",
+      "dateModified": "2026-10-27",
       "author": { "@id": "https://yt-policy-shield.vercel.app/#author" },
       "speakable": {
         "@type": "SpeakableSpecification",
@@ -140,7 +140,8 @@
         "Inauthentic and mass produced content checker",
         "Resolution and quality check for 720p HD",
         "Step-by-step fixes for every issue found",
-        "Private scan: your video never leaves your device"
+        "Private scan: your video never leaves your device",
+        "Content value score for low-value and inauthentic content risk"
       ]
     },
     {
@@ -621,6 +622,7 @@ a.hud-pill:hover{background:rgba(6,182,212,.18); border-color:rgba(34,211,238,.6
 .fa-circle-info::before,.fa-circle-question::before{content:"i"}
 .fa-ban::before{content:"X"}
 .fa-file-video::before{content:">"}
+.fa-file-pdf::before{content:"PDF"}
 .fa-copy::before{content:"[]"}
 .fa-lightbulb::before{content:"*"}
 .mi{width:1.4rem;display:inline-block;text-align:center}
@@ -718,7 +720,7 @@ a.hud-pill:hover{background:rgba(6,182,212,.18); border-color:rgba(34,211,238,.6
         <p class="font-orb text-lg sm:text-xl tracking-[.15em] text-white">DROP VIDEO INTO TARGET ZONE</p>
         <p class="text-slate-400 mt-2 mb-6 text-sm">or click to open the file picker</p>
         <button type="button" class="btn-neon" id="pickBtn"><i class="fa-solid fa-crosshairs"></i> SELECT VIDEO FILE</button>
-        <p class="mt-6 text-xs tracking-[.25em] text-cyan-300/70">ACCEPTED: MP4 &nbsp;//&nbsp; MOV &nbsp;//&nbsp; WEBM</p>
+        <p class="mt-6 text-xs tracking-[.25em] text-cyan-300/70">ACCEPTED: MP4 &nbsp;//&nbsp; MOV &nbsp;//&nbsp; WEBM &nbsp;//&nbsp; MAX 100 MB</p>
       </div>
       <input id="fileInput" type="file" accept=".mp4,.mov,.webm,video/mp4,video/quicktime,video/webm" class="hidden">
 
@@ -1137,11 +1139,13 @@ input.addEventListener('change', () => { if (input.files[0]) handleFile(input.fi
 $('#abortBtn').addEventListener('click', resetAll);
 $('#errBtn').addEventListener('click', resetAll);
 
+const MAX_FILE_BYTES = 100 * 1024 * 1024;
 function handleFile(file) {
   const okExt = /\.(mp4|mov|webm)$/i.test(file.name);
   const okType = /^video\/(mp4|quicktime|webm)$/i.test(file.type);
   if (!okExt && !okType) { toast('Unsupported file. Please use MP4, MOV or WEBM.'); input.value = ''; return; }
   if (!file.size) { toast('That file is empty.'); input.value = ''; return; }
+  if (file.size > MAX_FILE_BYTES) { toast('File is too large. Please use a video under 100 MB.'); input.value = ''; return; }
   startScan(file);
 }
 
@@ -1155,8 +1159,10 @@ const MOD_ICON = {
 };
 function setMod(id, state) {
   const li = $(`#modList li[data-mod="${id}"]`);
+  if (!li) return;
   li.className = state === 'pending' ? '' : state;
-  $('.mi', li).innerHTML = MOD_ICON[state];
+  const mi = $('.mi', li);
+  if (mi) mi.innerHTML = MOD_ICON[state] || MOD_ICON.pending;
 }
 let shownPct = 0;
 function setProgress(p, text) {
@@ -1355,7 +1361,11 @@ async function runDiagnostics(file, token) {
 }
 
 function logAudio(a) {
-  if (a.status === 'speech') log(a.roboticScore >= 62 && a.confidence === 'clear' ? 'Voice analysis done: sounds robotic.' : a.roboticScore >= 40 ? 'Voice analysis done: a little flat.' : 'Voice analysis done: sounds natural.', a.roboticScore >= 62 && a.confidence === 'clear' ? 'bad' : a.roboticScore >= 40 ? 'warn' : 'ok');
+  if (a.status === 'speech') {
+    const failAt = a.confidence === 'mixed' ? VOICE_TUNE.failMixed : a.voiceLevel === 'clear' ? VOICE_TUNE.failClear : VOICE_TUNE.failQuiet;
+    const warnAt = a.confidence === 'mixed' ? VOICE_TUNE.warnMixed : VOICE_TUNE.warnClear;
+    log(a.roboticScore >= failAt ? 'Voice analysis done: sounds robotic.' : a.roboticScore >= warnAt ? 'Voice analysis done: a little flat.' : 'Voice analysis done: sounds natural.', a.roboticScore >= failAt ? 'bad' : a.roboticScore >= warnAt ? 'warn' : 'ok');
+  }
   else if (a.status === 'nospeech') log('Audio found, but no clear spoken voice.', 'info');
   else if (a.status === 'silent') log('This video has no audible sound.', 'info');
   else log('Audio could not be read for this file.', 'info');
@@ -2662,10 +2672,12 @@ function renderResults(R) {
     <div class="flex flex-wrap gap-3 mt-10 justify-center">
       <button class="btn-neon" id="resetBtn"><i class="fa-solid fa-rotate-right"></i> SCAN NEW VIDEO</button>
       <button class="btn-ghost" id="copyBtn"><i class="fa-regular fa-copy"></i> COPY REPORT</button>
+      <button class="btn-ghost" id="pdfBtn"><i class="fa-regular fa-file-pdf"></i> DOWNLOAD PDF</button>
     </div>`;
 
   $('#resetBtn').addEventListener('click', resetAll);
   $('#copyBtn').addEventListener('click', () => copyReport(R, head, tag, scoreKnown ? score : null, sorted));
+  $('#pdfBtn').addEventListener('click', () => downloadPdf(R, head, tag, scoreKnown ? score : null, sorted));
   requestAnimationFrame(() => requestAnimationFrame(() => {
     $('#ringFg').style.strokeDashoffset = C * (1 - (scoreKnown ? score : 0) / 100);
     $$('.meter>i').forEach(el => { el.style.transform = 'scaleX(' + (clamp(+el.dataset.w, 0, 100) / 100) + ')'; });
@@ -2674,12 +2686,15 @@ function renderResults(R) {
 
 function copyReport(R, head, tag, score, checks) {
   const m = R.meta;
-  const lines = ['YT POLICY SHIELD v2.0 — REPORT', `File: ${m.name} (${m.w && m.h ? m.w + 'x' + m.h + ', ' : ''}${durText(m)})`,
+  const lines = ['YT POLICY SHIELD v2.0 — REPORT', `File: ${m.name} (${m.w && m.h ? m.w + 'x' + m.h + ', ' : ''}${durText(m)}, ${fmtSize(m.size)})`,
     `Verdict: ${head} (${tag})${score === null ? '' : '  |  Score: ' + score + '/100'}`, ''];
   checks.forEach(c => {
     lines.push(`[${statusWord(c)}] ${c.title}: ${c.headline}`);
+    if (c.badge) lines.push('  Result: ' + c.badge);
     lines.push('  ' + c.note);
+    (c.facts || []).forEach(f => lines.push('  - ' + f));
     (c.fixes || []).forEach((f, i) => lines.push(`  Fix ${i + 1}: ${f}`));
+    if (c.tip) lines.push('  Tip: ' + c.tip);
     lines.push('');
   });
   lines.push('Estimate only; not an official YouTube decision.');
@@ -2693,6 +2708,94 @@ function fallbackCopy(text, cb) {
   document.body.appendChild(ta); ta.select();
   try { document.execCommand('copy'); cb(); } catch (_) { toast('Copy failed. Select the report text manually.'); }
   ta.remove();
+}
+
+function pdfEscape(s) {
+  return String(s).replace(/\\/g, '\\\\').replace(/\(/g, '\\(').replace(/\)/g, '\\)').replace(/[^\x09\x20-\x7E]/g, c => {
+    const code = c.charCodeAt(0);
+    return code > 255 ? '?' : '\\' + code.toString(8).padStart(3, '0');
+  });
+}
+function wrapPdfLines(text, max) {
+  const words = String(text || '').replace(/\s+/g, ' ').trim().split(' ');
+  const lines = [];
+  let cur = '';
+  words.forEach(w => {
+    const next = cur ? cur + ' ' + w : w;
+    if (next.length > max) { if (cur) lines.push(cur); cur = w; } else cur = next;
+  });
+  if (cur) lines.push(cur);
+  return lines.length ? lines : [''];
+}
+function downloadPdf(R, head, tag, score, checks) {
+  const m = R.meta;
+  const pageW = 612, pageH = 792, margin = 42;
+  const bg = '0.02 0.03 0.07 rg 0 0 ' + pageW + ' ' + pageH + ' re f';
+  const blocks = [];
+  const add = (text, size, color, gap) => {
+    wrapPdfLines(text, size >= 14 ? 46 : 84).forEach(line => blocks.push({ text: line, size, color, gap: gap || (size + 5) }));
+  };
+  add('YT POLICY SHIELD', 16, '0.13 0.71 0.83', 22);
+  add('Local monetization diagnostic report', 10, '0.89 0.91 0.94', 16);
+  add('File: ' + m.name, 10, '0.89 0.91 0.94', 14);
+  add((m.w && m.h ? m.w + 'x' + m.h + '  |  ' : '') + durText(m) + '  |  ' + fmtSize(m.size), 10, '0.79 0.82 0.88', 14);
+  add('Verdict: ' + head, 13, '0.13 0.71 0.83', 18);
+  add(tag + (score === null ? '' : '  |  Score: ' + score + '/100'), 10, '0.89 0.91 0.94', 18);
+  checks.forEach(c => {
+    add(' ', 8, '0.89 0.91 0.94', 10);
+    add('[' + statusWord(c) + '] ' + c.title, 11, '0.40 0.83 0.93', 16);
+    if (c.badge) add('Result: ' + c.badge, 10, '0.89 0.91 0.94', 14);
+    add(c.headline, 10, '0.89 0.91 0.94', 14);
+    add(c.note, 9, '0.79 0.82 0.88', 13);
+    (c.facts || []).forEach(f => add('- ' + f, 9, '0.79 0.82 0.88', 12));
+    (c.fixes || []).forEach((f, i) => add('Fix ' + (i + 1) + ': ' + f, 9, '0.79 0.82 0.88', 12));
+    if (c.tip) add('Tip: ' + c.tip, 9, '0.79 0.82 0.88', 12);
+  });
+  add('Estimate only; not an official YouTube decision.', 9, '0.63 0.71 0.78', 14);
+
+  const pages = [];
+  let y = pageH - margin, ops = [bg];
+  const flush = () => { if (ops.length) pages.push(ops.join('\n')); ops = [bg]; y = pageH - margin; };
+  blocks.forEach(b => {
+    if (y - b.gap < margin) flush();
+    ops.push('BT /F1 ' + b.size + ' Tf ' + b.color + ' rg ' + margin + ' ' + y + ' Td (' + pdfEscape(b.text) + ') Tj ET');
+    y -= b.gap;
+  });
+  flush();
+
+  const n = pages.length;
+  const fontId = 3 + n;
+  const objs = [
+    '<< /Type /Catalog /Pages 2 0 R >>',
+    '<< /Type /Pages /Kids [' + pages.map((_, i) => (3 + i) + ' 0 R').join(' ') + '] /Count ' + n + ' >>'
+  ];
+  pages.forEach((_, i) => {
+    objs.push('<< /Type /Page /Parent 2 0 R /MediaBox [0 0 ' + pageW + ' ' + pageH + '] /Resources << /Font << /F1 ' + fontId + ' 0 R >> >> /Contents ' + (fontId + 1 + i) + ' 0 R >>');
+  });
+  objs.push('<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>');
+  pages.forEach(body => {
+    const stream = body + '\n';
+    objs.push('<< /Length ' + stream.length + ' >>\nstream\n' + stream + 'endstream');
+  });
+
+  let pdf = '%PDF-1.4\n';
+  const xref = [0];
+  objs.forEach((o, i) => {
+    xref.push(pdf.length);
+    pdf += (i + 1) + ' 0 obj\n' + o + '\nendobj\n';
+  });
+  const xrefStart = pdf.length;
+  pdf += 'xref\n0 ' + (objs.length + 1) + '\n0000000000 65535 f \n';
+  xref.slice(1).forEach(p => { pdf += String(p).padStart(10, '0') + ' 00000 n \n'; });
+  pdf += 'trailer << /Size ' + (objs.length + 1) + ' /Root 1 0 R >>\nstartxref\n' + xrefStart + '\n%%EOF';
+  const blob = new Blob([pdf], { type: 'application/pdf' });
+  const a = document.createElement('a');
+  const url = URL.createObjectURL(blob);
+  a.href = url;
+  a.download = 'yt-policy-shield-report.pdf';
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 1500);
+  toast('PDF downloaded.', true);
 }
 
 })();
