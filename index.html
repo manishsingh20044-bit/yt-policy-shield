@@ -610,6 +610,7 @@ a.hud-pill:hover{background:rgba(6,182,212,.18); border-color:rgba(34,211,238,.6
 .fa-mobile-screen::before{content:"[]"}
 .fa-clone::before{content:"="}
 .fa-wave-square::before{content:"~"}
+.fa-chart-simple::before{content:"%"}
 .fa-xmark::before{content:"x"}
 .fa-triangle-exclamation::before{content:"!"}
 .fa-rotate-left::before,.fa-rotate-right::before{content:"<"}
@@ -977,6 +978,7 @@ a.hud-pill:hover{background:rgba(6,182,212,.18); border-color:rgba(34,211,238,.6
               <li data-mod="fmt"><span class="mi"></span>Format &amp; Aspect Ratio</li>
               <li data-mod="reuse"><span class="mi"></span>Reused Content Rules</li>
               <li data-mod="voice"><span class="mi"></span>AI Voice Signature</li>
+              <li data-mod="value"><span class="mi"></span>Content Value Score</li>
             </ul>
           </div>
           <div class="glass p-4">
@@ -1181,7 +1183,7 @@ function resetScanUI(file) {
   $('#log').innerHTML = '';
   $('#hudRes').textContent = 'RES: --'; $('#hudDur').textContent = 'DUR: --';
   $('#hudName').textContent = 'TARGET: ' + file.name;
-  ['res', 'fmt', 'reuse', 'voice'].forEach(m => setMod(m, 'pending'));
+  ['res', 'fmt', 'reuse', 'voice', 'value'].forEach(m => setMod(m, 'pending'));
   const c = $('#previewCanvas').getContext('2d');
   c.fillStyle = '#020617'; c.fillRect(0, 0, 640, 360);
 }
@@ -1335,10 +1337,14 @@ async function runDiagnostics(file, token) {
   }
 
   setProgress(94, 'Compiling Diagnostic Matrix...');
+  setMod('value', 'active');
   R.voiceCheck = checkVoice(R.audio);
   R.reuseCheck = checkReuse(R.meta, R.visual, R.audio);
+  R.valueCheck = checkContentValue(R.meta, R.visual, R.audio, R.reuseCheck);
   setMod('voice', R.voiceCheck.status);
   setMod('reuse', R.reuseCheck.status);
+  setMod('value', R.valueCheck.status);
+  log(`Content value: ${R.valueCheck.headline}`, R.valueCheck.status === 'bad' ? 'bad' : R.valueCheck.status === 'warn' ? 'warn' : 'ok');
   chk();
   setProgress(100, 'Diagnostic Complete');
   log('Report ready.', 'ok');
@@ -2443,6 +2449,81 @@ function checkReuse(meta, vis, aud) {
     tip: 'We can’t see where your clips came from. Make sure you own, or have a license for, everything in the video.' };
 }
 
+function checkContentValue(meta, vis, aud, reuse) {
+  const base = { id: 'value', icon: 'fa-chart-simple', title: 'Content Value Score', spec: 'LOW VALUE RISK', meterLabel: 'Viewer value' };
+  const dur = meta && meta.dur ? meta.dur : 0;
+  const visReady = vis && !vis.skipped;
+  const audioKnown = aud && ['speech', 'nospeech', 'silent'].includes(aud.status);
+  if (!audioKnown && (!visReady || vis.limited) && !(reuse && !reuse.unverified)) {
+    return { ...base, status: 'info', unverified: true, badge: 'Not Checked', value: 'Unknown', sub: 'Not enough data', meter: 0,
+      headline: 'Content value couldn’t be checked',
+      note: 'We couldn’t read enough picture or sound to estimate whether this clip looks low-value or inauthentic.',
+      facts: [], tip: CHECK_NEEDS_MP4 };
+  }
+
+  let risk = 0;
+  const reasons = [];
+  const facts = [];
+  const noSpeech = aud && (aud.status === 'silent' || aud.status === 'nospeech');
+  const shortSilent = dur > 0 && dur < 15 && noSpeech;
+  const noCutsLong = visReady && vis.hits === 0 && dur > 20;
+  const reuseFlag = reuse && !reuse.unverified && (reuse.status === 'bad' || reuse.status === 'warn');
+
+  if (shortSilent) {
+    risk += 34;
+    reasons.push('it is under 15 seconds and has no spoken commentary');
+  }
+  if (aud && aud.status === 'silent') {
+    risk += 28;
+    reasons.push('it has no sound');
+  } else if (aud && aud.status === 'nospeech') {
+    risk += 24;
+    reasons.push('there is only music or ambient sound, with no speech');
+  }
+  if (noCutsLong) {
+    risk += 26;
+    reasons.push('it is over 20 seconds with no cuts or edits');
+  }
+  if (reuseFlag) {
+    risk += reuse.status === 'bad' ? 32 : 18;
+    reasons.push(reuse.status === 'bad' ? 'the reused-content check is high risk' : 'the reused-content check shows warning signs');
+  }
+  if (aud && aud.status === 'speech' && aud.confidence === 'clear') risk -= 10;
+  if (visReady && vis.hits > 0) risk -= 6;
+  risk = clamp(Math.round(risk), 0, 100);
+
+  facts.push('Length: ' + (dur > 0 ? fmtTime(dur) : 'Unknown'));
+  facts.push('Spoken commentary: ' + (aud && aud.status === 'speech' ? 'Yes' : noSpeech ? 'No' : 'Unknown'));
+  facts.push('Editing: ' + (!visReady ? 'Not measured' : vis.hits === 0 ? 'No cuts detected' : vis.hits + ' cut' + (vis.hits === 1 ? '' : 's')));
+  facts.push('Reused-content check: ' + (reuse && !reuse.unverified ? (reuse.status === 'bad' ? 'High risk' : reuse.status === 'warn' ? 'Medium risk' : 'Low risk') : 'Not checked'));
+
+  const meter = 100 - risk;
+  const b = { ...base, facts, meter, risk };
+  const why = reasons.length ? joinList(reasons.slice(0, 4)) : 'no major low-value signs';
+
+  if (risk >= 55) return { ...b, status: 'bad', badge: 'Low Value Risk: High', value: 'High', sub: 'May look inauthentic',
+    headline: 'Low value risk is high',
+    note: `We noticed that ${why}. YouTube may treat this as low-value or inauthentic content if it adds little original commentary, editing, or footage.`,
+    fixes: [
+      'Add human commentary (voiceover or on camera) that explains, reacts, or teaches.',
+      'Edit the clip: cuts, zooms, titles, and captions so it is not one unedited take.',
+      'Include original footage or a unique point of view instead of stock or saved clips alone.',
+      'Give viewers a reason to watch past the first seconds: a hook, a takeaway, or a clear story.'
+    ] };
+  if (risk >= 28) return { ...b, status: 'warn', badge: 'Low Value Risk: Medium', value: 'Medium', sub: 'Could look thin',
+    headline: 'Low value risk is medium',
+    note: `We noticed that ${why}. That does not fail the check on its own, but adding commentary and edits usually keeps a clip out of the low-value bucket.`,
+    fixes: [
+      'Add a short spoken take or on-screen explanation.',
+      'Cut or re-order shots so the video feels produced.',
+      'Mix in original footage if you used stock or saved clips.'
+    ] };
+  return { ...b, status: 'ok', badge: 'Low Value Risk: Low', value: 'Low', sub: 'Looks like it adds value',
+    headline: 'Low value risk is low',
+    note: 'This clip does not look like a short, silent, unedited, or reused upload. YouTube may still review it, but the usual low-value signals are not stacked here.',
+    tip: 'Keep adding original commentary and edits on future uploads so the channel does not look mass-produced.' };
+}
+
 const STATUS_ICON = { ok: 'fa-circle-check', warn: 'fa-triangle-exclamation', bad: 'fa-circle-xmark', info: 'fa-circle-info' };
 const NOTE_TITLE = { ok: 'WHY IT PASSED', warn: 'WHAT TO WATCH', bad: 'WHY IT FAILED', info: 'GOOD TO KNOW' };
 const statusWord = c => c.unverified ? 'NOT CHECKED' : { ok: 'PASSED', warn: 'WARNING', bad: 'FAILED', info: 'NO ISSUE' }[c.status];
@@ -2489,7 +2570,7 @@ function checkCard(c, i) {
 
 function renderResults(R) {
   const { meta } = R;
-  const checks = [R.resCheck, R.fmtCheck, R.reuseCheck, R.voiceCheck];
+  const checks = [R.resCheck, R.fmtCheck, R.reuseCheck, R.voiceCheck, R.valueCheck];
   const ran = checks.filter(c => !c.unverified);
   const fails = checks.filter(c => c.status === 'bad').length;
   const warns = checks.filter(c => c.status === 'warn').length;
@@ -2508,13 +2589,13 @@ function renderResults(R) {
     tag = 'NOT ENOUGH READABLE DATA'; sub = 'We couldn’t read enough of this video to judge it. Export it as a standard MP4 and scan again.';
   } else {
     level = 'ok'; icon = 'fa-circle-check'; head = 'MONETIZATION SAFE';
-    tag = passedN === 4 ? '100% PASSED' : `${passedN} OF ${ran.length} CHECKS PASSED`;
+    tag = passedN === checks.length ? '100% PASSED' : `${passedN} OF ${ran.length} CHECKS PASSED`;
     sub = 'Your video passed every check. We found no signs of policy problems.';
   }
 
   let score = 100;
   ran.forEach(c => {
-    const wgt = { res: 30, fmt: 10, reuse: 35, voice: 35 }[c.id];
+    const wgt = { res: 22, fmt: 8, reuse: 26, voice: 26, value: 18 }[c.id];
     if (c.status === 'bad') score -= wgt; else if (c.status === 'warn') score -= Math.round(wgt * 0.45);
   });
   const audioStatus = R.audio && R.audio.status;
@@ -2526,8 +2607,8 @@ function renderResults(R) {
   const grade = !scoreKnown ? 'NOT ENOUGH DATA' : level === 'bad' ? 'AT RISK' : level === 'warn' ? 'NEEDS WORK' : score >= 90 ? 'EXCELLENT' : 'GOOD';
   const C = 2 * Math.PI * 52;
 
-  const pills = [R.resCheck, R.voiceCheck, R.reuseCheck, R.fmtCheck].map(badgeHTML).join('');
-  const specs = [R.resCheck, R.voiceCheck, R.reuseCheck, R.fmtCheck].map(specCard).join('');
+  const pills = [R.resCheck, R.voiceCheck, R.reuseCheck, R.fmtCheck, R.valueCheck].map(badgeHTML).join('');
+  const specs = [R.resCheck, R.voiceCheck, R.reuseCheck, R.fmtCheck, R.valueCheck].map(specCard).join('');
   const order = { bad: 0, warn: 1, ok: 2, info: 3 };
   const sorted = [...checks].sort((a, b) => (a.unverified ? 4 : order[a.status]) - (b.unverified ? 4 : order[b.status]));
   const cards = sorted.map(checkCard).join('');
@@ -2569,7 +2650,7 @@ function renderResults(R) {
     </div>
 
     <h2 class="font-orb text-xs tracking-[.35em] text-cyan-300 mt-8 mb-3">// YOUR VIDEO AT A GLANCE</h2>
-    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">${specs}</div>
+    <div class="grid sm:grid-cols-2 lg:grid-cols-5 gap-4">${specs}</div>
 
     <div class="flex flex-wrap items-end justify-between gap-2 mt-8 mb-3">
       <h2 class="font-orb text-xs tracking-[.35em] text-cyan-300">// FAILURE DIAGNOSTIC MATRIX</h2>
