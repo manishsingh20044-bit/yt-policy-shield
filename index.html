@@ -102,7 +102,7 @@
       },
       "inLanguage": "en-US",
       "datePublished": "2026-01-01",
-      "dateModified": "2026-10-26",
+      "dateModified": "2026-10-31",
       "author": { "@id": "https://yt-policy-shield.vercel.app/#author" },
       "speakable": {
         "@type": "SpeakableSpecification",
@@ -481,6 +481,8 @@ a.hud-pill:hover{background:rgba(6,182,212,.18); border-color:rgba(34,211,238,.6
   font-size:.7rem; color:#031017; background:#22d3ee; border-radius:4px; font-weight:700}
 .fade-up{opacity:1}
 .banner .tagline{color:var(--c)}
+.why-list{list-style:disc;padding-left:1.2rem;display:flex;flex-direction:column;gap:.35rem;font-size:.9rem;line-height:1.5}
+.verdict-why .fixlist{font-size:.9rem}
 .badge{display:inline-flex;align-items:center;gap:.45rem;padding:.3rem .85rem;border-radius:999px;font-size:.8rem;font-weight:700;letter-spacing:.03em;border:1px solid currentColor;white-space:nowrap}
 .badge.ok{color:#10f5a0;background:rgba(16,245,160,.10)}
 .badge.warn{color:#f59e0b;background:rgba(245,158,11,.10)}
@@ -612,6 +614,8 @@ a.hud-pill:hover{background:rgba(6,182,212,.18); border-color:rgba(34,211,238,.6
 .fa-wave-square::before{content:"~"}
 .fa-chart-simple::before{content:"%"}
 .fa-xmark::before{content:"x"}
+.fa-check::before{content:"\2713"}
+.text-green-400{color:#4ade80}.text-rose-400{color:#fb7185}
 .fa-triangle-exclamation::before{content:"!"}
 .fa-rotate-left::before,.fa-rotate-right::before{content:"<"}
 .fa-circle::before{content:"o"}
@@ -651,6 +655,7 @@ a.hud-pill:hover{background:rgba(6,182,212,.18); border-color:rgba(34,211,238,.6
   .btn-neon,.btn-ghost{width:100%;min-height:48px;font-size:16px;padding:1rem 1.4rem}
   .text-5xl{font-size:2.2rem}.text-3xl{font-size:1.5rem}.text-2xl{font-size:1.25rem}
   .text-xs,.text-\[9px\],.text-\[10px\],.text-\[11px\]{font-size:14px}
+  .w-36 .text-\[9px\]{font-size:9px}
   .text-sm{font-size:16px}
   nav.flex.flex-wrap{gap:.6rem}
   .social-links a{min-width:44px;min-height:44px}
@@ -720,11 +725,11 @@ a.hud-pill:hover{background:rgba(6,182,212,.18); border-color:rgba(34,211,238,.6
         <button type="button" class="btn-neon" id="pickBtn"><i class="fa-solid fa-crosshairs"></i> SELECT VIDEO FILE</button>
         <p class="mt-6 text-xs tracking-[.25em] text-cyan-300/70">ACCEPTED: MP4 &nbsp;//&nbsp; MOV &nbsp;//&nbsp; WEBM</p>
       </div>
-      <input id="fileInput" type="file" accept=".mp4,.mov,.webm,video/mp4,video/quicktime,video/webm" class="hidden">
+      <input id="fileInput" type="file" accept=".mp4,.m4v,.mov,.webm,video/mp4,video/x-m4v,video/quicktime,video/webm" class="hidden">
 
       <div class="mt-8 grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        <div class="glass p-4"><i class="fa-solid fa-tv text-cyan-400 mb-2"></i><p class="font-orb text-xs tracking-widest text-white">RESOLUTION &amp; QUALITY</p><p class="text-xs text-slate-400 mt-1">Flags anything below 720p HD as a Low Quality Error.</p></div>
-        <div class="glass p-4"><i class="fa-solid fa-mobile-screen text-cyan-400 mb-2"></i><p class="font-orb text-xs tracking-widest text-white">SHORTS / LONG FORMAT</p><p class="text-xs text-slate-400 mt-1">Checks aspect ratio and length against Shorts rules.</p></div>
+        <div class="glass p-4"><i class="fa-solid fa-tv text-cyan-400 mb-2"></i><p class="font-orb text-xs tracking-widest text-white">RESOLUTION &amp; QUALITY</p><p class="text-xs text-slate-400 mt-1">Warns when your video is below 720p HD.</p></div>
+        <div class="glass p-4"><i class="fa-solid fa-mobile-screen text-cyan-400 mb-2"></i><p class="font-orb text-xs tracking-widest text-white">SHORTS / LONG FORMAT</p><p class="text-xs text-slate-400 mt-1">Checks shape and length against the current Shorts rules (square or vertical, up to 3 minutes).</p></div>
         <div class="glass p-4"><i class="fa-solid fa-clone text-cyan-400 mb-2"></i><p class="font-orb text-xs tracking-widest text-white">REUSED CONTENT RISK</p><p class="text-xs text-slate-400 mt-1">Looks for unedited, commentary-free stock-style footage.</p></div>
         <div class="glass p-4"><i class="fa-solid fa-wave-square text-cyan-400 mb-2"></i><p class="font-orb text-xs tracking-widest text-white">AI VOICE SIGNATURE</p><p class="text-xs text-slate-400 mt-1">Our tool listens to the timing and tone of your voiceover just like a human reviewer does, flagging flat and unnatural audio instantly so you can stay safe.</p></div>
       </div>
@@ -854,13 +859,13 @@ a.hud-pill:hover{background:rgba(6,182,212,.18); border-color:rgba(34,211,238,.6
             <span class="k tl"></span><span class="k tr"></span><span class="k bl"></span><span class="k br"></span>
             <h3 class="font-orb">Example 1: High Risk (Reused Content)</h3>
             <img src="/demo-result-1.png" width="1175" height="679" loading="lazy" decoding="async" alt="YT Policy Shield scan result showing high reused content risk and no clear voice on a YouTube Short">
-            <p class="demo-cap">Result: 1 Critical Issue (No Voice / Reused Content).</p>
+            <p class="demo-cap">Result: flagged for high reused-content risk (no commentary found).</p>
           </article>
           <article class="glass demo-card cc">
             <span class="k tl"></span><span class="k tr"></span><span class="k bl"></span><span class="k br"></span>
             <h3 class="font-orb">Example 2: Low Quality (Resolution)</h3>
             <img src="/demo-result-2.png" width="1155" height="692" loading="lazy" decoding="async" alt="YT Policy Shield scan result showing a YouTube Short failed for resolution below 720p HD">
-            <p class="demo-cap">Result: 1 Critical Issue (Below 720p HD).</p>
+            <p class="demo-cap">Result: flagged for resolution below 720p HD.</p>
           </article>
         </div>
       </section>
@@ -1037,10 +1042,8 @@ a.hud-pill:hover{background:rgba(6,182,212,.18); border-color:rgba(34,211,238,.6
       <a href="#" onclick="openTermsModal(event)" style="color:#67e8f9; text-decoration:none; letter-spacing:.1em;">TERMS & CONDITIONS</a>
     </nav>
     <nav class="social-links" aria-label="Social media">
-      <a href="#" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
-      <a href="#" aria-label="Twitter / X"><i class="fa-brands fa-x-twitter"></i></a>
-      <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
-      <a href="#" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+      <a href="https://www.youtube.com/@ytshieldhindi" target="_blank" rel="noopener" aria-label="YT Shield Hindi on YouTube"><i class="fa-brands fa-youtube"></i></a>
+      <a href="https://www.instagram.com/ytshieldhindi/" target="_blank" rel="noopener" aria-label="YT Shield Hindi on Instagram"><i class="fa-brands fa-instagram"></i></a>
     </nav>
     <p class="text-xs">YT Policy Shield is a free YouTube Shorts monetization checker, AI voice detector, reused content checker, and YPP eligibility scanner that runs in your browser.</p>
     <p class="text-xs">It uses a heuristic estimate modeled on YouTube Partner Program guidance.</p>
@@ -1084,6 +1087,8 @@ a.hud-pill:hover{background:rgba(6,182,212,.18); border-color:rgba(34,211,238,.6
 
 window.openTermsModal = function(e) { if(e) e.preventDefault(); document.getElementById('termsModal').classList.add('show'); }
 window.closeTermsModal = function() { document.getElementById('termsModal').classList.remove('show'); }
+document.addEventListener('keydown', e => { if (e.key === 'Escape') window.closeTermsModal(); });
+document.getElementById('termsModal').addEventListener('click', e => { if (e.target.id === 'termsModal') window.closeTermsModal(); });
 
 /* ============================================================
    Helpers & Scanner Engine
@@ -1105,7 +1110,7 @@ const fmtTime = s => {
   return h ? `${h}:${String(m).padStart(2,'0')}:${String(r).padStart(2,'0')}` : `${m}:${String(r).padStart(2,'0')}`;
 };
 const fmtSize = b => b > 1e9 ? (b / 1e9).toFixed(2) + ' GB' : (b / 1e6).toFixed(1) + ' MB';
-const durText = m => (m.estimated ? '~' : '') + fmtTime(m.dur);
+const durText = m => (m.durUnknown || !(m.dur > 0)) ? 'length unknown' : (m.estimated ? '~' : '') + fmtLen(m.dur);
 const median = a => { if (!a.length) return 0; const s = [...a].sort((x,y)=>x-y), m = s.length >> 1; return s.length % 2 ? s[m] : (s[m-1] + s[m]) / 2; };
 const pct = (a, p) => { if (!a.length) return 0; const s = [...a].sort((x,y)=>x-y); return s[Math.min(s.length-1, Math.floor(p * (s.length-1)))]; };
 const mean = a => a.length ? a.reduce((x,y)=>x+y,0) / a.length : 0;
@@ -1138,8 +1143,8 @@ $('#abortBtn').addEventListener('click', resetAll);
 $('#errBtn').addEventListener('click', resetAll);
 
 function handleFile(file) {
-  const okExt = /\.(mp4|mov|webm)$/i.test(file.name);
-  const okType = /^video\/(mp4|quicktime|webm)$/i.test(file.type);
+  const okExt = /\.(mp4|m4v|mov|webm)$/i.test(file.name);
+  const okType = /^video\/(mp4|x-m4v|quicktime|webm)$/i.test(file.type);
   if (!okExt && !okType) { toast('Unsupported file. Please use MP4, MOV or WEBM.'); input.value = ''; return; }
   if (!file.size) { toast('That file is empty.'); input.value = ''; return; }
   startScan(file);
@@ -1269,10 +1274,10 @@ async function runDiagnostics(file, token) {
     log('Using a lightweight scan for this file...', 'info');
     if (info) { w = info.w || 0; h = info.h || 0; dur = info.dur || 0; }
     durSource = 'container header';
-    if (!(dur > 0)) { dur = Math.max(1, file.size * 8 / 8e6); estimated = true; durSource = 'estimated from file size (assumes ~8 Mbps)'; }
+    if (!(dur > 0)) { dur = 0; estimated = true; durSource = 'unknown'; }
   }
   const codec = info ? friendlyCodec(info.codec) : '';
-  R.meta = { w, h, dur, name: file.name, size: file.size, type: file.type || 'unknown', limited, estimated, durSource, codec, container: info ? info.container : '', sig: info ? info.sig : null };
+  R.meta = { w, h, dur, name: file.name, size: file.size, type: file.type || 'unknown', limited, estimated, durUnknown: !(dur > 0), durSource, codec, container: info ? info.container : '', sig: info ? info.sig : null };
   $('#hudRes').textContent = (w && h) ? `RES: ${w}×${h}` : 'RES: UNKNOWN';
   $('#hudDur').textContent = `DUR: ${durText(R.meta)}`;
   if (limited) drawPlaceholder('PREVIEW UNAVAILABLE', 'Scanning file details instead');
@@ -1329,7 +1334,7 @@ async function runDiagnostics(file, token) {
   chk();
   logAudio(R.audio);
   if (limited && estimated && R.audio.audioDuration > 0) {
-    R.meta.dur = R.audio.audioDuration; R.meta.estimated = false; R.meta.durSource = 'audio track';
+    R.meta.dur = R.audio.audioDuration; R.meta.estimated = false; R.meta.durUnknown = false; R.meta.durSource = 'audio track';
     R.fmtCheck = checkFormat(R.meta);
     setMod('fmt', R.fmtCheck.status);
     $('#hudDur').textContent = `DUR: ${durText(R.meta)}`;
@@ -1355,7 +1360,8 @@ async function runDiagnostics(file, token) {
 }
 
 function logAudio(a) {
-  if (a.status === 'speech') log(a.roboticScore >= 62 && a.confidence === 'clear' ? 'Voice analysis done: sounds robotic.' : a.roboticScore >= 40 ? 'Voice analysis done: a little flat.' : 'Voice analysis done: sounds natural.', a.roboticScore >= 62 && a.confidence === 'clear' ? 'bad' : a.roboticScore >= 40 ? 'warn' : 'ok');
+  if (a.status === 'speech' && a.roboticScore === null) log('Voice found. Its tone could not be measured clearly under the background sound.', 'ok');
+  else if (a.status === 'speech') log(a.roboticScore >= 62 && a.confidence === 'clear' ? 'Voice analysis done: sounds robotic.' : a.roboticScore >= 40 ? 'Voice analysis done: a little flat.' : 'Voice analysis done: sounds natural.', a.roboticScore >= 62 && a.confidence === 'clear' ? 'bad' : a.roboticScore >= 40 ? 'warn' : 'ok');
   else if (a.status === 'nospeech') log('Audio found, but no clear spoken voice.', 'info');
   else if (a.status === 'silent') log('This video has no audible sound.', 'info');
   else log('Audio could not be read for this file.', 'info');
@@ -1382,13 +1388,25 @@ function loadVideo(file) {
     v.onerror = () => finish(false, 'decode-error');
     v.onloadedmetadata = async () => {
       try {
-        if (!isFinite(v.duration)) {
-          await new Promise(res => { const t = setTimeout(res, 3500); v.ontimeupdate = () => { clearTimeout(t); v.ontimeupdate = null; res(); }; v.currentTime = 1e7; });
-          v.currentTime = 0;
+        if (!isFinite(v.duration) || !(v.duration > 0)) {
+          // WebM files from screen recorders / MediaRecorder often have no length in the header (duration = Infinity).
+          // Seeking far past the end makes the browser scan the file and report the real length.
+          await new Promise(res => {
+            let t = 0;
+            const ok = () => isFinite(v.duration) && v.duration > 0;
+            const done = () => { clearTimeout(t); v.removeEventListener('durationchange', onDc); v.ontimeupdate = null; res(); };
+            const onDc = () => { if (ok()) done(); };
+            t = setTimeout(done, 8000);
+            v.addEventListener('durationchange', onDc);
+            v.ontimeupdate = () => { if (ok()) done(); };
+            try { v.currentTime = 1e9; } catch (_) { done(); }
+          });
+          if (isFinite(v.duration) && v.duration > 0) await seek(v, 0);
         }
-        if (v.readyState < 2) await seek(v, Math.min(0.05, v.duration / 2));
+        if (v.readyState < 2 && isFinite(v.duration)) await seek(v, Math.min(0.05, v.duration / 2));
       } catch (_) {}
-      if (!isFinite(v.duration) || v.duration <= 0 || !v.videoWidth || !v.videoHeight) return finish(false, 'no-video-stream');
+      if (!v.videoWidth || !v.videoHeight) return finish(false, 'no-video-stream');
+      if (!isFinite(v.duration) || v.duration <= 0) return finish(false, 'no-duration');
       finish(true);
     };
     try { v.src = url; } catch (_) { finish(false, 'decode-error'); }
@@ -1636,7 +1654,7 @@ async function parseWebM(file) {
   try { walk(0, len); } catch (_) {}
   const codec = codecs.find(c => c.startsWith('V_')) || '';
   if (!w && !h && !durTicks) return null;
-  return { container: 'webm', w, h, dur: durTicks * tcs / 1e9, codec, sig: { texts, handlers: [], compressor: '', rotated: false, fps: 0, brand: null } };
+  return { container: 'webm', w, h, dur: durTicks * tcs / 1e9, codec, hasAudio: codecs.length ? codecs.some(c => c.startsWith('A_')) : undefined, sig: { texts, handlers: [], compressor: '', rotated: false, fps: 0, brand: null } };
 }
 
 async function parseContainer(file) {
@@ -1699,38 +1717,160 @@ async function analyzeVisual(v, dur, chk, onProg) {
   };
 }
 
-const AUDIO_FULL_READ_LIMIT = 80 * 1024 * 1024;
-const AUDIO_DECODE_RATE = 16000;
-
-function makeDecoder() {
-  const OAC = window.OfflineAudioContext || window.webkitOfflineAudioContext;
-  if (!OAC) return null;
-  let ctx;
-  try { ctx = new OAC(1, 1, AUDIO_DECODE_RATE); } catch (_) { try { ctx = new OAC(1, 1, 44100); } catch (__) { return null; } }
-  return buf => new Promise((res, rej) => { const p = ctx.decodeAudioData(buf, res, rej); if (p && p.catch) p.catch(rej); });
+/* ---- Speech presence detector (voice vs music / noise / silence) ----
+   Works on mono PCM at ~8 kHz. Splits audio into 5 s blocks and scores each block for "someone is talking",
+   using features that survive a music bed: syllable-rate (2-8 Hz) energy modulation in the 300-3400 Hz speech band,
+   irregular (non-beat) onset timing, and formant-band co-modulation. Weights were fitted on clean speech (male/female), TTS (English, Hindi), speech over ~16 kinds of music
+   (pop, jazz, EDM, sitar, Bollywood song, etc.) at +15..0 dB, and music / songs / noise without narration. */
+const SP_FN = 256, SP_FPS = 100, SP_BANDS = 12, SP_BLOCK_S = 5;
+const SP_MODEL = {
+  keys: ["per", "rr", "rrb", "xb", "cc", "bmod", "onPs", "low", "m4c", "mpk", "icv"],
+  mu: [0.28736, 1.03682, 1.23942, 0.61282, 0.44465, 1.1216, 3.24115, 0.53376, 0.53998, 0.19544, 0.61661],
+  sd: [0.15998, 0.29999, 0.23134, 0.17133, 0.13919, 0.29643, 1.39774, 0.19921, 0.1482, 0.07433, 0.29027],
+  W1: [[0.85058, 0.07718, 0.21331, -0.36898, 0.20989, -0.21121, -0.34025, 0.26475], [0.23962, 0.15619, -0.25351, 0.06144, -0.25491, 0.24486, -0.06787, 0.15748], [-0.13613, 0.23057, 0.07035, 0.60858, 0.07015, 0.19582, -0.02666, 0.48329], [-0.42698, 0.30343, 0.08257, 0.30129, 0.08749, -0.07527, -0.08388, -0.52104], [0.41563, -0.28898, 0.68905, -0.33488, 0.68533, -0.76343, 0.81131, 0.03952], [-0.64696, 0.24858, 0.08997, 0.98724, 0.08687, -0.42727, 0.45542, -0.50491], [0.02723, 0.35644, 0.07189, 0.27309, 0.07307, -0.10054, -0.10827, 0.47136], [0.05743, 0.71317, 0.23766, -0.07786, 0.23437, -0.10108, 0.12777, 0.50398], [-0.26017, -0.02732, -0.0678, 0.11083, -0.06627, -0.43488, 0.25121, 0.37191], [0.07105, -0.0577, 0.31686, -0.22034, 0.31567, 0.51129, 0.35595, -0.00269], [-0.11667, 0.23658, -0.37308, -0.23089, -0.37229, 0.64739, 0.1262, 0.49567]],
+  b1: [-0.39637, 0.00735, -1.63089, 0.4539, -1.62049, -1.7224, 1.93301, -0.06305],
+  W2: [-1.34555, 1.01966, -1.19045, 1.44894, -1.18585, -1.50282, 1.50773, 1.42718],
+  b2: -1.09468
+};
+const SP_SILENCE_DB = -36;   // speech-band level of a ~-76 dBFS signal: below this a block counts as silent
+const spTrig = new Map();
+function spTrigTable(n) {
+  if (spTrig.has(n)) return spTrig.get(n);
+  const fs = []; for (let f = 0.5; f <= 20.001; f += 0.25) fs.push(f);
+  const c = new Float64Array(fs.length * n), s = new Float64Array(fs.length * n);
+  fs.forEach((f, i) => { const w = 2 * Math.PI * f / SP_FPS; for (let t = 0; t < n; t++) { c[i * n + t] = Math.cos(w * t); s[i * n + t] = Math.sin(w * t); } });
+  const tab = { fs, c, s }; if (spTrig.size > 8) spTrig.clear(); spTrig.set(n, tab); return tab;
 }
-
-function toMono8k(buf) {
-  const sr = buf.sampleRate, c0 = buf.getChannelData(0), c1 = buf.numberOfChannels > 1 ? buf.getChannelData(1) : null;
-  const factor = Math.max(1, Math.round(sr / 8000)), sr2 = sr / factor;
-  const n = Math.floor(c0.length / factor), mul = 1 / (factor * (c1 ? 2 : 1));
-  const ds = new Float32Array(n);
-  for (let i = 0; i < n; i++) {
-    let acc = 0; const base = i * factor;
-    for (let k = 0; k < factor; k++) { acc += c0[base + k]; if (c1) acc += c1[base + k]; }
-    ds[i] = acc * mul;
+function spFFT(re, im) {
+  const n = re.length;
+  for (let i = 1, j = 0; i < n; i++) { let bit = n >> 1; for (; j & bit; bit >>= 1) j ^= bit; j ^= bit;
+    if (i < j) { let t = re[i]; re[i] = re[j]; re[j] = t; t = im[i]; im[i] = im[j]; im[j] = t; } }
+  for (let len = 2; len <= n; len <<= 1) {
+    const ang = -2 * Math.PI / len, wr = Math.cos(ang), wi = Math.sin(ang), h = len >> 1;
+    for (let i = 0; i < n; i += len) { let cr = 1, ci = 0;
+      for (let k = 0; k < h; k++) { const a = i + k, b = a + h, vr = re[b] * cr - im[b] * ci, vi = re[b] * ci + im[b] * cr;
+        re[b] = re[a] - vr; im[b] = im[a] - vi; re[a] += vr; im[a] += vi; const nr = cr * wr - ci * wi; ci = cr * wi + ci * wr; cr = nr; } } }
+}
+/* Per-frame (10 ms) speech-band energy and 12 log band energies (300-3400 Hz). */
+function spFrames(ds, sr) {
+  const hop = Math.round(sr / SP_FPS), nF = Math.max(0, Math.floor((ds.length - SP_FN) / hop) + 1), B = SP_BANDS;
+  const edges = [];
+  for (let b = 0; b <= B; b++) edges.push(Math.round(300 * Math.pow(3400 / 300, b / B) * SP_FN / sr));
+  for (let b = 1; b <= B; b++) if (edges[b] <= edges[b - 1]) edges[b] = edges[b - 1] + 1;
+  const half = SP_FN >> 1;
+  for (let b = 0; b <= B; b++) edges[b] = Math.min(edges[b], half);
+  const hann = new Float32Array(SP_FN); for (let i = 0; i < SP_FN; i++) hann[i] = 0.5 - 0.5 * Math.cos(2 * Math.PI * i / (SP_FN - 1));
+  const re = new Float32Array(SP_FN), im = new Float32Array(SP_FN);
+  const eSp = new Float32Array(nF), band = new Float32Array(nF * B);
+  for (let t = 0; t < nF; t++) {
+    const o = t * hop;
+    for (let i = 0; i < SP_FN; i++) { re[i] = ds[o + i] * hann[i]; im[i] = 0; }
+    spFFT(re, im);
+    let s = 0;
+    for (let b = 0; b < B; b++) { let e = 0; for (let k = edges[b]; k < edges[b + 1]; k++) e += re[k] * re[k] + im[k] * im[k]; s += e; band[t * B + b] = Math.log(e + 1e-10); }
+    eSp[t] = s;
   }
-  return { ds, sr2 };
+  return { nF, eSp, band };
 }
-
-function audioWindows(total) {
-  if (total <= 45) return [[0, total]];
-  const L = 12, n = 2;
-  return Array.from({ length: n }, (_, i) => { const c = (i + 0.5) / n * total; return [Math.max(0, c - L / 2), Math.min(total, c + L / 2)]; });
+function spMovAvg(x, w) {
+  const n = x.length, h = w >> 1, cs = new Float64Array(n + 1), o = new Float64Array(n);
+  for (let i = 0; i < n; i++) cs[i + 1] = cs[i] + x[i];
+  for (let t = 0; t < n; t++) { const a = Math.max(0, t - h), b = Math.min(n, t + h + 1); o[t] = (cs[b] - cs[a]) / (b - a); }
+  return o;
 }
-function pickSegments(ds, sr2) {
-  const total = ds.length / sr2;
-  return audioWindows(total).map(([a, b]) => ({ ds: ds.subarray(Math.floor(a * sr2), Math.floor(b * sr2)), sr2 }));
+/* Features for frames [a, b). */
+function spBlockFeatures(F, a, b) {
+  const { eSp, band } = F, B = SP_BANDS, n = b - a, FPS = SP_FPS;
+  const dbs = new Float64Array(n); let mE = 0;
+  for (let t = 0; t < n; t++) { dbs[t] = 10 * Math.log10(eSp[a + t] + 1e-10); mE += eSp[a + t]; }
+  mE /= n;
+  let low = 0; for (let t = a; t < b; t++) if (eSp[t] < 0.5 * mE) low++;
+  const sorted = Float64Array.from(dbs).sort();
+  const p95 = sorted[Math.floor(0.95 * (n - 1))];
+  const cd = new Float64Array(n); let mcd = 0;
+  for (let t = 0; t < n; t++) { cd[t] = Math.max(dbs[t], p95 - 35); mcd += cd[t] / n; }
+  // modulation spectrum of the clipped speech-band envelope
+  let m4c = 0, mtc = 0, smax = 0, ssum = 0;
+  const win = new Float64Array(n); for (let t = 0; t < n; t++) win[t] = (cd[t] - mcd) * (0.5 - 0.5 * Math.cos(2 * Math.PI * (t + 0.5) / n));
+  const tab = spTrigTable(n);
+  for (let i = 0; i < tab.fs.length; i++) {
+    const f = tab.fs[i], o = i * n; let re = 0, im = 0;
+    for (let t = 0; t < n; t++) { re += win[t] * tab.c[o + t]; im += win[t] * tab.s[o + t]; }
+    const p = re * re + im * im; mtc += p;
+    if (f >= 2 && f <= 8) { m4c += p; ssum += p; if (p > smax) smax = p; }
+  }
+  // syllable-like onsets: >5 dB rise within 50 ms
+  const sm = spMovAvg(cd, 3), on = [];
+  for (let t = 5; t < n; t++) if (sm[t] - sm[t - 5] > 5 && (!on.length || t - on[on.length - 1] > 8)) on.push(t);
+  let icv = 0;
+  if (on.length > 3) { const ioi = []; for (let i = 1; i < on.length; i++) ioi.push(on[i] - on[i - 1]);
+    const m = ioi.reduce((x, y) => x + y, 0) / ioi.length; icv = Math.sqrt(ioi.reduce((x, y) => x + (y - m) * (y - m), 0) / ioi.length) / m; }
+  // per-band 2-8 Hz envelope (difference of moving averages)
+  const bp = [], e = new Float64Array(n); let bmod = 0;
+  for (let k = 0; k < B; k++) {
+    let mx = -1e9; for (let t = 0; t < n; t++) { e[t] = band[(a + t) * B + k]; if (e[t] > mx) mx = e[t]; }
+    for (let t = 0; t < n; t++) if (e[t] < mx - 8) e[t] = mx - 8;
+    const s3 = spMovAvg(e, 3), s25 = spMovAvg(e, 25), d = new Float64Array(n); let v = 0;
+    for (let t = 0; t < n; t++) { d[t] = s3[t] - s25[t]; v += d[t] * d[t]; }
+    bp.push(d); bmod += Math.sqrt(v / n) / B;
+  }
+  const corr = (x, y) => { let sx = 0, sy = 0, sxy = 0; for (let t = 0; t < n; t++) { sx += x[t] * x[t]; sy += y[t] * y[t]; sxy += x[t] * y[t]; } return sxy / Math.sqrt(sx * sy + 1e-12); };
+  const lo = new Float64Array(n), hi = new Float64Array(n);
+  for (let t = 0; t < n; t++) { for (let k = 0; k < 5; k++) lo[t] += bp[k][t]; for (let k = 8; k < 12; k++) hi[t] += bp[k][t]; }
+  const xb = corr(lo, hi);
+  let cc = 0, cn = 0; for (let i = 0; i < B; i++) for (let j = i + 1; j < B; j++) { cc += corr(bp[i], bp[j]); cn++; }
+  // beat periodicity of the onset envelope (music is periodic, speech is not)
+  const ons = new Float64Array(n); let om = 0;
+  for (let t = 1; t < n; t++) { let s = 0; for (let k = 0; k < B; k++) { const dd = bp[k][t] - bp[k][t - 1]; if (dd > 0) s += dd; } ons[t] = s; om += s / n; }
+  let r0 = 0; for (let t = 0; t < n; t++) { ons[t] -= om; r0 += ons[t] * ons[t]; }
+  let per = 0, bestL = 0;
+  const Lmax = Math.min(120, Math.floor(n / 2));
+  for (let L = 25; L <= Lmax; L++) { let s = 0; for (let t = 0; t + L < n; t++) s += ons[t] * ons[t + L]; s /= r0 * (n - L) / n + 1e-12; if (s > per) { per = s; bestL = L; } }
+  // what is left after cancelling the repeating beat (comb at the beat period): speech survives, a loop does not
+  let rr = 1, rrb = 1;
+  if (bestL && n - 2 * bestL > 100) {
+    const L = bestL; let vx = 0, vy = 0, sb = 0;
+    const x = new Float64Array(n); for (let t = 0; t < n; t++) for (let k = 3; k < B; k++) x[t] += bp[k][t];
+    for (let t = L; t < n - L; t++) { const y = x[t] - 0.5 * (x[t - L] + x[t + L]); vx += x[t] * x[t]; vy += y * y; }
+    rr = vx > 0 ? vy / vx : 1;
+    for (let k = 0; k < B; k++) { let a1 = 0, a2 = 0; const d = bp[k]; for (let t = L; t < n - L; t++) { const y = d[t] - 0.5 * (d[t - L] + d[t + L]); a1 += d[t] * d[t]; a2 += y * y; } sb += a1 > 0 ? a2 / a1 : 1; }
+    rrb = sb / B;
+  }
+  return { per, rr, rrb, xb, cc: cc / cn, bmod, onPs: on.length / (n / FPS), low: low / n, m4c: mtc > 0 ? m4c / mtc : 0, mpk: ssum > 0 ? smax / ssum : 0, icv,
+    level: 10 * Math.log10(mE + 1e-12), p95 };
+}
+/* Small neural network (11 inputs, 8 hidden units) -> probability that the block contains speech. */
+function spPredict(f) {
+  const M = SP_MODEL, H = M.b1.length, z = M.keys.map((k, i) => ((Number.isFinite(f[k]) ? f[k] : M.mu[i]) - M.mu[i]) / M.sd[i]);
+  let o = M.b2;
+  for (let h = 0; h < H; h++) { let a = M.b1[h]; for (let i = 0; i < z.length; i++) a += z[i] * M.W1[i][h]; o += Math.tanh(a) * M.W2[h]; }
+  return 1 / (1 + Math.exp(-o));
+}
+/* Splits a mono segment into ~5 s blocks; returns [{ t0, t1, active, p, f }] (t in seconds relative to segment start). */
+function spScoreSegment(ds, sr, silenceDb) {
+  const F = spFrames(ds, sr), L = SP_BLOCK_S * SP_FPS, out = [];
+  if (F.nF < 2 * SP_FPS) return out;
+  const nb = Math.max(1, Math.round(F.nF / L));
+  for (let i = 0; i < nb; i++) {
+    const a = Math.floor(i * F.nF / nb), b = Math.floor((i + 1) * F.nF / nb);
+    if (b - a < 2 * SP_FPS) continue;
+    const f = spBlockFeatures(F, a, b);
+    const active = f.p95 > silenceDb;
+    let p = 0;
+    if (active) p = spPredict(f);
+    out.push({ t0: a / SP_FPS, t1: b / SP_FPS, active, p, f });
+  }
+  return out;
+}
+/* Whole-file decision from all scored blocks (in time order). */
+function spDecide(blocks) {
+  const act = blocks.filter(b => b.active);
+  if (!act.length) return { speech: false, active: 0 };
+  const ps = act.map(b => b.p).sort((a, b) => b - a);
+  const top = ps.slice(0, Math.max(1, Math.ceil(ps.length / 3))).reduce((a, b) => a + b, 0) / Math.max(1, Math.ceil(ps.length / 3));
+  const n50 = ps.filter(p => p >= 0.5).length, n75 = ps.filter(p => p >= 0.75).length, frac = n50 / act.length;
+  const speech = n75 >= 3 || (top >= 0.6 && (frac >= 0.3 || n75 >= 2 || act.length <= 2));
+  return { speech, confidence: speech && top >= 0.8 && frac >= 0.5 ? 'clear' : 'mixed', frac, top, n75, active: act.length };
 }
 
 function audioOffsets(A) {
@@ -1783,18 +1923,135 @@ async function readAudioWindow(file, A, t0, t1, chk) {
   return out;
 }
 
-async function mp4AudioSegments(file, A, decode, chk, onProg) {
+/* ---- Audio coverage ----
+   The old scan only listened to two 12-second samples of any video longer than 45 s, so a voice that was not inside
+   those samples (or was under background music) was reported as "No voice". We now listen to the whole audio track
+   (up to 30 minutes) in 30-second chunks, and for longer videos to 60 evenly spaced 20-second windows (20 minutes). */
+const AUDIO_FULL_COVER_S = 30 * 60;
+const AUDIO_CHUNK_S = 30;
+const AUDIO_SAMPLE_WINDOWS = 60, AUDIO_SAMPLE_LEN = 20;
+const IS_MOBILE = /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent || '') || (navigator.deviceMemory && navigator.deviceMemory < 4);
+const AUDIO_FULL_READ_LIMIT = (IS_MOBILE ? 120 : 300) * 1024 * 1024;
+const AUDIO_DECODE_RATES = [8000, 16000, 22050, 44100];
+const VOICE_KEEP_S = 150, OTHER_KEEP_S = 45;
+
+function makeDecoder() {
+  const OAC = window.OfflineAudioContext || window.webkitOfflineAudioContext;
+  if (!OAC) return null;
+  let ctx = null;
+  for (const r of AUDIO_DECODE_RATES) { try { ctx = new OAC(1, 1, r); break; } catch (_) {} }
+  if (!ctx) return null;
+  // A decode that never settles (seen with some damaged files) must not leave the scan stuck.
+  return (buf, ms = 45000) => new Promise((res, rej) => {
+    const t = setTimeout(() => rej(new Error('audio decode timed out')), ms);
+    const ok = v => { clearTimeout(t); res(v); }, bad = e => { clearTimeout(t); rej(e || new Error('audio decode failed')); };
+    try { const p = ctx.decodeAudioData(buf, ok, bad); if (p && p.catch) p.catch(bad); } catch (e) { bad(e); }
+  });
+}
+
+function toMono8k(buf) {
+  const sr = buf.sampleRate, c0 = buf.getChannelData(0), c1 = buf.numberOfChannels > 1 ? buf.getChannelData(1) : null;
+  const factor = Math.max(1, Math.round(sr / 8000)), sr2 = sr / factor;
+  const n = Math.floor(c0.length / factor), mul = 1 / (factor * (c1 ? 2 : 1));
+  const ds = new Float32Array(n);
+  for (let i = 0; i < n; i++) {
+    let acc = 0; const base = i * factor;
+    for (let k = 0; k < factor; k++) { acc += c0[base + k]; if (c1) acc += c1[base + k]; }
+    ds[i] = acc * mul;
+  }
+  return { ds, sr2 };
+}
+
+function audioPlanWindows(total) {
+  if (!(total > 0)) return [];
+  if (total <= AUDIO_FULL_COVER_S) {
+    const w = [];
+    for (let t = 0; t < total; t += AUDIO_CHUNK_S) w.push([t, Math.min(total, t + AUDIO_CHUNK_S)]);
+    if (w.length > 1 && w[w.length - 1][1] - w[w.length - 1][0] < 6) w[w.length - 2][1] = w.pop()[1];
+    return w;
+  }
+  const n = AUDIO_SAMPLE_WINDOWS, L = AUDIO_SAMPLE_LEN;
+  return Array.from({ length: n }, (_, i) => { const c = (i + 0.5) / n * total; return [Math.max(0, c - L / 2), Math.min(total, c + L / 2)]; });
+}
+
+/* Collects block scores across the whole file and keeps the PCM of the parts that sound like speech
+   (for the robotic-voice measurements) plus a small sample of the rest (to describe music / ambience). */
+function makeVoiceCollector() {
+  return {
+    blocks: [], voice: [], voiceSec: 0, other: [], otherSec: 0, analyzed: 0, maxP95: 0,
+    add(ds, sr2, t0) {
+      if (!ds || ds.length < sr2 * 0.5) return;
+      this.analyzed += ds.length / sr2;
+      // overall loudness (all frequencies), 50 ms RMS, 95th percentile
+      const W = Math.round(sr2 * 0.05), rms = [];
+      for (let p = 0; p + W <= ds.length; p += W) { let e = 0; for (let k = 0; k < W; k++) e += ds[p + k] * ds[p + k]; rms.push(Math.sqrt(e / W)); }
+      this.maxP95 = Math.max(this.maxP95, pct(rms, 0.95));
+      const bl = spScoreSegment(ds, sr2, SP_SILENCE_DB);
+      bl.forEach(b => this.blocks.push({ t0: t0 + b.t0, t1: t0 + b.t1, p: b.p, active: b.active }));
+      // runs of consecutive speech-like blocks become one voice piece
+      for (let i = 0; i < bl.length;) {
+        if (!(bl[i].active && bl[i].p >= 0.5)) {
+          if (bl[i].active && this.otherSec < OTHER_KEEP_S) { const piece = ds.slice(Math.floor(bl[i].t0 * sr2), Math.floor(bl[i].t1 * sr2)); this.other.push({ ds: piece, sr2 }); this.otherSec += piece.length / sr2; }
+          i++; continue;
+        }
+        let j = i, ps = 0; while (j < bl.length && bl[j].active && bl[j].p >= 0.5) { ps += bl[j].p; j++; }
+        const piece = ds.slice(Math.floor(bl[i].t0 * sr2), Math.floor(bl[j - 1].t1 * sr2));
+        this.voice.push({ ds: piece, sr2, p: ps / (j - i) });
+        this.voiceSec += piece.length / sr2;
+        i = j;
+      }
+      if (this.voiceSec > VOICE_KEEP_S) {   // keep the clearest speech, drop the weakest pieces
+        this.voice.sort((a, b) => b.p - a.p);
+        while (this.voiceSec > VOICE_KEEP_S && this.voice.length > 1) { const x = this.voice.pop(); this.voiceSec -= x.ds.length / x.sr2; }
+      }
+    }
+  };
+}
+
+async function finishVoice(col, audioDuration, sampled, chk, onProg) {
+  const peakDb = Math.round(20 * Math.log10(Math.max(col.maxP95, 1e-7)));
+  const coverage = { durAnalyzed: col.analyzed, audioDuration, sampled };
+  if (col.maxP95 < SILENCE_RMS) return { status: 'silent', peakDb, ...coverage };
+  const d = spDecide(col.blocks);
+  if (!d.active) return { status: 'silent', peakDb, ...coverage };   // only sub-audible hum outside the speech band
+  const speechBlocks = col.blocks.filter(b => b.active && b.p >= 0.5);
+  const speechSec = speechBlocks.reduce((a, b) => a + (b.t1 - b.t0), 0);
+  const activeSec = col.blocks.filter(b => b.active).reduce((a, b) => a + (b.t1 - b.t0), 0);
+  const extra = { speechSec, speechShare: activeSec ? speechSec / activeSec : 0, speechTop: d.top, speechBlocks: d.n75, ...coverage };
+  const prog = p => onProg(0.75 + 0.25 * clamp((p - 0.5) * 2, 0, 1));
+  if (d.speech) {
+    const segs = col.voice.length ? col.voice : col.other;
+    const r = await measureVoice(segs, audioDuration, chk, prog, { decided: 'speech', confidence: d.confidence });
+    return Object.assign(r, extra, { peakDb: Math.max(r.peakDb || -120, peakDb) });
+  }
+  const segs = col.other.length ? col.other : col.voice;
+  if (!segs.length) return { status: 'nospeech', kind: 'ambient', peakDb, ...extra };
+  const r = await measureVoice(segs, audioDuration, chk, prog, { decided: 'nospeech' });
+  return Object.assign(r, extra, { peakDb: Math.max(r.peakDb || -120, peakDb) });
+}
+
+async function mp4AudioScan(file, A, decode, chk, onProg) {
   const total = A.count / A.rate;
-  const wins = audioWindows(total);
-  const segs = [];
+  const wins = audioPlanWindows(total);
+  const col = makeVoiceCollector();
+  let decoded = 0;
   for (let wi = 0; wi < wins.length; wi++) {
     chk();
     const bytes = await readAudioWindow(file, A, wins[wi][0], wins[wi][1], chk);
-    if (bytes && bytes.length) { sliceReset(); segs.push(toMono8k(await decode(bytes.buffer))); }
-    onProg(0.5 * (wi + 1) / wins.length);
+    if (bytes && bytes.length) {
+      try {
+        const buf = await decode(bytes.buffer);
+        sliceReset();
+        const m = toMono8k(buf);
+        col.add(m.ds, m.sr2, wins[wi][0]);
+        decoded++;
+      } catch (e) { if (e && e.cancelled) throw e; }
+    }
+    onProg(0.75 * (wi + 1) / wins.length);
     await yieldUI();
   }
-  return { segs, audioDuration: total };
+  if (!decoded) throw new Error('audio track could not be decoded');
+  return finishVoice(col, total, total > AUDIO_FULL_COVER_S, chk, onProg);
 }
 
 const AUDIO_RANK = { speech: 3, nospeech: 2, silent: 1 };
@@ -1804,14 +2061,14 @@ async function analyzeAudio(file, info, chk, onProg) {
   if (!decode) return { status: 'unsupported', note: 'Web Audio API is not available in this browser.' };
   const plans = info && info.audioTracks ? info.audioTracks : (info && info.audio ? [info.audio] : []);
   if (info && info.container === 'mp4/mov' && !plans.length) return { status: 'silent', audioDuration: 0, noTrack: true, peakDb: -120 };
+  if (info && info.container === 'webm' && info.hasAudio === false) return { status: 'silent', audioDuration: 0, noTrack: true, peakDb: -120 };
 
   const usable = plans.filter(p => p && !p.unsupported).slice(0, 3);
   const results = [];
   for (let i = 0; i < usable.length; i++) {
     try {
       const wrap = p => onProg((i + p) / usable.length);
-      const r = await mp4AudioSegments(file, usable[i], decode, chk, wrap);
-      if (r.segs.length) results.push(await measureVoice(r.segs, r.audioDuration, chk, wrap));
+      results.push(await mp4AudioScan(file, usable[i], decode, chk, wrap));
     } catch (e) { if (e && e.cancelled) throw e; }
   }
   if (results.length) {
@@ -1819,20 +2076,30 @@ async function analyzeAudio(file, info, chk, onProg) {
     return Object.assign(results[0], { tracks: plans.length });
   }
 
-  if (file.size > AUDIO_FULL_READ_LIMIT) return { status: 'skipped', note: 'Audio in this file can only be read by loading the whole file, which is too large to do safely.' };
-  let segs, audioDuration;
+  // Other formats (WebM, Opus/FLAC/PCM in MP4/MOV, etc.): the browser decodes the whole file in one go.
+  if (file.size > AUDIO_FULL_READ_LIMIT) return { status: 'skipped', note: `This file is too large (${fmtSize(file.size)}) to decode its audio safely in the browser. Export it as an MP4 with AAC audio (the usual export setting) and scan again.` };
+  let buf;
   try {
-    onProg(0.1);
+    onProg(0.05);
     const ab = await file.arrayBuffer(); chk();
-    const buf = await decode(ab);
-    const m = toMono8k(buf);
-    audioDuration = buf.duration; segs = pickSegments(m.ds, m.sr2);
-    onProg(0.5);
+    onProg(0.15);
+    buf = await decode(ab, 120000); chk();
   } catch (e) {
     if (e && e.cancelled) throw e;
     return { status: 'undecodable', note: 'No decodable audio track was found (the file may have no audio, or uses a codec this browser cannot read).' };
   }
-  return measureVoice(segs, audioDuration, chk, onProg);
+  const m = toMono8k(buf); buf = null;
+  const total = m.ds.length / m.sr2;
+  const col = makeVoiceCollector();
+  const wins = audioPlanWindows(total);
+  for (let wi = 0; wi < wins.length; wi++) {
+    chk();
+    sliceReset();
+    col.add(m.ds.subarray(Math.floor(wins[wi][0] * m.sr2), Math.floor(wins[wi][1] * m.sr2)), m.sr2, wins[wi][0]);
+    onProg(0.2 + 0.55 * (wi + 1) / wins.length);
+    await yieldUI();
+  }
+  return finishVoice(col, total, total > AUDIO_FULL_COVER_S, chk, onProg);
 }
 
 const SILENCE_RMS = 1.5e-4;
@@ -1969,7 +2236,7 @@ const VOICE_TUNE = {
 };
 const DEBUG_VOICE = /[?&]debug=1/.test(location.search);
 
-async function measureVoice(segs, audioDuration, chk, onProg) {
+async function measureVoice(segs, audioDuration, chk, onProg, opts = {}) {
   sliceReset();
   let totalWin = 0, voicedWin = 0, analyzed = 0, maxP95 = 0, tried = 0, modW = 0, modSum = 0, peakSum = 0;
   const f0s = [], dbs = [], pauses = [], snrs = [], deltas = [], pauseRms = []; let loop = { score: 0, period: 0 }, fluxSum = 0, fluxW = 0;
@@ -2031,7 +2298,7 @@ async function measureVoice(segs, audioDuration, chk, onProg) {
   onProg(1);
 
   const peakDb = Math.round(20 * Math.log10(Math.max(maxP95, 1e-7)));
-  if (maxP95 < SILENCE_RMS || totalWin === 0) return { status: 'silent', durAnalyzed: analyzed, audioDuration, peakDb };
+  if ((maxP95 < SILENCE_RMS || totalWin === 0) && !opts.decided) return { status: 'silent', durAnalyzed: analyzed, audioDuration, peakDb };
 
   const voicedRatio = voicedWin / Math.max(1, totalWin);
   const pausesPer30 = pauses.length / Math.max(1, analyzed / 30);
@@ -2046,9 +2313,16 @@ async function measureVoice(segs, audioDuration, chk, onProg) {
   // A very regular voice (typical of robotic text-to-speech) has a strong, even syllable rhythm (high modPeak).
   // That used to make it look like music and get thrown out as "no voice". We now keep it as speech when it also
   // has the marks of speech: a sound colour that changes every syllable, clear gaps between phrases, and no repeating loop.
-  const regularSpeech = modPeak < 0.9 && loopScore < 0.6 && flux !== null && flux >= 0.4 && pausesPer30 >= 3;
-  const clear = voicedRatio > 0.06 && voicedRatio < 0.99 && pausesPer30 >= 1.5 && pitchedFrac >= 0.2 && f0s.length >= 10 && (modPeak < 0.4 || regularSpeech);
-  const mixed = !clear && modRatio >= 0.42 && modPeak < 0.28 && pitchedFrac >= 0.2 && f0s.length >= 10 && loopScore < 0.85;
+  // Whether there is a voice at all is decided beforehand by the speech detector (spDecide) over the whole file;
+  // this function only measures how the voice sounds. The old in-function gate is kept for callers without a decision.
+  let clear, mixed;
+  if (opts.decided === 'speech') { clear = opts.confidence === 'clear'; mixed = !clear; }
+  else if (opts.decided === 'nospeech') { clear = false; mixed = false; }
+  else {
+    const regularSpeech = modPeak < 0.9 && loopScore < 0.6 && flux !== null && flux >= 0.4 && pausesPer30 >= 3;
+    clear = voicedRatio > 0.06 && voicedRatio < 0.99 && pausesPer30 >= 1.5 && pitchedFrac >= 0.2 && f0s.length >= 10 && (modPeak < 0.4 || regularSpeech);
+    mixed = !clear && modRatio >= 0.42 && modPeak < 0.28 && pitchedFrac >= 0.2 && f0s.length >= 10 && loopScore < 0.85;
+  }
   const common = { flux, pausesPer30, f0n: f0s.length, voicedRatio, durAnalyzed: analyzed, audioDuration, peakDb, snrDb, modRatio, modPeak, steadyFrac, jumpFrac, pitchedFrac, loopScore, loopPeriod };
 
   if (!clear && !mixed) {
@@ -2056,6 +2330,11 @@ async function measureVoice(segs, audioDuration, chk, onProg) {
     return { status: 'nospeech', kind: looped ? 'music-loop' : pitchedFrac >= 0.45 ? 'music' : 'ambient', ...common };
   }
 
+  const voiceLevel0 = peakDb < -45 ? 'quiet' : snrDb < 9 ? 'background' : 'clear';
+  if (f0s.length < 10 || dbs.length < 25) {
+    // A voice is there, but too little clean, pitched speech could be isolated (e.g. buried under loud music) to judge its tone.
+    return { status: 'speech', confidence: clear ? 'clear' : 'mixed', voiceLevel: voiceLevel0, roboticScore: null, pitchSpread: null, dbStd: null, pauseCV: null, pauseCount: pauses.length, pauseFloorDb: null, medianPitch: 0, bedLoop: loopScore >= 0.85, ...common };
+  }
   const med = median(f0s);
   const st = f0s.map(f => 12 * Math.log2(f / med));
   const pitchSpread = 1.4826 * median(st.map(Math.abs));
@@ -2076,7 +2355,10 @@ async function measureVoice(segs, audioDuration, chk, onProg) {
   if (typeof snrDb === 'number' && snrDb < 12) roboticScore = Math.max(0, roboticScore - (snrDb < 6 ? 12 : 8));
   if (pitchSpread >= 1.6 && dbStd >= 3.2) roboticScore = Math.max(0, roboticScore - 14);
   else if (pitchSpread >= 1.2 || dbStd >= 2.8) roboticScore = Math.max(0, roboticScore - 6);
-  const voiceLevel = peakDb < -45 ? 'quiet' : snrDb < 9 ? 'background' : 'clear';
+  // Pure digital silence between evenly timed phrases is the signature of an unedited text-to-speech export
+  // (a microphone always records some room noise, and people pause irregularly).
+  if (pauseFloorDb !== null && pauseFloorDb <= -90 && pauseCV !== null && pauseCV < 0.5) roboticScore = Math.min(100, roboticScore + 22);
+  const voiceLevel = voiceLevel0;
 
   return { status: 'speech', confidence: clear ? 'clear' : 'mixed', voiceLevel, pitchSpread, dbStd, pauseCV, pauseCount: pauses.length, pauseFloorDb, roboticScore, medianPitch: med, bedLoop: loopScore >= 0.85, ...common };
 }
@@ -2104,9 +2386,9 @@ function checkResolution({ w, h }) {
   const facts = [`Resolution: ${w}×${h}`];
   if (short < 720) {
     facts.push('Minimum recommended: 1280×720 (HD)');
-    return { ...base, status: 'bad', badge: 'Low Quality', value: `${w}×${h}`, sub: 'Below HD (720p)', meter,
-      headline: `Low video quality (${w}×${h})`,
-      note: `Your video is ${w}×${h}, which is below HD (720p). Low-resolution videos tend to get fewer recommendations and attract fewer advertisers, so YouTube may treat them as low quality.`,
+    return { ...base, status: 'warn', badge: 'Below HD', value: `${w}×${h}`, sub: 'Below HD (720p)', meter,
+      headline: `Low video quality (${w}×${h}, below 720p)`,
+      note: `Your video is ${w}×${h}, which is below HD (720p). YouTube has no minimum resolution for monetization, but blurry, low-resolution videos usually get less watch time and fewer recommendations, and look low-effort next to HD uploads.`,
       facts,
       fixes: [
         'Export the video again at 1920×1080 (or 1080×1920 for Shorts) from your editing app.',
@@ -2120,14 +2402,25 @@ function checkResolution({ w, h }) {
     headline: `${badge} (${w}×${h})`,
     note: short >= 1080
       ? `Your video is ${w}×${h}, which is Full HD or better. That’s sharp enough for YouTube’s quality standards, so resolution won’t hurt monetization.`
-      : `Your video is ${w}×${h}, which meets the HD (720p) minimum that YouTube viewers expect, so resolution won’t hurt monetization.`,
+      : `Your video is ${w}×${h}, which is HD (720p) quality that YouTube viewers expect, so resolution won’t hurt monetization.`,
     facts,
     tip: short < 1080 ? 'Exporting at 1080p gives the sharpest picture after YouTube compresses your video.' : '' };
 }
 
-function checkFormat({ w, h, dur, estimated }) {
-  const lenTxt = (estimated ? '~' : '') + fmtTime(dur);
+/* YouTube Shorts rules (YouTube Help, "Understand three-minute YouTube Shorts", answer 15424877):
+   - Since 15 Oct 2024, a video that is square or vertical AND up to 3 minutes long is categorised as a Short.
+   - A horizontal (wider than square) video is never a Short, whatever its length.
+   - A Short over 1 minute with an active Content ID claim is blocked worldwide (not playable, not monetised).
+   - Vertical/square videos over 3 minutes upload as regular (long-form) videos. */
+const SHORTS_MAX_S = 180;
+const SHORTS_CLAIM_S = 60;
+const isShortsShape = (w, h) => w > 0 && h > 0 && w / h <= 1.01;   // square or taller (1% slack for odd pixel sizes)
+const fmtLen = s => (Math.abs(s - SHORTS_MAX_S) < 2 || Math.abs(s - SHORTS_CLAIM_S) < 2) ? fmtTime(Math.floor(s)) + '.' + Math.floor((s % 1) * 10) : fmtTime(s);
+
+function checkFormat({ w, h, dur, estimated, durUnknown }) {
   const base = { id: 'fmt', icon: 'fa-mobile-screen', title: 'Format: Shorts vs Long Video', spec: 'FORMAT', meterLabel: 'Format fit' };
+  const lenKnown = dur > 0 && !estimated && !durUnknown;
+  const lenTxt = lenKnown ? fmtLen(dur) : 'unknown';
   if (!w || !h) {
     return { ...base, status: 'info', unverified: true, kind: 'unknown', asp: 'n/a', badge: 'Not Checked', value: 'Unknown', sub: `Length ${lenTxt}`, meter: 0,
       headline: 'Video shape couldn’t be read',
@@ -2135,14 +2428,27 @@ function checkFormat({ w, h, dur, estimated }) {
       facts: [`Length: ${lenTxt}`], tip: CHECK_NEEDS_MP4 };
   }
   const ratio = w / h, asp = aspectLabel(w, h);
-  const shortsShape = ratio <= 1.03;
+  const shape = ratio < 0.99 ? 'vertical' : ratio <= 1.01 ? 'square' : 'horizontal (widescreen)';
+  const shortsShape = isShortsShape(w, h);
+  const facts = [`Shape: ${asp} ${ratio < 0.99 ? 'vertical' : ratio <= 1.01 ? 'square' : 'horizontal'}`, `Length: ${lenTxt}`];
+
+  if (!lenKnown) {
+    const b = { ...base, kind: shortsShape ? 'unknown-len' : 'landscape', asp, facts, sub: `${asp} · length unknown` };
+    if (!shortsShape) return { ...b, status: 'ok', badge: 'Not a Short', value: 'Standard', meter: 100,
+      headline: `Horizontal video (${asp}): uploads as a regular video`,
+      note: `Your video is ${shape} (${asp}). Horizontal videos are never treated as Shorts on YouTube, whatever their length, so this will upload as a regular video. We couldn’t read its exact length.`,
+      tip: 'To publish it as a Short, re-frame it to vertical 9:16 (1080×1920) and keep it at 3:00 or less.' };
+    return { ...b, status: 'info', unverified: true, badge: 'Length Unknown', value: 'Unknown', meter: 0,
+      headline: 'Video length couldn’t be read',
+      note: `Your video is ${shape} (${asp}), which fits Shorts, but we couldn’t read its exact length. It only counts as a Short if it is 3:00 or shorter.`,
+      tip: CHECK_NEEDS_MP4 };
+  }
+
   let kind;
-  if (shortsShape && dur <= 180) kind = 'short';
+  if (shortsShape && dur <= SHORTS_MAX_S) kind = 'short';
   else if (shortsShape) kind = 'vlong';
-  else if (dur <= 180) kind = 'lshort';
+  else if (dur <= SHORTS_MAX_S) kind = 'lshort';
   else kind = 'long';
-  const facts = [`Shape: ${asp}`, `Length: ${lenTxt}`];
-  if (estimated) facts.push('Length is approximate');
   const b = { ...base, kind, asp, facts, sub: `${asp} · ${lenTxt}` };
 
   if (dur < 1) return { ...b, status: 'warn', badge: 'Too Short', value: 'Under 1s', meter: 30,
@@ -2151,31 +2457,37 @@ function checkFormat({ w, h, dur, estimated }) {
     fixes: ['Make the video longer so it gives viewers something worth watching.', 'Combine several short clips into one edited video with a clear beginning and end.'] };
   if (ratio < 0.4 || ratio > 2.5) return { ...b, status: 'warn', badge: 'Odd Aspect Ratio', value: asp, meter: 50,
     headline: `Unusual video shape (${asp})`,
-    note: `Your video’s shape (${asp}) is unusual. YouTube will add black bars around it, which looks unpolished and can reduce watch time.`,
+    note: `Your video’s shape (${asp}) is unusual. YouTube will add black bars around it, which looks unpolished and can reduce watch time.${kind === 'short' ? ' It is narrow enough and short enough to count as a Short.' : kind === 'vlong' ? ' At ' + lenTxt + ' it is longer than 3:00, so it is not a Short.' : ' Horizontal videos are never Shorts.'}`,
     fixes: ['Re-frame to widescreen 16:9 for regular videos, or vertical 9:16 for Shorts.', 'Keep the important action in the centre of the frame when cropping.'] };
-  if (kind === 'vlong') return { ...b, status: 'warn', badge: 'Too Long for Shorts', value: 'Vertical', meter: 55,
-    headline: `Vertical video over 3 minutes (${lenTxt})`,
-    note: `Vertical or square videos only count as Shorts when they are 3 minutes or shorter. Yours is ${lenTxt}, so it will upload as a regular video with black bars on desktop and TV, which hurts the viewing experience.`,
+  if (kind === 'vlong') return { ...b, status: 'warn', badge: 'Not a Short (over 3:00)', value: 'Not a Short', meter: 55,
+    headline: `Too long for Shorts: ${lenTxt} (limit 3:00)`,
+    note: `Your video is ${shape} (${asp}) and ${lenTxt} long. Shorts can be at most 3 minutes, so this will upload as a regular long video, shown with black bars on desktop and TV.`,
     fixes: [
-      'If you want a Short, trim it to 3:00 or less (under 60 seconds usually performs best).',
+      dur <= 600
+        ? `If you want a Short, trim it to 3:00 or less (cut at least ${fmtTime(Math.ceil(dur - SHORTS_MAX_S))}). Under 1:00 is safest if it uses any copyrighted music or clips.`
+        : 'If you want Shorts, cut the best moments into separate vertical clips of 3:00 or less (under 1:00 is safest if they use any copyrighted music or clips).',
       'If you want a regular video, re-edit it widescreen (16:9, 1920×1080).',
       'Or split it into several short vertical clips, each with a strong opening.'
     ] };
-  if (kind === 'short' && dur > 60) return { ...b, status: 'ok', badge: 'Long Shorts (Under 3 min)', value: 'Long Shorts', meter: 92,
-    headline: `Long Shorts format (${asp}, ${lenTxt})`,
-    note: `Your video is ${ratio < 0.99 ? 'vertical' : 'square'} (${asp}) and ${lenTxt} long. That still counts as a Short (up to 3 minutes), but clips over 60 seconds behave more like “long Shorts” and often need a stronger hook to hold the feed.`,
-    tip: 'Under 60 seconds usually performs best in Shorts. If this is meant as a longer piece, keep the first 3 seconds punchy.' };
-  if (kind === 'short') return { ...b, status: 'ok', badge: `Valid ${asp} Shorts`, value: 'Shorts', meter: 100,
+  if (kind === 'short' && dur > SHORTS_CLAIM_S) {
+    const edge = dur > SHORTS_MAX_S - 2;
+    return { ...b, status: 'ok', badge: 'Valid Short (1–3 min)', value: 'Short (1–3 min)', meter: 85,
+      facts: [...facts, 'Shorts limit: 3:00 (since Oct 2024)', 'Copyright-claimed Shorts over 1:00: blocked'],
+      headline: `Valid Short under the 3-minute rule (${asp}, ${lenTxt})`,
+      note: `Your video is ${shape} (${asp}) and ${lenTxt} long. Since 15 October 2024, square and vertical videos up to 3 minutes count as Shorts, so this is a valid Short. The old limit was 60 seconds, and one rule from it still matters: a Short longer than 1 minute that gets any Content ID (copyright) claim, for example from a popular song or a movie clip, is blocked worldwide and earns nothing.${edge ? ' It is right at the 3:00 limit, so trim a second or two to be safe.' : ''}`,
+      tip: 'Use only your own audio or royalty-free music from the YouTube Audio Library in 1–3 minute Shorts. If it must use claimed music, trim it to under 1:00.' };
+  }
+  if (kind === 'short') return { ...b, status: 'ok', badge: `Valid ${asp} Short`, value: 'Short', meter: 100,
     headline: `Valid Shorts format (${asp}, ${lenTxt})`,
-    note: `Your video is ${ratio < 0.99 ? 'vertical' : 'square'} (${asp}) and ${lenTxt} long. Vertical or square videos up to 3 minutes can appear in the YouTube Shorts feed, so the format is correct.`,
+    note: `Your video is ${shape} (${asp}) and ${lenTxt} long. Square or vertical videos up to 3 minutes count as Shorts, and at under 1 minute none of the extra rules for longer Shorts apply.`,
     tip: ratio > 0.6 ? 'The 9:16 vertical shape (1080×1920) fills the Shorts screen best.' : 'Keep captions and key action away from the bottom and right edges, where Shorts buttons sit.' };
-  if (kind === 'lshort') return { ...b, status: 'ok', badge: 'Standard Video', value: 'Standard', meter: 100,
-    headline: `Standard widescreen video (${asp}, ${lenTxt})`,
-    note: `Your video is widescreen (${asp}) and ${lenTxt} long. It will upload as a regular video, which is fine for monetization.`,
-    tip: 'To publish it as a Short instead, re-frame it to vertical 9:16 and keep it at 3:00 or less.' };
+  if (kind === 'lshort') return { ...b, status: 'ok', badge: 'Not a Short (horizontal)', value: 'Standard', meter: 100,
+    headline: `Horizontal video (${asp}, ${lenTxt}): uploads as a regular video, not a Short`,
+    note: `Your video is horizontal (${asp}) and ${lenTxt} long. YouTube never treats horizontal videos as Shorts, even short ones, so this will upload as a regular video. That is fine for monetization.`,
+    tip: 'To publish it as a Short instead, re-frame it to vertical 9:16 (1080×1920) and keep it at 3:00 or less.' };
   return { ...b, status: 'ok', badge: 'Long-Form Video', value: 'Long-Form', meter: 100,
     headline: `Long-form widescreen video (${asp}, ${lenTxt})`,
-    note: `Your video is widescreen (${asp}) and ${lenTxt} long, a good fit for a regular YouTube upload.`,
+    note: `Your video is horizontal (${asp}) and ${lenTxt} long, a good fit for a regular YouTube upload.`,
     tip: dur >= 480 ? 'Videos of 8+ minutes can show mid-roll ads, which usually raises earnings.' : 'Videos of 8+ minutes can show mid-roll ads, if the content suits it.' };
 }
 
@@ -2186,23 +2498,32 @@ function audioKindLabel(a) {
   return 'Unknown';
 }
 const loudnessWord = db => db < -50 ? 'Very quiet' : db < -35 ? 'Quiet' : 'Normal';
+const coverageFact = a => a && a.durAnalyzed > 0
+  ? `Audio checked: ${a.sampled ? fmtTime(a.durAnalyzed) + ' sampled across ' + fmtTime(a.audioDuration) : 'all ' + fmtTime(a.audioDuration || a.durAnalyzed)}`
+  : null;
 
 function checkVoice(a) {
   const base = { id: 'voice', icon: 'fa-wave-square', title: 'AI Voice / Monotone Check', spec: 'AUDIO', meterLabel: 'Naturalness' };
   if (a.status === 'speech') {
     const mixed = a.confidence === 'mixed';
     const lvl = { clear: 'Clear', quiet: 'Quiet', background: 'Background' }[a.voiceLevel] || 'Clear';
-    const facts = [
+    const measured = a.roboticScore !== null && a.roboticScore !== undefined;
+    const facts = [`Voice found: Yes${a.speechSec > 0 ? ' (about ' + fmtTime(a.speechSec) + ' of speech' + (a.sampled ? ' in the parts checked)' : ')') : ''}`];
+    const cov = coverageFact(a); if (cov) facts.push(cov);
+    if (measured) facts.push(
       `Voice tone variety: ${a.pitchSpread < 0.8 ? 'Very flat' : a.pitchSpread < 1.5 ? 'Fairly flat' : 'Natural'}`,
-      `Volume changes: ${a.dbStd < 2.4 ? 'Very even' : a.dbStd < 4.2 ? 'Fairly even' : 'Natural'}`
-    ];
-    if (a.pauseCV !== null) facts.push(`Pauses: ${a.pauseCV < 0.4 ? 'Evenly spaced' : a.pauseCV < 0.6 ? 'Fairly regular' : 'Natural'}`);
+      `Volume changes: ${a.dbStd < 2.4 ? 'Very even' : a.dbStd < 4.2 ? 'Fairly even' : 'Natural'}`);
+    if (a.pauseCV !== null && a.pauseCV !== undefined) facts.push(`Pauses: ${a.pauseCV < 0.4 ? 'Evenly spaced' : a.pauseCV < 0.6 ? 'Fairly regular' : 'Natural'}`);
     if (a.pauseFloorDb !== null && a.pauseFloorDb !== undefined) facts.push(`Gaps between phrases: ${a.pauseFloorDb <= -80 ? 'Digital silence' : a.pauseFloorDb <= -66 ? 'Unusually clean' : 'Natural room noise'}`);
     facts.push(`Voice level: ${lvl}`);
     if (mixed) facts.push('Mixed with music or background sound');
-    if (DEBUG_VOICE) facts.push(`DEBUG score=${a.roboticScore} pitchSpread=${a.pitchSpread.toFixed(2)} dbStd=${a.dbStd.toFixed(2)} pauseCV=${a.pauseCV === null ? 'n/a' : a.pauseCV.toFixed(2)} floorDb=${a.pauseFloorDb === null ? 'n/a' : a.pauseFloorDb.toFixed(1)} pauses=${a.pauseCount} mixed=${mixed} modPeak=${a.modPeak.toFixed(2)} flux=${a.flux === null ? 'n/a' : a.flux.toFixed(2)}`);
-    const meter = clamp(100 - a.roboticScore, 0, 100);
-    const b = { ...base, facts, meter };
+    const f2 = v => (v === null || v === undefined) ? 'n/a' : v.toFixed(2);
+    if (DEBUG_VOICE) facts.push(`DEBUG score=${a.roboticScore} pitchSpread=${f2(a.pitchSpread)} dbStd=${f2(a.dbStd)} pauseCV=${f2(a.pauseCV)} floorDb=${f2(a.pauseFloorDb)} pauses=${a.pauseCount} mixed=${mixed} speechShare=${f2(a.speechShare)} top=${f2(a.speechTop)} n75=${a.speechBlocks} snr=${f2(a.snrDb)}`);
+    const b = { ...base, facts, meter: measured ? clamp(100 - a.roboticScore, 0, 100) : 70 };
+    if (!measured) return { ...b, status: 'ok', badge: 'Voice Found', value: 'Voice Found', sub: 'Tone not measurable',
+      headline: 'Voice found under background sound',
+      note: 'We found a spoken voice in this video, but it sits under loud music or background sound, so its tone couldn’t be measured well enough to judge whether it sounds robotic.',
+      tip: 'Turn the music down under the voice (about 15 dB quieter) so viewers can follow it, then scan again for a full voice check.' };
     const failAt = mixed ? VOICE_TUNE.failMixed : a.voiceLevel === 'clear' ? VOICE_TUNE.failClear : VOICE_TUNE.failQuiet;
     const warnAt = mixed ? VOICE_TUNE.warnMixed : VOICE_TUNE.warnClear;
     if (a.roboticScore >= failAt) return { ...b, status: 'bad', badge: 'Robotic Voice', value: 'Robotic', sub: 'Sounds synthetic',
@@ -2240,16 +2561,18 @@ function checkVoice(a) {
     const loopNote = a.kind === 'music-loop' ? ' The sound is a short loop that repeats, the way free library music does.' : '';
     return { ...base, status: 'info', badge: 'No Clear Voice', value: 'No Voice', sub: 'Nothing to check', meter: 100,
       headline: 'No clear narration found',
-      facts: ['Spoken narration: None found', `Audio type: ${audioKindLabel(a)}`, `Loudness: ${loudnessWord(a.peakDb)}`].concat(DEBUG_VOICE ? [`DEBUG nospeech voicedRatio=${a.voicedRatio.toFixed(2)} pauses/30s=${a.pausesPer30.toFixed(1)} pitchedFrac=${a.pitchedFrac.toFixed(2)} f0n=${a.f0n} modPeak=${a.modPeak.toFixed(2)} modRatio=${a.modRatio.toFixed(2)} loop=${a.loopScore.toFixed(2)} flux=${a.flux === null ? 'n/a' : a.flux.toFixed(2)}`] : []),
+      facts: ['Spoken narration: None found', `Audio type: ${audioKindLabel(a)}`, `Loudness: ${loudnessWord(a.peakDb)}`, coverageFact(a)].filter(Boolean).concat(DEBUG_VOICE ? [`DEBUG nospeech speechShare=${(a.speechShare || 0).toFixed(2)} top=${(a.speechTop || 0).toFixed(2)} n75=${a.speechBlocks} loop=${(a.loopScore || 0).toFixed(2)}`] : []),
       note: `We couldn’t find a clear spoken voice, so there’s no AI-voice risk to check.${loopNote} Music-only videos are fine, but make sure the visuals are original (see the reused content check).`,
-      tip: 'If someone does speak, even quietly in the background, raise the voice or turn the music down and scan again.' };
+      tip: 'If someone does speak, even quietly in the background, raise the voice or turn the music down and scan again. Singing in a song doesn’t count as narration.' };
   }
   if (a.status === 'silent') return { ...base, status: 'info', badge: 'Silent Video', value: 'Silent', sub: 'Nothing to check', meter: 100,
-    headline: a.noTrack ? 'This video has no audio' : 'No sound in this video', facts: ['Sound: None'],
-    note: 'This video has no audible sound, so there’s no voice to check. Silent videos can look low-effort, so adding music or commentary helps.' };
+    headline: a.noTrack ? 'This video has no audio track' : 'No sound in this video', facts: [a.noTrack ? 'Audio track: None' : 'Audio track: Present, but silent or muted', coverageFact(a)].filter(Boolean),
+    note: a.noTrack
+      ? 'This file has no audio track at all, so there’s no voice to check. Silent videos can look low-effort, so adding music or commentary helps.'
+      : 'This video has an audio track, but it is silent (or muted) all the way through, so there’s no voice to check. If you expected sound, check that the audio wasn’t muted or removed when exporting.' };
   return { ...base, status: 'info', unverified: true, badge: 'Not Checked', value: 'Unknown', sub: 'Audio not readable', meter: 0,
     headline: 'Audio couldn’t be read',
-    note: 'We couldn’t read this video’s audio, so the voice check was skipped.',
+    note: a.note || 'We couldn’t read this video’s audio, so the voice check was skipped.',
     facts: [], tip: CHECK_NEEDS_MP4 };
 }
 
@@ -2395,8 +2718,7 @@ function checkReuse(meta, vis, aud) {
   else if (aud.status === 'speech') risk -= aud.confidence === 'mixed' ? 4 : 10;
   if (noEdits && noCommentary) risk += 15;
 
-  const vertical = meta.w && meta.h && meta.w / meta.h <= 0.8;
-  const isShort = vertical && meta.dur <= 180;
+  const isShort = isShortsShape(meta.w, meta.h) && meta.dur > 0 && meta.dur <= SHORTS_MAX_S && !meta.durUnknown;
   if (isShort && noCommentary && !hasCamera && !editor && (noEdits || vis.limited)) {
     risk += noEdits ? 14 : 8; reasons.push('it’s a short vertical clip with no sign that you recorded or edited it');
   }
@@ -2405,6 +2727,9 @@ function checkReuse(meta, vis, aud) {
   const strong = pos.filter(s => s.strong);
   const ownWork = aud.status === 'speech' && aud.confidence !== 'mixed' && (vis.skipped || vis.hits > 0);
   if (strong.length) risk = Math.max(risk, ownWork ? (strong.length >= 2 ? 55 : 42) : 70);
+  // Without a concrete sign that the footage came from someone else (download site, stock library, rip, platform ID),
+  // we can't know it isn't the creator's own footage, so missing commentary / cuts alone is "at risk", never "high".
+  else risk = Math.min(risk, 59);
   risk = clamp(Math.round(risk), 0, 100);
 
   const pace = vis.skipped ? null : vis.hits === 0 ? 'No cuts detected' : vis.cutsPerMin < 4 ? 'Slow' : vis.cutsPerMin < 15 ? 'Moderate' : 'Fast';
@@ -2490,9 +2815,10 @@ function checkContentValue(meta, vis, aud, reuse) {
   }
   if (aud && aud.status === 'speech' && aud.confidence === 'clear') risk -= 10;
   if (visReady && vis.hits > 0) risk -= 6;
+  if (!(reuse && reuse.status === 'bad')) risk = Math.min(risk, 54);   // "high" only together with clear reuse signs
   risk = clamp(Math.round(risk), 0, 100);
 
-  facts.push('Length: ' + (dur > 0 ? fmtTime(dur) : 'Unknown'));
+  facts.push('Length: ' + (dur > 0 && !meta.durUnknown ? fmtTime(dur) : 'Unknown'));
   facts.push('Spoken commentary: ' + (aud && aud.status === 'speech' ? 'Yes' : noSpeech ? 'No' : 'Unknown'));
   facts.push('Editing: ' + (!visReady ? 'Not measured' : vis.hits === 0 ? 'No cuts detected' : vis.hits + ' cut' + (vis.hits === 1 ? '' : 's')));
   facts.push('Reused-content check: ' + (reuse && !reuse.unverified ? (reuse.status === 'bad' ? 'High risk' : reuse.status === 'warn' ? 'Medium risk' : 'Low risk') : 'Not checked'));
@@ -2568,49 +2894,105 @@ function checkCard(c, i) {
   </article>`;
 }
 
-function renderResults(R) {
-  const { meta } = R;
+/* ---- Final verdict: will this video likely be monetizable? ----
+   Only checks tied to YouTube monetization policy decide the verdict:
+   - Reused content policy (other people's clips, downloads, unedited stock)       -> reuse check
+   - Inauthentic content policy (mass-produced / repetitive / low-value, renamed
+     from "repetitious content" on 15 July 2025)                                   -> content value check
+   - Robotic / default TTS voice: AI voices are allowed, but a flat synthetic voice
+     with nothing original added is a common sign of mass-produced content         -> voice check (raises "at risk" only)
+   Resolution and Shorts format are not monetization rules; they are shown as advice and never make a video "not monetizable".
+   Source: YouTube Help "YouTube channel monetization policies" (support.google.com/youtube/answer/1311392). */
+const POLICY_IDS = ['reuse', 'value'];
+function monetizationVerdict(R) {
   const checks = [R.resCheck, R.fmtCheck, R.reuseCheck, R.voiceCheck, R.valueCheck];
   const ran = checks.filter(c => !c.unverified);
-  const fails = checks.filter(c => c.status === 'bad').length;
-  const warns = checks.filter(c => c.status === 'warn').length;
+  const policyRan = checks.filter(c => !c.unverified && (POLICY_IDS.includes(c.id) || c.id === 'voice'));
+  const blockers = checks.filter(c => !c.unverified && POLICY_IDS.includes(c.id) && c.status === 'bad');
+  const risks = checks.filter(c => !c.unverified && ((POLICY_IDS.includes(c.id) && c.status === 'warn') || (c.id === 'voice' && (c.status === 'bad' || c.status === 'warn'))));
+  const advice = checks.filter(c => !c.unverified && (c.id === 'res' || c.id === 'fmt') && (c.status === 'warn' || c.status === 'bad'));
+  let level;
+  if (blockers.length) level = 'bad';
+  else if (risks.length) level = 'warn';
+  else if (policyRan.length < 2 || ran.length < 2) level = 'info';
+  else level = 'ok';
+  return { level, blockers, risks, advice, ran, checks };
+}
+
+function renderResults(R) {
+  const { meta } = R;
+  const V = monetizationVerdict(R);
+  const { level, blockers, risks, advice, ran, checks } = V;
+  const fails = checks.filter(c => !c.unverified && c.status === 'bad').length;
+  const warns = checks.filter(c => !c.unverified && c.status === 'warn').length;
   const passedN = ran.filter(c => c.status === 'ok' || c.status === 'info').length;
   const s = n => n === 1 ? '' : 'S';
+  const issues = blockers.length + risks.length;
 
-  let level, head, tag, sub, icon;
-  if (fails) {
-    level = 'bad'; icon = 'fa-ban'; head = 'REJECTION RISK DETECTED';
-    tag = `HIGH RISK · ${fails} CRITICAL ISSUE${s(fails)}`; sub = 'Fix the red items below, then scan again.';
-  } else if (warns) {
-    level = 'warn'; icon = 'fa-triangle-exclamation'; head = 'REJECTION RISK DETECTED';
-    tag = `MODERATE RISK · ${warns} WARNING${s(warns)}`; sub = 'Fix the amber items below to stay on the safe side.';
-  } else if (ran.length < 2) {
-    level = 'info'; icon = 'fa-circle-question'; head = 'UNABLE TO VERIFY';
-    tag = 'NOT ENOUGH READABLE DATA'; sub = 'We couldn’t read enough of this video to judge it. Export it as a standard MP4 and scan again.';
+  let head, tag, sub, icon;
+  if (level === 'bad') {
+    icon = 'fa-ban'; head = 'LIKELY NOT MONETIZABLE';
+    tag = `HIGH RISK · ${issues} MONETIZATION ISSUE${s(issues)}`;
+    sub = 'As it is, this video shows strong signs of content YouTube usually doesn’t pay for. Fix the red items below, then scan again.';
+  } else if (level === 'warn') {
+    icon = 'fa-triangle-exclamation'; head = 'MONETIZATION AT RISK';
+    tag = `MEDIUM RISK · ${issues} THING${s(issues)} TO FIX`;
+    sub = 'This video could be monetized, but it shows some warning signs that can lead to limited or no ads. Fix the amber items below to be safer.';
+  } else if (level === 'info') {
+    icon = 'fa-circle-question'; head = 'CAN’T TELL YET';
+    tag = 'NOT ENOUGH READABLE DATA';
+    sub = 'We couldn’t read enough of this video’s picture or sound to estimate its monetization risk. Export it as a standard MP4 (H.264 video, AAC audio) and scan again.';
   } else {
-    level = 'ok'; icon = 'fa-circle-check'; head = 'MONETIZATION SAFE';
-    tag = passedN === checks.length ? '100% PASSED' : `${passedN} OF ${ran.length} CHECKS PASSED`;
-    sub = 'Your video passed every check. We found no signs of policy problems.';
+    icon = 'fa-circle-check'; head = 'LIKELY MONETIZABLE';
+    tag = advice.length ? `LOW RISK · ${advice.length} TIP${s(advice.length)} TO IMPROVE` : 'LOW RISK';
+    sub = 'We found no signs of reused, mass-produced or low-value content in this file, so it looks eligible for ads.';
   }
 
   let score = 100;
   ran.forEach(c => {
-    const wgt = { res: 22, fmt: 8, reuse: 26, voice: 26, value: 18 }[c.id];
+    const wgt = { res: 8, fmt: 4, reuse: 32, voice: 22, value: 26 }[c.id];
     if (c.status === 'bad') score -= wgt; else if (c.status === 'warn') score -= Math.round(wgt * 0.45);
   });
   const audioStatus = R.audio && R.audio.status;
-  if (audioStatus === 'silent' || audioStatus === 'nospeech') score -= 10;
+  if (audioStatus === 'silent' || audioStatus === 'nospeech') score -= 6;
   score = clamp(score, 0, 100);
-  if (meta && meta.dur > 0 && meta.dur < 30) score = Math.min(score, 85);
-  if (fails) score = Math.min(score, 59); else if (warns) score = Math.min(score, 79);
-  const scoreKnown = ran.length >= 2;
-  const grade = !scoreKnown ? 'NOT ENOUGH DATA' : level === 'bad' ? 'AT RISK' : level === 'warn' ? 'NEEDS WORK' : score >= 90 ? 'EXCELLENT' : 'GOOD';
+  if (level === 'bad') score = Math.min(score, 45);
+  else if (level === 'warn') score = clamp(score, 46, 74);
+  else if (level === 'ok') score = Math.max(score, 75);
+  const scoreKnown = level !== 'info';
+  const grade = !scoreKnown ? 'NOT ENOUGH DATA' : level === 'bad' ? 'HIGH RISK' : level === 'warn' ? 'MEDIUM RISK' : 'LOW RISK';
   const C = 2 * Math.PI * 52;
 
-  const pills = [R.resCheck, R.voiceCheck, R.reuseCheck, R.fmtCheck, R.valueCheck].map(badgeHTML).join('');
-  const specs = [R.resCheck, R.voiceCheck, R.reuseCheck, R.fmtCheck, R.valueCheck].map(specCard).join('');
+  // why + what to fix + what we can't check
+  const whyItems = [...blockers, ...risks].map(c => `<li class="tx-${c.status}">${esc(c.title)}: ${esc(c.headline)}</li>`);
+  if (level === 'ok') {
+    const good = [R.reuseCheck, R.valueCheck, R.voiceCheck].filter(c => !c.unverified).map(c => `<li class="tx-ok">${esc(c.title)}: ${esc(c.headline)}</li>`);
+    whyItems.push(...good);
+  }
+  advice.forEach(c => whyItems.push(`<li class="tx-warn">${esc(c.title)}: ${esc(c.headline)} <span class="text-slate-400">(advice, not a monetization rule)</span></li>`));
+  if (R.fmtCheck && R.fmtCheck.kind === 'short' && meta.dur > SHORTS_CLAIM_S)
+    whyItems.push('<li class="tx-warn">Shorts over 1:00 that get any Content ID (copyright) claim are blocked and earn nothing. We can’t see claims, so only use music and clips you own or royalty-free audio.</li>');
+  const fixList = [];
+  [...blockers, ...risks, ...advice].forEach(c => (c.fixes || []).slice(0, 2).forEach(f => { if (fixList.length < 6 && !fixList.includes(f)) fixList.push(f); }));
+  const verdictBox = `
+    <div class="glass p-5 mt-4 fade-up verdict-why" style="animation-delay:.05s">
+      <p class="font-orb text-xs tracking-widest text-cyan-300 mb-2">WHY THIS RESULT</p>
+      <ul class="why-list">${whyItems.join('') || '<li>Not enough of the file could be read to explain a result.</li>'}</ul>
+      ${fixList.length ? `<p class="font-orb text-xs tracking-widest text-cyan-300 mt-4 mb-2">WHAT TO FIX FIRST</p><ol class="fixlist">${fixList.map(f => `<li>${esc(f)}</li>`).join('')}</ol>` : ''}
+      <p class="font-orb text-xs tracking-widest text-cyan-300 mt-4 mb-2">WHAT THIS SCAN CAN’T CHECK</p>
+      <ul class="why-list text-slate-400">
+        <li>What is said or shown (advertiser-friendly topics such as violence, swearing, adult or shocking content). YouTube reviews those separately and may limit ads.</li>
+        <li>Content ID / copyright claims on music or clips, and whether your channel posts many near-identical videos.</li>
+        <li>Your channel’s YPP eligibility (subscribers and watch hours or Shorts views).</li>
+      </ul>
+      <p class="text-xs text-slate-400 mt-4"><strong>This is an estimate</strong> made from patterns in your file, on your device. It is not a YouTube decision and can be wrong. YouTube’s own review is final.</p>
+    </div>`;
+
+  const pills = [R.reuseCheck, R.valueCheck, R.voiceCheck, R.resCheck, R.fmtCheck].map(badgeHTML).join('');
+  const specs = [R.reuseCheck, R.valueCheck, R.voiceCheck, R.resCheck, R.fmtCheck].map(specCard).join('');
   const order = { bad: 0, warn: 1, ok: 2, info: 3 };
-  const sorted = [...checks].sort((a, b) => (a.unverified ? 4 : order[a.status]) - (b.unverified ? 4 : order[b.status]));
+  const policyFirst = c => (POLICY_IDS.includes(c.id) || c.id === 'voice') ? 0 : 1;
+  const sorted = [...checks].sort((a, b) => ((a.unverified ? 4 : order[a.status]) - (b.unverified ? 4 : order[b.status])) || (policyFirst(a) - policyFirst(b)));
   const cards = sorted.map(checkCard).join('');
   const unver = checks.filter(c => c.unverified).length;
   const foot = unver ? `<p class="text-xs text-slate-400 mt-4"><i class="fa-regular fa-circle-question text-cyan-400 mr-1"></i>${unver} check${unver > 1 ? 's' : ''} couldn’t run because part of this file couldn’t be read. Export it as a standard MP4 and scan again for a complete report.</p>` : '';
@@ -2622,7 +3004,7 @@ function renderResults(R) {
       <div class="flex flex-col lg:flex-row items-center gap-6 lg:gap-8">
         <div class="icon-wrap w-24 h-24 shrink-0 grid place-items-center rounded-full border-2 text-5xl"><i class="fa-solid ${icon}"></i></div>
         <div class="flex-1 text-center lg:text-left">
-          <p class="text-xs tracking-[.4em] text-slate-400 mb-2">// FINAL VERDICT</p>
+          <p class="text-xs tracking-[.4em] text-slate-400 mb-2">// MONETIZATION ESTIMATE</p>
           <h2 class="headline font-orb font-black text-3xl sm:text-5xl leading-tight">${head}</h2>
           <p class="tagline font-orb font-bold text-lg sm:text-2xl mt-1 tracking-widest">${tag}</p>
           <p class="mt-3 text-slate-300">${sub}</p>
@@ -2635,7 +3017,7 @@ function renderResults(R) {
               <circle id="ringFg" class="ring-fg" cx="60" cy="60" r="52" fill="none" stroke-width="8" stroke-linecap="round" stroke-dasharray="${C}" stroke-dashoffset="${C}"/>
             </svg>
             <div class="absolute inset-0 grid place-items-center">
-              <div><p class="font-orb text-4xl font-black text-white">${scoreKnown ? score : '—'}</p><p class="text-[9px] tracking-[.25em] text-slate-400">OUT OF 100</p></div>
+              <div><p class="font-orb text-4xl font-black text-white">${scoreKnown ? score : '—'}</p><p class="text-[9px] tracking-[.25em] text-slate-400">SAFETY SCORE</p></div>
             </div>
           </div>
           <p class="font-orb text-xs tracking-[.25em] mt-3 grade" style="color:var(--c)">${grade}</p>
@@ -2644,6 +3026,7 @@ function renderResults(R) {
       </div>
     </div>
 
+    ${verdictBox}
     <div class="flex flex-wrap items-center gap-x-6 gap-y-1 mt-4 text-xs text-slate-400 fade-up" style="animation-delay:.1s">
       <span><i class="fa-solid fa-file-video text-cyan-400 mr-1"></i>${esc(meta.name)}</span>
       <span>${fmtSize(meta.size)}</span><span>${durText(meta)}</span>
@@ -2653,7 +3036,7 @@ function renderResults(R) {
     <div class="grid sm:grid-cols-2 lg:grid-cols-5 gap-4">${specs}</div>
 
     <div class="flex flex-wrap items-end justify-between gap-2 mt-8 mb-3">
-      <h2 class="font-orb text-xs tracking-[.35em] text-cyan-300">// FAILURE DIAGNOSTIC MATRIX</h2>
+      <h2 class="font-orb text-xs tracking-[.35em] text-cyan-300">// CHECK-BY-CHECK DETAILS</h2>
       <p class="text-xs text-slate-400">${issueCount ? `<span class="tx-${fails ? 'bad' : 'warn'}">${issueCount} to fix</span> · ` : ''}<span class="tx-ok">${passedN} passed</span></p>
     </div>
     <div class="flex flex-col gap-4">${cards}</div>
@@ -2674,7 +3057,7 @@ function renderResults(R) {
 
 function copyReport(R, head, tag, score, checks) {
   const m = R.meta;
-  const lines = ['YT POLICY SHIELD v2.0 — REPORT', `File: ${m.name} (${m.w && m.h ? m.w + 'x' + m.h + ', ' : ''}${durText(m)})`,
+  const lines = ['YT POLICY SHIELD — MONETIZATION ESTIMATE', `File: ${m.name} (${m.w && m.h ? m.w + 'x' + m.h + ', ' : ''}${durText(m)})`,
     `Verdict: ${head} (${tag})${score === null ? '' : '  |  Score: ' + score + '/100'}`, ''];
   checks.forEach(c => {
     lines.push(`[${statusWord(c)}] ${c.title}: ${c.headline}`);
@@ -2682,7 +3065,7 @@ function copyReport(R, head, tag, score, checks) {
     (c.fixes || []).forEach((f, i) => lines.push(`  Fix ${i + 1}: ${f}`));
     lines.push('');
   });
-  lines.push('Estimate only; not an official YouTube decision.');
+  lines.push('Estimate only, made from patterns in the file. Not a YouTube decision. It cannot check what is said or shown (advertiser-friendly guidelines), Content ID claims, or channel eligibility.');
   const text = lines.join('\n');
   const done = () => toast('Report copied to clipboard.', true);
   if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(done, () => fallbackCopy(text, done));
